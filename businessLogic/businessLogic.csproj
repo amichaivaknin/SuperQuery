@@ -107,6 +107,7 @@
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\SearchEngineResultsList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RankAggregation\BordaMethod.cs" />
     <Compile Include="RankAggregation\RankAggregation.cs" />
     <Compile Include="SearchEngines\AOLSearchEngine.cs" />
     <Compile Include="SearchEngines\ASKSearchEngine.cs" />

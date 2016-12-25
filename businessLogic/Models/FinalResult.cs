@@ -9,6 +9,10 @@ namespace businessLogic.Models
 {
     public class FinalResult : Result
     {
-       public string SearchEngines { get; internal set; }
+        public FinalResult()
+        {
+            SearchEngines = new Dictionary<string, int>();
+        }
+        public Dictionary<string,int> SearchEngines { get; internal set; }
     }
 }
