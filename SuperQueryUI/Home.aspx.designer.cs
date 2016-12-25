@@ -49,13 +49,13 @@ namespace SuperQueryUI {
         protected global::System.Web.UI.WebControls.CheckBox checkbox_bing;
         
         /// <summary>
-        /// checkbox_baidu control.
+        /// checkbox_gigablast control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox checkbox_baidu;
+        protected global::System.Web.UI.WebControls.CheckBox checkbox_gigablast;
         
         /// <summary>
         /// checkbox_aol control.

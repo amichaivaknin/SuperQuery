@@ -23,7 +23,7 @@
                                       
                 </tr>
                 <tr>
-                        <td> <asp:CheckBox ID="checkbox_baidu" runat="server" Checked="true"/> Baidu </td>
+                        <td> <asp:CheckBox ID="checkbox_gigablast" runat="server" Checked="true"/> GigaBlast </td>
                         <td><asp:CheckBox ID="checkbox_aol" runat="server" Checked="true"/> AOL </td>
                         <td> <asp:CheckBox ID="checkbox_ask" runat="server" Checked="true"/> Ask </td>                   
                 </tr>

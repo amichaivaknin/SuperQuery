@@ -30,7 +30,8 @@ namespace businessLogic
             {
                 {"Google", new GoogleSearchEngine()},
                 {"Bing", new BingSearchEngine()},
-                {"Yandex", new YandexSearchEngine()}
+                {"Yandex", new YandexSearchEngine()},
+                {"GigaBlast", new GigaBlastEngine()}
             };
 
         }

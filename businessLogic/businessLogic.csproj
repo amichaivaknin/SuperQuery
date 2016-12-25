@@ -113,6 +113,7 @@
     <Compile Include="SearchEngines\BaiduSearchEngine.cs" />
     <Compile Include="SearchEngines\BaseSearchEngine.cs" />
     <Compile Include="SearchEngines\BingSearchEngine.cs" />
+    <Compile Include="SearchEngines\GigaBlastEngine.cs" />
     <Compile Include="SearchEngines\GoogleSearchEngine.cs" />
     <Compile Include="MultiSearch.cs" />
     <Compile Include="SearchEngines\YahooSearchEngine.cs" />
