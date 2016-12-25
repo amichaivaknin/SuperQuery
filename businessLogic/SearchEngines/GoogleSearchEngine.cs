@@ -46,11 +46,11 @@ namespace businessLogic.SearchEngines
                     {
                         resultList.Results.Add(new Result
                         {
-                            Link = item["link"].ToString(),
+                            Link = item["link"].ToString().Replace("https://","").Replace("http://", "").Replace("www.", ""),
                             Title = item["title"].ToString(),
                             Description = item["snippet"].ToString(),
                             Rank = count++
-
+          
                         });
 
                     }
@@ -64,8 +64,7 @@ namespace businessLogic.SearchEngines
 
             }
             return resultList;
-        }
-        
+        } 
 
     }
 }
