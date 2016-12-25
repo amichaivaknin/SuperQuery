@@ -13,8 +13,7 @@ namespace ConsoleApplication1
         static void Main(string[] args)
         {
             ISuperQueryManager x = new SuperQueryManager();
-            var y = x.GetQueryResults("11");
-
+            var y = x.GetQueryResults("Amichai");
             foreach (var result in y)
             {
                 Console.WriteLine(result.SearchEngines +" " +result.Link+ " " +result.Rank);
