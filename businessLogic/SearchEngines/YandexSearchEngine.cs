@@ -37,7 +37,7 @@ namespace businessLogic.SearchEngines
                 {
                     resultList.Results.Add(new Result
                     {
-                        Link = item.Element("doc").Element("url")?.Value,
+                        Link = item.Element("doc").Element("url")?.Value.Replace("https://", "").Replace("http://", "").Replace("www.", ""),
                         Title = item.Element("doc").Element("title")?.Value,
                         Description = item.Element("doc").Element("headline")?.Value,
                         Rank = count++
