@@ -23,9 +23,9 @@ namespace SuperQueryUI
         protected void btn_search_Click(object sender, EventArgs e)
         {
             query = search.Value;
-            if (checkbox_google.Checked) engines.Add("google");
-            if (checkbox_bing.Checked) engines.Add("bing");
-            if (checkbox_yandex.Checked) engines.Add("yandex");
+            if (checkbox_google.Checked) engines.Add("Google");
+            if (checkbox_bing.Checked) engines.Add("Bing");
+            if (checkbox_yandex.Checked) engines.Add("Yandex");
             /////////////// add more engines if needed !!!!!!!
             manager.GetQueryResults(engines, query);
 

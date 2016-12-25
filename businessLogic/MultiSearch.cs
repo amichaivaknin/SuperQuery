@@ -49,7 +49,15 @@ namespace businessLogic
 
         public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines, string query)
         {
-            throw new NotImplementedException();
+            var allResults = new ConcurrentBag<SearchEngineResultsList>();
+
+            Parallel.ForEach(engines, searchEngine =>
+            {
+                var engineResult = _searchEngines[searchEngine].Search(query);
+                allResults.Add(engineResult);
+            });
+
+            return allResults.ToList();
         }
     }
 }
