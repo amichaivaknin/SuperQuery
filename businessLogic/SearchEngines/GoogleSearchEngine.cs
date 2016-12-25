@@ -30,8 +30,12 @@ namespace businessLogic.SearchEngines
                 Results = new List<Result>()
             };
             WebClient webClient = new WebClient();
-            string apiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-            string cx = "007172875963593911035:kpk5tcwf8pa";
+            //string apiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
+            //string cx = "007172875963593911035:kpk5tcwf8pa";
+
+            string apiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
+            string cx = "009511415247016879030:smaostb1cxe";
+
             int count = 1;
             uint start = 1;
 
