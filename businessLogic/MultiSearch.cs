@@ -28,15 +28,18 @@ namespace businessLogic
 
             _searchEngines = new Dictionary<string, ISearchEngine>
             {
-
+                {"Google", new GoogleSearchEngine()},
+                {"Bing", new BingSearchEngine()},
+                {"Yandex", new YandexSearchEngine()}
             };
+
         }
 
         public IEnumerable<SearchEngineResultsList> GetResultsFromAllSearchEngines(string query)
         {
             var allResults = new ConcurrentBag<SearchEngineResultsList>();
 
-            Parallel.ForEach(_searchEngines, searchEngine =>
+            Parallel.ForEach(_searchEngines.Values, searchEngine =>
             {
                 allResults.Add(searchEngine.Search(query));
             });
