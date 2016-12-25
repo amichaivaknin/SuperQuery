@@ -49,7 +49,7 @@ namespace businessLogic
 
         public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines, string query)
         {
-            throw new NotImplementedException();
+            return null;
         }
     }
 }
