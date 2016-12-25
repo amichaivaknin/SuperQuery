@@ -11,8 +11,8 @@ namespace businessLogic.SearchEngines
 {
     internal class GoogleSearchEngine : BaseSearchEngine, ISearchEngine
     {
-        private static string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-        private static string SearchEngineId = "007172875963593911035:kpk5tcwf8pa";
+        private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
+        private const string SearchEngineId = "007172875963593911035:kpk5tcwf8pa";
 
         public GoogleSearchEngine() 
         {
@@ -26,7 +26,6 @@ namespace businessLogic.SearchEngines
                 SearchEngineName = "Google",
                 Results = new List<Result>()
             };
-            query = "vaknin";
             var svc = new Google.Apis.Customsearch.v1.CustomsearchService(new BaseClientService.Initializer { ApiKey = ApiKey });
             var listRequest = svc.Cse.List(query);
 
