@@ -27,5 +27,10 @@ namespace businessLogic
             var allSearchResults = _multiSearch.GetResultsFromAllSearchEngines(query);
             return  _rankAggregation.RankAndMerge(allSearchResults);
         }
+
+        public IEnumerable<FinalResult> GetQueryResults(List<string> engines, string query)
+        {
+            
+        }
     }
 }

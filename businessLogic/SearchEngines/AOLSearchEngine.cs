@@ -30,7 +30,6 @@ namespace businessLogic.SearchEngines
                 {
                   Link = ch.ToString(),
                   Title = ch.ToString(),
-                  PhotoUrl = ch.ToString(),
                   Description = ch.ToString(),
                   Rank = i
                 });

@@ -38,7 +38,6 @@ namespace businessLogic.RankAggregation
                             {
                                 Link = result.Link,
                                 Description = result.Description,
-                                PhotoUrl = result.PhotoUrl,
                                 Rank = result.Rank,
                                 SearchEngines = singleSearchEngineResults.SearchEngineName,
                                 Title = result.Title

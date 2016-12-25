@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,17 +11,24 @@ namespace businessLogic
 {
     internal class MultiSearch: IMultiSearch
     {
-        private readonly List<ISearchEngine> _searchEngines;
+       // private readonly List<ISearchEngine> _searchEngines;
+
+        private readonly Dictionary<string,ISearchEngine> _searchEngines;
 
         public MultiSearch()
         {
-            _searchEngines = new List<ISearchEngine>
+            //_searchEngines = new List<ISearchEngine>
+            //{
+            //    new AolSearchEngine(),
+            //    new AskSearchEngine(),
+            //    new BaiduSearchEngine(),
+            //    new GoogleSearchEngine(),
+            //    new YahooSearchEngine()
+            //};
+
+            _searchEngines = new Dictionary<string, ISearchEngine>
             {
-                new AolSearchEngine(),
-                new AskSearchEngine(),
-                new BaiduSearchEngine(),
-                new GoogleSearchEngine(),
-                new YahooSearchEngine()
+
             };
         }
 
@@ -34,6 +42,11 @@ namespace businessLogic
             });
 
             return allResults.ToList();
+        }
+
+        public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines, string query)
+        {
+            throw new NotImplementedException();
         }
     }
 }

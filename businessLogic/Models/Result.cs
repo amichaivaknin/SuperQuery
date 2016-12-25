@@ -10,7 +10,6 @@ namespace businessLogic.Models
     {
         public string Title { get; set; }
         public string Link { get; set; }
-        public string PhotoUrl { get; set; }
         public string Description { get; set; }
         public double Rank { get; set; }
     }
