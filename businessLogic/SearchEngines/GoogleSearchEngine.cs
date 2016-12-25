@@ -14,8 +14,8 @@ namespace businessLogic.SearchEngines
 {
     internal class GoogleSearchEngine : BaseSearchEngine, ISearchEngine
     {
-        private static string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-        private static string SearchEngineId = "007172875963593911035:kpk5tcwf8pa";
+        private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
+        private const string SearchEngineId = "007172875963593911035:kpk5tcwf8pa";
 
         public GoogleSearchEngine() 
         {
