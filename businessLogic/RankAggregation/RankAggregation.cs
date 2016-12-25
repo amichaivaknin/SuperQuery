@@ -26,8 +26,8 @@ namespace businessLogic.RankAggregation
                         if (aggregationResults.ContainsKey(result.Link))
                         {
 
-                            aggregationResults[result.Link].SearchEngines =
-                                $"{aggregationResults[result.Link].SearchEngines} ,{singleSearchEngineResults.SearchEngineName}";
+                           // aggregationResults[result.Link].SearchEngines =
+                               // $"{aggregationResults[result.Link].SearchEngines} ,{singleSearchEngineResults.SearchEngineName}";
                             aggregationResults[result.Link].Rank += result.Rank;
                         }
                         else
@@ -39,7 +39,7 @@ namespace businessLogic.RankAggregation
                                 Link = result.Link,
                                 Description = result.Description,
                                 Rank = result.Rank,
-                                SearchEngines = singleSearchEngineResults.SearchEngineName,
+                                //SearchEngines = singleSearchEngineResults.SearchEngineName,
                                 Title = result.Title
                             };
 
@@ -52,6 +52,12 @@ namespace businessLogic.RankAggregation
             var resultsList = aggregationResults.Values.OrderBy(result => result.Rank).Reverse().ToList();
       
             return resultsList;
+        }
+
+        public List<FinalResult> BordaRank(IEnumerable<SearchEngineResultsList> allSearchResults)
+        {
+            var borda = new BordaMethod();
+            return borda.BordaRank(allSearchResults);
         }
     }
 }
