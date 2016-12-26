@@ -48,15 +48,16 @@ namespace businessLogic.SearchEngines
                     Dictionary<string, object> collection = serializer.Deserialize<Dictionary<string, object>>(result);
                     foreach (Dictionary<string, object> item in (IEnumerable)collection["items"])
                     {
-                        resultList.Results.Add(new Result
+                        if (!resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(item["link"].ToString()))))
                         {
-                            DisplayUrl = StringConvert(item["link"].ToString()),
-                            Title = item["title"].ToString(),
-                            Description = item["snippet"].ToString(),
-                            Rank = count++
-          
-                        });
-
+                            resultList.Results.Add(new Result
+                            {
+                                DisplayUrl = StringConvert(item["link"].ToString()),
+                                Title = item["title"].ToString(),
+                                Description = item["snippet"].ToString(),
+                                Rank = count++
+                            });
+                        }
                     }
                     start += 10;
                 }

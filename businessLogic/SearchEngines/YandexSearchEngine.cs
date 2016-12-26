@@ -40,14 +40,17 @@ namespace businessLogic.SearchEngines
                     {
                         var element = xElement.Element("headline");
 
-                        resultList.Results.Add(new Result
+                        if (!resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(xElement.Element("url")?.Value))))
                         {
-                            DisplayUrl = StringConvert(xElement.Element("url")?.Value),
-                            Title = xElement.Element("title")?.Value,
-                            Description = element != null ?  xElement.Element("headline").Value : xElement.Element("passages").Element("passage").Value,
-                            //Description = item.Element("doc").Element("headline").Value,
-                            Rank = count++
-                        });
+                            resultList.Results.Add(new Result
+                            {
+                                DisplayUrl = StringConvert(xElement.Element("url")?.Value),
+                                Title = xElement.Element("title")?.Value,
+                                Description = element != null ? xElement.Element("headline").Value : xElement.Element("passages").Element("passage").Value,
+                                //Description = item.Element("doc").Element("headline").Value,
+                                Rank = count++
+                            }); 
+                        }
                     }
                 } 
             }
