@@ -65,8 +65,10 @@ namespace businessLogic.RankAggregation
 
         private bool CheckUrl(string arUrl, string resultUrl)
         {
-            try
-            {
+                if (!arUrl.Contains("/")||!resultUrl.Contains("/"))
+                {
+                    return false;
+                }
                 if (arUrl.Equals(resultUrl)) return false;
                 var ar = arUrl.IndexOf("/", StringComparison.Ordinal);
                 var res = resultUrl.IndexOf("/", StringComparison.Ordinal);
@@ -74,12 +76,6 @@ namespace businessLogic.RankAggregation
                 {
                     return true;
                 }
-            }
-            catch (Exception)
-            {
-                
-                return false;
-            }
             return false;
         }
 
