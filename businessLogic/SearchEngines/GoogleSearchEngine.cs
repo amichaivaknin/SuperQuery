@@ -41,9 +41,9 @@ namespace businessLogic.SearchEngines
 
             try
             {
-                for (int i = 0; i < 1; i++)
+                for (int i = 0; i < 10; i++)
                 {
-                    string result = webClient.DownloadString(String.Format("https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}&start={3}&alt=json", apiKey, cx, query, start));
+                    string result = webClient.DownloadString(String.Format("https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}&start={3}&alt=json&cr=us", apiKey, cx, query, start));
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
                     Dictionary<string, object> collection = serializer.Deserialize<Dictionary<string, object>>(result);
                     foreach (Dictionary<string, object> item in (IEnumerable)collection["items"])

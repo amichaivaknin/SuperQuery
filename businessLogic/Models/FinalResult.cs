@@ -13,6 +13,6 @@ namespace businessLogic.Models
         {
             SearchEngines = new Dictionary<string, int>();
         }
-        public Dictionary<string,int> SearchEngines { get; internal set; }
+        public Dictionary<string,int> SearchEngines { get; internal set; }  // show where its shown and what is the rank
     }
 }
