@@ -42,7 +42,7 @@ namespace businessLogic.SearchEngines
 
                         resultList.Results.Add(new Result
                         {
-                            Link = xElement.Element("url")?.Value.Replace("https://", "").Replace("http://", "").Replace("www.", ""),
+                            DisplayUrl = StringConvert(xElement.Element("url")?.Value),
                             Title = xElement.Element("title")?.Value,
                             Description = element != null ?  xElement.Element("headline").Value : xElement.Element("passages").Element("passage").Value,
                             //Description = item.Element("doc").Element("headline").Value,

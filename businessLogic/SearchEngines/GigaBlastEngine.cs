@@ -25,7 +25,7 @@ namespace businessLogic.SearchEngines
 
             int count = 1;
             WebClient webClient = new WebClient();
-            string result = webClient.DownloadString(string.Format("http://www.gigablast.com/search?q={0}&format=json&n=100&rxivq=1015471771&rand=1482683517796",query));
+            string result = webClient.DownloadString(string.Format("http://www.gigablast.com/search?q={0}&format=json&n=10&rxivq=1015471771&rand=1482683517796",query));
             // var data = (JObject)JsonConvert.DeserializeObject(result.ToString());
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, object> collection = serializer.Deserialize<Dictionary<string, object>>(result);
@@ -33,7 +33,7 @@ namespace businessLogic.SearchEngines
             {
                 resultList.Results.Add(new Result
                 {
-                    Link = res["url"].ToString().Replace("https://", "").Replace("http://", "").Replace("www.", ""),
+                    DisplayUrl = StringConvert(res["url"].ToString()),
                     Title = res["title"].ToString(),
                     Description = res["sum"].ToString(),
                     Rank = count++

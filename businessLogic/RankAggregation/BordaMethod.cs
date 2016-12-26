@@ -17,23 +17,23 @@ namespace businessLogic.RankAggregation
              {
                 foreach (var result in searchResults.Results)
                  {
-                     if (!aggregationResults.ContainsKey(result.Link))
+                     if (!aggregationResults.ContainsKey(result.DisplayUrl))
                      {
-                         aggregationResults.Add(result.Link,new FinalResult
+                         aggregationResults.Add(result.DisplayUrl,new FinalResult
                          {
-                             Link = result.Link,
+                             DisplayUrl = result.DisplayUrl,
                              Description = result.Description,
                              Title = result.Title
                          });
                      }
 
-                     if (aggregationResults[result.Link].Description == null)
+                     if (aggregationResults[result.DisplayUrl].Description == null)
                      {
-                         aggregationResults[result.Link].Description = result.Description;
+                         aggregationResults[result.DisplayUrl].Description = result.Description;
                      }
 
-                    aggregationResults[result.Link].Rank += 100 - result.Rank;
-                    aggregationResults[result.Link].SearchEngines.Add(searchResults.SearchEngineName,(int)result.Rank);
+                    aggregationResults[result.DisplayUrl].Rank += 100 - result.Rank;
+                    aggregationResults[result.DisplayUrl].SearchEngines.Add(searchResults.SearchEngineName,(int)result.Rank);
                  }
              }
 

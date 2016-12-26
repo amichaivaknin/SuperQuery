@@ -16,7 +16,7 @@ namespace ConsoleApplication1
             var y = x.GetQueryResults("Amichai");
             foreach (var result in y)
             {
-                Console.WriteLine(result.SearchEngines +" " +result.Link+ " " +result.Rank);
+                Console.WriteLine(result.SearchEngines +" " +result.DisplayUrl+ " " +result.Rank);
             }
 
             Console.ReadLine();

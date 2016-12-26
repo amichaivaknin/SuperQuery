@@ -24,7 +24,7 @@ namespace businessLogic.SearchEngines
             {
                 resultList.Results.Add(new Result
                 {
-                    Link = ch.ToString(),
+                    DisplayUrl = ch.ToString(),
                     Title = ch.ToString(),
                     Description = ch.ToString(),
                     Rank = i

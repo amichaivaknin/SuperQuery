@@ -38,7 +38,7 @@
         <div id="results_div" style="text-align:left">
             <div id="res1" runat="server"> 
                 Title: <asp:Label ID="title1" runat="server" Text=""></asp:Label><br />
-                Link: <asp:Label ID="link1" runat="server" Text=""></asp:Label><br />
+                DisplayUrl: <asp:Label ID="link1" runat="server" Text=""></asp:Label><br />
                 Description: <asp:Label ID="description1" runat="server" Text=""></asp:Label>
             </div>
         </div>

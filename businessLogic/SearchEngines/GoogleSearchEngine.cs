@@ -50,7 +50,7 @@ namespace businessLogic.SearchEngines
                     {
                         resultList.Results.Add(new Result
                         {
-                            Link = item["link"].ToString().Replace("https://","").Replace("http://", "").Replace("www.", ""),
+                            DisplayUrl = StringConvert(item["link"].ToString()),
                             Title = item["title"].ToString(),
                             Description = item["snippet"].ToString(),
                             Rank = count++

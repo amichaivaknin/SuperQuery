@@ -23,12 +23,12 @@ namespace businessLogic.RankAggregation
                 {
                     lock (_lockMe)
                     {
-                        if (aggregationResults.ContainsKey(result.Link))
+                        if (aggregationResults.ContainsKey(result.DisplayUrl))
                         {
 
-                           // aggregationResults[result.Link].SearchEngines =
-                               // $"{aggregationResults[result.Link].SearchEngines} ,{singleSearchEngineResults.SearchEngineName}";
-                            aggregationResults[result.Link].Rank += result.Rank;
+                           // aggregationResults[result.DisplayUrl].SearchEngines =
+                               // $"{aggregationResults[result.DisplayUrl].SearchEngines} ,{singleSearchEngineResults.SearchEngineName}";
+                            aggregationResults[result.DisplayUrl].Rank += result.Rank;
                         }
                         else
                         {
@@ -36,14 +36,14 @@ namespace businessLogic.RankAggregation
 
                             res = new FinalResult
                             {
-                                Link = result.Link,
+                                DisplayUrl = result.DisplayUrl,
                                 Description = result.Description,
                                 Rank = result.Rank,
                                 //SearchEngines = singleSearchEngineResults.SearchEngineName,
                                 Title = result.Title
                             };
 
-                            aggregationResults.TryAdd(result.Link, res);
+                            aggregationResults.TryAdd(result.DisplayUrl, res);
                         }
                     }
                 }
