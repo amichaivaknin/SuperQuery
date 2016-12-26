@@ -34,19 +34,6 @@
             <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" value="jerusalem" runat="server" /> <br /><br />
             <asp:Button ID="btn_search" runat="server" Text="Search" OnClick="btn_search_Click" />
         </div>
-
-        <div id="results_div" style="text-align:left">
-            <div id="res1" runat="server"> 
-                Title: <asp:Label ID="title1" runat="server" Text=""></asp:Label><br />
-                DisplayUrl: <asp:Label ID="link1" runat="server" Text=""></asp:Label><br />
-                Description: <asp:Label ID="description1" runat="server" Text=""></asp:Label>
-            </div>
-        </div>
-
-        <br />
-
-        
-        <asp:TextBox ID="TextBox1" runat="server" Height="295px" TextMode="MultiLine" Width="776px"></asp:TextBox>     
     </form>
 </body>
 </html>
