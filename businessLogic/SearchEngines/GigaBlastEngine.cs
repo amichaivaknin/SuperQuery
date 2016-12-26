@@ -31,13 +31,17 @@ namespace businessLogic.SearchEngines
             Dictionary<string, object> collection = serializer.Deserialize<Dictionary<string, object>>(result);
             foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
             {
-                resultList.Results.Add(new Result
+                if (resultList.Results.All(r => r.DisplayUrl != StringConvert(res["url"].ToString())))
                 {
-                    DisplayUrl = StringConvert(res["url"].ToString()),
-                    Title = res["title"].ToString(),
-                    Description = res["sum"].ToString(),
-                    Rank = count++
-                });
+                    resultList.Results.Add(new Result
+                    {
+                        DisplayUrl = StringConvert(res["url"].ToString()),
+                        Title = res["title"].ToString(),
+                        Description = res["sum"].ToString(),
+                        Rank = count++
+                    });
+                }
+                
 
             }
             return resultList;
