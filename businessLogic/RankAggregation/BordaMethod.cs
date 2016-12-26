@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using businessLogic.Models;
+using System.Diagnostics;
 
 namespace businessLogic.RankAggregation
 {
@@ -40,7 +41,7 @@ namespace businessLogic.RankAggregation
                             Title = result.Title
                         });
                     }
-
+                    fl = false;
                     if (aggregationResults[key].Description == null)
                     {
                         aggregationResults[key].Description = result.Description;
@@ -67,9 +68,11 @@ namespace businessLogic.RankAggregation
         {
             try
             {
+                Debug.WriteLine("first:    " + arUrl + "\nsecond:    " + resultUrl);
                 if (arUrl.Equals(resultUrl)) return false;
                 var ar = arUrl.IndexOf("/", StringComparison.Ordinal);
                 var res = resultUrl.IndexOf("/", StringComparison.Ordinal);
+                Debug.WriteLine("first:    " + arUrl.Substring(0, ar) + "\nsecond:    " + resultUrl.Substring(0, res));
                 if (arUrl.Substring(0, ar).Equals(resultUrl.Substring(0, res)))
                 {
                     return true;
@@ -85,7 +88,8 @@ namespace businessLogic.RankAggregation
 
         private bool CheckMatch(string results, string resultDescription)
         {
-            if (resultDescription==null)
+            Debug.WriteLine("first:    " + results + "\nsecond:    " + resultDescription);
+            if (resultDescription.Equals(""))
             {
                 return false;
             }
