@@ -109,7 +109,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RankAggregation\BordaMethod.cs" />
     <Compile Include="RankAggregation\RankAggregation.cs" />
-    <Compile Include="SearchEngines\AOLSearchEngine.cs" />
     <Compile Include="SearchEngines\ASKSearchEngine.cs" />
     <Compile Include="SearchEngines\BaiduSearchEngine.cs" />
     <Compile Include="SearchEngines\BaseSearchEngine.cs" />
@@ -117,7 +116,6 @@
     <Compile Include="SearchEngines\GigaBlastEngine.cs" />
     <Compile Include="SearchEngines\GoogleSearchEngine.cs" />
     <Compile Include="MultiSearch.cs" />
-    <Compile Include="SearchEngines\YahooSearchEngine.cs" />
     <Compile Include="SearchEngines\YandexSearchEngine.cs" />
     <Compile Include="SuperQueryManager.cs" />
   </ItemGroup>
