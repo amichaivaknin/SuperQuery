@@ -9,7 +9,7 @@ namespace businessLogic.SearchEngines
 {
     internal class BaseSearchEngine
     {
-        internal string StringConvert(string value)
+        internal string UrlConvert(string value)
         {
             return value.Replace("https://", "").Replace("http://", "").Replace("www.", "").TrimEnd('/').TrimEnd('\\');
         }

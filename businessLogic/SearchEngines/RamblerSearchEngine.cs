@@ -34,7 +34,7 @@ namespace businessLogic.SearchEngines
                     {
                         resultList.Results.Add(new Result
                         {
-                            DisplayUrl = header[j].GetAttributeValue("href", null),
+                            DisplayUrl = UrlConvert(header[j].GetAttributeValue("href", null)),
                             Title = header[j].InnerText,
                             Description = snippet[j].InnerText,
                             Rank = c++

@@ -32,7 +32,7 @@ namespace businessLogic.SearchEngines
                         {
                             resultList.Results.Add(new Result
                             {
-                                DisplayUrl = StringConvert(title.GetAttributeValue("href", null)),
+                                DisplayUrl = UrlConvert(title.GetAttributeValue("href", null)),
                                 Title = title.InnerText,
                                 Description = decriptions[count].InnerText
                             });
