@@ -46,7 +46,7 @@ namespace businessLogic.RankAggregation
 
         private void RankSingleResultsList(Dictionary<string, FinalResult> aggregationResults, SearchEngineResultsList searchResults)
         {
-            var searchListLength = searchResults.Results.Count;
+            const int startRankPosition = 100;
 
             foreach (var result in searchResults.Results)
             {
@@ -76,7 +76,7 @@ namespace businessLogic.RankAggregation
 
                 if (!aggregationResults[key].SearchEngines.ContainsKey(searchResults.SearchEngineName))
                 {
-                    aggregationResults[key].Rank += searchListLength - result.Rank + _rankBySearchEngine[searchResults.SearchEngineName];
+                    aggregationResults[key].Rank += startRankPosition - result.Rank + _rankBySearchEngine[searchResults.SearchEngineName];
                     aggregationResults[key].SearchEngines.Add(searchResults.SearchEngineName, (int)result.Rank);
                 }    
             }
