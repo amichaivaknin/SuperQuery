@@ -19,26 +19,40 @@ namespace SuperQueryUI
         List<int> resPerPage = new List<int>();
         List<string> enginesOnResults = new List<string>();
         string query;
+        int currPage;
+        int flag;
         List<FinalResult> ranking_results;
+        List<Button> buttonList = new List<Button>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             { 
               //  createResultDiv();
             }
-            else
+            else 
             {
-            //    Button clickedButton = (Button)sender;
-            //    paging(int.Parse(clickedButton.Text));
-               // clickedButton.Text
+                try
+                {
+                    flag = (int)Session["flag"];
+                }
+                catch (Exception)
+                {
+                    //Button b = (Button)sender;
+                    //if (!b.ClientID.Equals("btn_search"))
+                    //{
+                    //    ranking_results = (List<FinalResult>)Session["res"];
+                    //}
+                }
+                
+                //    Button clickedButton = (Button)sender;
+                //    paging(int.Parse(clickedButton.Text));
+                // clickedButton.Text            
 
             }
         }
 
         protected void btn_search_Click(object sender, EventArgs e)
         {
-
-            
 
             query = search.Value;
             
@@ -50,7 +64,12 @@ namespace SuperQueryUI
             if (checkbox_rambler.Checked) engines.Add("Rambler");
             /////////////// add more engines if needed !!!!!!!
             ranking_results = manager.GetQueryResults(engines, query).ToList();
-            createFirstpage();
+            Session["res"] = ranking_results;
+            currPage = 1;
+            Session["page"] = currPage;
+            Session["flag"] = 1;
+            createPage();
+            initialButtonList();
 
         }
 
@@ -138,14 +157,13 @@ namespace SuperQueryUI
             resPerPage.Add(numOfRes % 10);
         }
 
-        protected void createFirstpage()
+        protected void createPage()
         {
             resPerPageFunc();
             for(int i = 0; i < resPerPage[0]; i++)
             {
                 makeResDiv(ranking_results[i].Title, ranking_results[i].DisplayUrl, ranking_results[i].Description,ranking_results[i].SearchEngines.Keys.ToList());
             }
-            makePagingDiv();
         }
         protected void makeResDiv(string title,string url,string description,List<string> enginesNames)
         {
@@ -219,27 +237,31 @@ namespace SuperQueryUI
 
         }
 
-        protected void makePagingDiv()
+        protected void initialButtonList()
         {
-            List<Button> l = new List<Button>();
-            System.Web.UI.HtmlControls.HtmlGenericControl addButtonDiv =
-            new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
+            buttonList.Add(page1Button);
+            buttonList.Add(page2Button);
+            buttonList.Add(page3Button);
+            buttonList.Add(page4Button);
+            buttonList.Add(page5Button);
+            buttonList.Add(page6Button);
+            buttonList.Add(page7Button);
+            buttonList.Add(page8Button);
+            buttonList.Add(page9Button);
+            buttonList.Add(page10Button);
             for (int k = 0; k < resPerPage.Count; k++)
             {
-                Button b = new Button();
-                b.Text = k.ToString();
-                b.UseSubmitBehavior = false;
-                b.CausesValidation = false;            
-                //b.CausesValidation = false;
-
-                //b.Attributes.Add("AutoPostBack", "return false;");
-                //b.Click += paging;
-                addButtonDiv.Controls.Add(b);
+                buttonList[k].Visible = true;
             }
-            //this.Controls.Add(addButtonDiv);
-            pagingDiv.Controls.Add(addButtonDiv);
-           // form1.Controls.Add(addButtonDiv);
+            Session["buttons"] = buttonList;           
         }
 
+        protected void changePage(object sender, EventArgs e)
+        {
+            currPage = (int)Session["page"];
+            
+            Button clickedButton = (Button)sender;
+            clickedButton.Style.Add(HtmlTextWriterStyle.Color, "red");
+        }
     }
 }
