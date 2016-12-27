@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using businessLogic.Interfaces;
 using businessLogic.Models;
 using HtmlAgilityPack;
 
 namespace businessLogic.SearchEngines
 {
-   internal class HotBotSearchEngine : BaseSearchEngine, ISearchEngine
+    internal class HotBotSearchEngine : BaseSearchEngine, ISearchEngine
     {
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("HotBot");
-            HtmlWeb web = new HtmlWeb();
+            var web = new HtmlWeb();
 
-            for (int i = 1; i <= 10; i++)
+            for (var i = 1; i <= 10; i++)
             {
-                HtmlDocument document = web.Load($"http://hotbot.com/search/?query={query}&page={i}");
-                HtmlNode[] searchResults = document.DocumentNode.SelectNodes("//div[@class='search-results']//a").ToArray();
+                var document = web.Load($"http://hotbot.com/search/?query={query}&page={i}");
+                var searchResults = document.DocumentNode.SelectNodes("//div[@class='search-results']//a").ToArray();
 
                 foreach (var node in searchResults)
                 {
@@ -38,25 +34,18 @@ namespace businessLogic.SearchEngines
                             });
                             count++;
 
-                            if (count>=10)
-                            {
+                            if (count >= 10)
                                 break;
-                            }
                         }
                         if (count >= 10)
-                        {
                             break;
-                        }
                     }
                     if (count >= 10)
-                    {
                         break;
-                    }
                 }
+            }
 
-            } 
-            
-            return resultList;     
+            return resultList;
         }
     }
 }

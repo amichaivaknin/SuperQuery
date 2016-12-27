@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,9 +8,9 @@ using businessLogic.SearchEngines;
 
 namespace businessLogic
 {
-    internal class MultiSearch: IMultiSearch
+    internal class MultiSearch : IMultiSearch
     {
-        private readonly Dictionary<string,ISearchEngine> _searchEngines;
+        private readonly Dictionary<string, ISearchEngine> _searchEngines;
 
         public MultiSearch()
         {
@@ -30,15 +29,13 @@ namespace businessLogic
         {
             var allResults = new ConcurrentBag<SearchEngineResultsList>();
 
-            Parallel.ForEach(_searchEngines.Values, searchEngine =>
-            {
-                allResults.Add(searchEngine.Search(query));
-            });
+            Parallel.ForEach(_searchEngines.Values, searchEngine => { allResults.Add(searchEngine.Search(query)); });
 
             return allResults.ToList();
         }
 
-        public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines, string query)
+        public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines,
+            string query)
         {
             var allResults = new ConcurrentBag<SearchEngineResultsList>();
 
