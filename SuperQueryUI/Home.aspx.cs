@@ -17,6 +17,7 @@ namespace SuperQueryUI
         ISuperQueryManager manager = new SuperQueryManager();
         List<string> engines = new List<string>();
         List<int> resPerPage = new List<int>();
+        List<string> enginesOnResults = new List<string>();
         string query;
         List<FinalResult> ranking_results;
         protected void Page_Load(object sender, EventArgs e)
@@ -134,10 +135,10 @@ namespace SuperQueryUI
             resPerPageFunc();
             for(int i = 0; i < resPerPage[0]; i++)
             {
-                makeResDiv(ranking_results[i].Title, ranking_results[i].DisplayUrl, ranking_results[i].Description);
+                makeResDiv(ranking_results[i].Title, ranking_results[i].DisplayUrl, ranking_results[i].Description,ranking_results[i].SearchEngines.Keys.ToList());
             }
         }
-        protected void makeResDiv(string title,string url,string description)
+        protected void makeResDiv(string title,string url,string description,List<string> enginesNames)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl addBRDiv =
             new System.Web.UI.HtmlControls.HtmlGenericControl("BR");
@@ -157,7 +158,17 @@ namespace SuperQueryUI
             hyperLink.NavigateUrl = "http://"+url;
             addTitleDiv.Controls.Add(hyperLink);
             // addTitleDiv.InnerHtml = title;
-            
+
+
+            System.Web.UI.HtmlControls.HtmlGenericControl searchEnginesLDiv =
+            new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
+            string names="";
+            foreach(var name in enginesNames)
+            {
+                names = $"{names}{name}, ";
+            }
+            searchEnginesLDiv.Style.Add(HtmlTextWriterStyle.Color, "red");
+            searchEnginesLDiv.InnerHtml = names;
 
 
             System.Web.UI.HtmlControls.HtmlGenericControl addURLDiv =
@@ -174,10 +185,26 @@ namespace SuperQueryUI
 
             
             createResultDiv.Controls.Add(addTitleDiv);
+            createResultDiv.Controls.Add(searchEnginesLDiv);
             createResultDiv.Controls.Add(addURLDiv);
             createResultDiv.Controls.Add(addDescriptionDiv);
             createResultDiv.Controls.Add(addBRDiv);
             this.Controls.Add(createResultDiv);
+        }
+
+        protected void getEnginesNames(int page)
+        {
+            int numOfRes = resPerPage[page];
+            int startIndex = 10 * page;
+            for(int i = 0; i < numOfRes; i++)
+            {
+                List<string> names = ranking_results[startIndex].SearchEngines.Keys.ToList();
+                foreach(var name in names)
+                {
+                    enginesOnResults.Add(name);
+                }
+            }
+
         }
 
     }

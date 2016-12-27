@@ -19,7 +19,7 @@ namespace businessLogic.SearchEngines
             var count = 1;
             var start = 0;
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 1; i++)
             {
                 WebClient webClient = new WebClient();
                 string result = webClient.DownloadString(String.Format("https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={0}&q={1}&count=10&offset={2}&mkt=en-us&safesearch=Moderate&filter=webpages", apiKey, query, start));
