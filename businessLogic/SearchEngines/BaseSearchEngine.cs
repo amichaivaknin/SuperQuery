@@ -7,7 +7,7 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    internal class BaseSearchEngine
+    public class BaseSearchEngine
     {
         internal string UrlConvert(string value)
         {
@@ -22,5 +22,11 @@ namespace businessLogic.SearchEngines
                 Results = new List<Result>()
             };
         }
+
+        internal List<Result> DistinctList(IEnumerable<Result> results)
+        {
+            return results.GroupBy(x => x.DisplayUrl).Select(y => y.First()).ToList();
+        }
+
     }
 }

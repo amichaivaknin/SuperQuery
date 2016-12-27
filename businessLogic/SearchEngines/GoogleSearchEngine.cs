@@ -14,13 +14,6 @@ namespace businessLogic.SearchEngines
 {
     internal class GoogleSearchEngine : BaseSearchEngine, ISearchEngine
     {
-        //private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-        //private const string SearchEngineId = "007172875963593911035:kpk5tcwf8pa";
-
-        public GoogleSearchEngine() 
-        {
-           
-        }
 
         public SearchEngineResultsList Search(string query)
         {
@@ -31,8 +24,8 @@ namespace businessLogic.SearchEngines
             string cx = "009511415247016879030:smaostb1cxe";
             var count = 1;
             uint start = 1;
-            WebClient webClient = new WebClient();
 
+            WebClient webClient = new WebClient();
             try
             {
                 for (var i = 0; i < 1; i++)
