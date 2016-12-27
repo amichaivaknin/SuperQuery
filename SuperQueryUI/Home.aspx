@@ -30,7 +30,7 @@
             </table>
         </div>
         <br />
-        <div style="text-align:center">
+         <div style="text-align:center">
             <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" value="jerusalem" runat="server" /> <br /><br />
             <asp:Button ID="btn_search" runat="server" Text="Search" OnClick="btn_search_Click" />
         </div>

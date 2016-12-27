@@ -37,6 +37,9 @@ namespace SuperQueryUI
 
         protected void btn_search_Click(object sender, EventArgs e)
         {
+
+            
+
             query = search.Value;
             
             //if (checkbox_bing.Checked) engines.Add("Bing");
@@ -85,7 +88,8 @@ namespace SuperQueryUI
                 createResultDiv.Controls.Add(addURLDiv);
                 createResultDiv.Controls.Add(addDescriptionDiv);
                 createResultDiv.Controls.Add(addBRDiv);
-                this.Controls.Add(createResultDiv);
+                resDiv.Controls.Add(createResultDiv);
+                //this.Controls.Add(createResultDiv);
 
                 //////////////
                                
