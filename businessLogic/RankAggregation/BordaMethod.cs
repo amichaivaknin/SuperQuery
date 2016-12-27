@@ -17,10 +17,12 @@ namespace businessLogic.RankAggregation
         {
             _rankBySearchEngine = new Dictionary<string, int>
             {
-                {"Google", 40},
-                {"Bing", 30},
+                {"Google", 10},
+                {"Bing", 10},
                 {"Yandex", 10},
-                {"GigaBlast", 0}
+                {"GigaBlast", 10},
+                {"HotBot", 10},
+                {"Rambler", 10}
             };
         }
         public List<FinalResult> BordaRank(IEnumerable<SearchEngineResultsList> allSearchResults)

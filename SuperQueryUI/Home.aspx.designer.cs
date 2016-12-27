@@ -58,22 +58,22 @@ namespace SuperQueryUI {
         protected global::System.Web.UI.WebControls.CheckBox checkbox_gigablast;
         
         /// <summary>
-        /// checkbox_aol control.
+        /// checkbox_HotBot control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox checkbox_aol;
+        protected global::System.Web.UI.WebControls.CheckBox checkbox_HotBot;
         
         /// <summary>
-        /// checkbox_ask control.
+        /// checkbox_rambler control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox checkbox_ask;
+        protected global::System.Web.UI.WebControls.CheckBox checkbox_rambler;
         
         /// <summary>
         /// search control.
@@ -92,5 +92,23 @@ namespace SuperQueryUI {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_search;
+        
+        /// <summary>
+        /// resDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl resDiv;
+        
+        /// <summary>
+        /// pagingDiv control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pagingDiv;
     }
 }

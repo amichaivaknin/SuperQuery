@@ -20,7 +20,9 @@ namespace businessLogic
                 {"Google", new GoogleSearchEngine()},
                 {"Bing", new BingSearchEngine()},
                 {"Yandex", new YandexSearchEngine()},
-                {"GigaBlast", new GigaBlastEngine()}
+                {"GigaBlast", new GigaBlastEngine()},
+                {"HotBot", new HotBotSearchEngine()},
+                {"Rambler", new RamblerSearchEngine()}
             };
         }
 

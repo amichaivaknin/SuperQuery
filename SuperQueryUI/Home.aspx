@@ -24,8 +24,8 @@
                 </tr>
                 <tr>
                         <td> <asp:CheckBox ID="checkbox_gigablast" runat="server" Checked="true"/> GigaBlast </td>
-                        <td><asp:CheckBox ID="checkbox_aol" runat="server" Checked="true"/> AOL </td>
-                        <td> <asp:CheckBox ID="checkbox_ask" runat="server" Checked="true"/> Ask </td>                   
+                        <td><asp:CheckBox ID="checkbox_HotBot" runat="server" Checked="true"/> HotBot </td>
+                        <td> <asp:CheckBox ID="checkbox_rambler" runat="server" Checked="true"/> Rambler </td>                   
                 </tr>
             </table>
         </div>
@@ -34,6 +34,10 @@
             <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" value="jerusalem" runat="server" /> <br /><br />
             <asp:Button ID="btn_search" runat="server" Text="Search" OnClick="btn_search_Click" />
         </div>
+        <br />
+        <div id="resDiv" runat="server"></div>
+        <br />
+        <div id="pagingDiv" runat="server" style="text-align:center"></div>
     </form>
 </body>
 </html>

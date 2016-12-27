@@ -38,12 +38,15 @@ namespace SuperQueryUI
         protected void btn_search_Click(object sender, EventArgs e)
         {
             query = search.Value;
-            if (checkbox_google.Checked) engines.Add("Google");
-            if (checkbox_bing.Checked) engines.Add("Bing");
-            if (checkbox_yandex.Checked) engines.Add("Yandex");
+            
+            //if (checkbox_bing.Checked) engines.Add("Bing");
+            //if (checkbox_google.Checked) engines.Add("Google");
+            //if (checkbox_yandex.Checked) engines.Add("Yandex");
             if (checkbox_gigablast.Checked) engines.Add("GigaBlast");
+            if (checkbox_HotBot.Checked) engines.Add("HotBot");
+            if (checkbox_rambler.Checked) engines.Add("Rambler");
             /////////////// add more engines if needed !!!!!!!
-            ranking_results=manager.GetQueryResults(engines, query).ToList();
+            ranking_results = manager.GetQueryResults(engines, query).ToList();
             createFirstpage();
 
         }
@@ -95,6 +98,7 @@ namespace SuperQueryUI
             {
                 Button b = new Button();
                 b.Text = k.ToString();
+                b.UseSubmitBehavior = false;
                 //b.CausesValidation = false;
                 
                 //b.Attributes.Add("AutoPostBack", "return false;");
@@ -137,6 +141,7 @@ namespace SuperQueryUI
             {
                 makeResDiv(ranking_results[i].Title, ranking_results[i].DisplayUrl, ranking_results[i].Description,ranking_results[i].SearchEngines.Keys.ToList());
             }
+            makePagingDiv();
         }
         protected void makeResDiv(string title,string url,string description,List<string> enginesNames)
         {
@@ -167,6 +172,8 @@ namespace SuperQueryUI
             {
                 names = $"{names}{name}, ";
             }
+            names=names.TrimEnd(' ');
+            names=names.TrimEnd(',');
             searchEnginesLDiv.Style.Add(HtmlTextWriterStyle.Color, "red");
             searchEnginesLDiv.InnerHtml = names;
 
@@ -189,7 +196,8 @@ namespace SuperQueryUI
             createResultDiv.Controls.Add(addURLDiv);
             createResultDiv.Controls.Add(addDescriptionDiv);
             createResultDiv.Controls.Add(addBRDiv);
-            this.Controls.Add(createResultDiv);
+            resDiv.Controls.Add(createResultDiv);
+            //this.Controls.Add(createResultDiv);
         }
 
         protected void getEnginesNames(int page)
@@ -205,6 +213,28 @@ namespace SuperQueryUI
                 }
             }
 
+        }
+
+        protected void makePagingDiv()
+        {
+            List<Button> l = new List<Button>();
+            System.Web.UI.HtmlControls.HtmlGenericControl addButtonDiv =
+            new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
+            for (int k = 0; k < resPerPage.Count; k++)
+            {
+                Button b = new Button();
+                b.Text = k.ToString();
+                b.UseSubmitBehavior = false;
+                b.CausesValidation = false;            
+                //b.CausesValidation = false;
+
+                //b.Attributes.Add("AutoPostBack", "return false;");
+                //b.Click += paging;
+                addButtonDiv.Controls.Add(b);
+            }
+            //this.Controls.Add(addButtonDiv);
+            pagingDiv.Controls.Add(addButtonDiv);
+           // form1.Controls.Add(addButtonDiv);
         }
 
     }
