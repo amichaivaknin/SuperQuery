@@ -119,6 +119,7 @@
     <Compile Include="SearchEngines\GoogleSearchEngine.cs" />
     <Compile Include="MultiSearch.cs" />
     <Compile Include="SearchEngines\HotBotSearchEngine.cs" />
+    <Compile Include="SearchEngines\RamblerSearchEngine.cs" />
     <Compile Include="SearchEngines\YandexSearchEngine.cs" />
     <Compile Include="SuperQueryManager.cs" />
   </ItemGroup>
