@@ -18,6 +18,7 @@ namespace businessLogic.SearchEngines
 
             for (var i = 1; i <= 10; i++)
             {
+                int c = 1;
                 HtmlDocument document = web.Load($"http://nova.rambler.ru/search?scroll=1&utm_source=nhp&utm_content=search&utm_medium=button&utm_campaign=self_promo&query={query}&page={i}");
                 HtmlNode[] searchResults = document.DocumentNode.SelectNodes("//body").ToArray();
                 var lWrapper = searchResults[0].SelectNodes("//div[@class='l-wrapper']//a").ToArray();
@@ -35,7 +36,8 @@ namespace businessLogic.SearchEngines
                         {
                             DisplayUrl = header[j].GetAttributeValue("href", null),
                             Title = header[j].InnerText,
-                            Description = snippet[j].InnerText
+                            Description = snippet[j].InnerText,
+                            Rank = c++
                         });
                     }
                     break;
