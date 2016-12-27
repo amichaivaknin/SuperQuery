@@ -11,21 +11,10 @@ namespace businessLogic
 {
     internal class MultiSearch: IMultiSearch
     {
-       // private readonly List<ISearchEngine> _searchEngines;
-
         private readonly Dictionary<string,ISearchEngine> _searchEngines;
 
         public MultiSearch()
         {
-            //_searchEngines = new List<ISearchEngine>
-            //{
-            //    new AolSearchEngine(),
-            //    new AskSearchEngine(),
-            //    new BaiduSearchEngine(),
-            //    new GoogleSearchEngine(),
-            //    new YahooSearchEngine()
-            //};
-
             _searchEngines = new Dictionary<string, ISearchEngine>
             {
                 {"Google", new GoogleSearchEngine()},
@@ -33,7 +22,6 @@ namespace businessLogic
                 {"Yandex", new YandexSearchEngine()},
                 {"GigaBlast", new GigaBlastEngine()}
             };
-
         }
 
         public IEnumerable<SearchEngineResultsList> GetResultsFromAllSearchEngines(string query)
@@ -57,7 +45,6 @@ namespace businessLogic
                 var engineResult = _searchEngines[searchEngine].Search(query);
                 allResults.Add(engineResult);
             });
-
             return allResults.ToList();
         }
     }

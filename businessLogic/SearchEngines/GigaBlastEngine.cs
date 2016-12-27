@@ -17,21 +17,17 @@ namespace businessLogic.SearchEngines
     {
         public SearchEngineResultsList Search(string query)
         {
-            var resultList = new SearchEngineResultsList
-            {
-                SearchEngineName = "GigaBlast",
-                Results = new List<Result>()
-            };
-
-            int count = 1;
+            var resultList = CreateSearchEngineResultsList("GigaBlast");
+          
+            var count = 1;
             WebClient webClient = new WebClient();
             string result = webClient.DownloadString(string.Format("http://www.gigablast.com/search?q={0}&format=json&n=100&rxivq=1015471771&rand=1482683517796",query));
-            // var data = (JObject)JsonConvert.DeserializeObject(result.ToString());
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, object> collection = serializer.Deserialize<Dictionary<string, object>>(result);
+
             foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
             {
-                if (!(resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(res["url"].ToString())))))
+                if (!resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(res["url"].ToString()))))
                 {
                     resultList.Results.Add(new Result
                     {
@@ -40,9 +36,7 @@ namespace businessLogic.SearchEngines
                         Description = res["sum"].ToString(),
                         Rank = count++
                     });
-                }
-                
-
+                }        
             }
             return resultList;
         }

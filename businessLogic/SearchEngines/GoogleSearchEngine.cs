@@ -24,24 +24,18 @@ namespace businessLogic.SearchEngines
 
         public SearchEngineResultsList Search(string query)
         {
-            var resultList = new SearchEngineResultsList
-            {
-                SearchEngineName = "Google",
-                Results = new List<Result>()
-            };
-            WebClient webClient = new WebClient();
+            var resultList = CreateSearchEngineResultsList("Google");
             //string apiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
             //string cx = "007172875963593911035:kpk5tcwf8pa";
-
             string apiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
             string cx = "009511415247016879030:smaostb1cxe";
-
-            int count = 1;
+            var count = 1;
             uint start = 1;
+            WebClient webClient = new WebClient();
 
             try
             {
-                for (int i = 0; i < 10; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     string result = webClient.DownloadString(String.Format("https://www.googleapis.com/customsearch/v1?key={0}&cx={1}&q={2}&start={3}&alt=json&cr=us", apiKey, cx, query, start));
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -62,14 +56,12 @@ namespace businessLogic.SearchEngines
                     start += 10;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                var x = e.Message;
                 return resultList;
-
             }
             return resultList;
-        } 
+        }
 
     }
 }
