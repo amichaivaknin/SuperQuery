@@ -31,7 +31,8 @@ namespace businessLogic
         public IEnumerable<FinalResult> GetQueryResults(List<string> engines, string query)
         {
             var searchResults = _multiSearch.GetResultsFromSelectedSearchEngines(engines,query);
-            return  _rankAggregation.BordaRank(searchResults);
+            var finalResults = _rankAggregation.BordaRank(searchResults);
+            return finalResults.Take(100);
         }
     }
 }

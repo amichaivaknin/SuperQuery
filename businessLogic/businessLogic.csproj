@@ -103,6 +103,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAsyncSearchEngine.cs" />
     <Compile Include="Interfaces\IMultiSearch.cs" />
     <Compile Include="Interfaces\IRankAggregation.cs" />
     <Compile Include="Interfaces\ISearchEngine.cs" />

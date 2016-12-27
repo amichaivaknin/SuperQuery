@@ -13,8 +13,11 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            var r =new RamblerSearchEngine();
-            var s = r.Search1("amichai").Result;
+           
+            var r =new GigaBlastEngine();
+            var s = r.AsyncSearch("amichai").Result;         
+
+            var x = 1;
 
         }
     }
