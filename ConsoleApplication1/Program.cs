@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using businessLogic;
 using businessLogic.Interfaces;
+using businessLogic.SearchEngines;
 
 namespace ConsoleApplication1
 {
@@ -12,14 +13,8 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            ISuperQueryManager x = new SuperQueryManager();
-            var y = x.GetQueryResults("Amichai");
-            foreach (var result in y)
-            {
-                Console.WriteLine(result.SearchEngines +" " +result.DisplayUrl+ " " +result.Rank);
-            }
-
-            Console.ReadLine();
+            var r =new RamblerSearchEngine();
+            var s = r.Search1("amichai").Result;
 
         }
     }

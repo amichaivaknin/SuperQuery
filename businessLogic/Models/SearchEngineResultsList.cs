@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace businessLogic.Models
 {
-    internal class SearchEngineResultsList
+    public class SearchEngineResultsList
     {
         public string SearchEngineName { get; set; }
         public List<Result> Results { get; set; }
