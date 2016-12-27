@@ -9,8 +9,7 @@ namespace businessLogic.Interfaces
 {
     internal interface IRankAggregation
     {
-        List<FinalResult> RankAndMerge(IEnumerable<SearchEngineResultsList> allSearchResults);
-
+        //List<FinalResult> RankAndMerge(IEnumerable<SearchEngineResultsList> allSearchResults);
         List<FinalResult> BordaRank(IEnumerable<SearchEngineResultsList> allSearchResults);
     }
 }
