@@ -4,6 +4,7 @@ using businessLogic.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -145,15 +146,18 @@ namespace SuperQueryUI
             new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
 
 
+            byte[] bytes = Encoding.Default.GetBytes(title);
+            string title_utf8 = Encoding.UTF8.GetString(bytes);
             System.Web.UI.HtmlControls.HtmlGenericControl addTitleDiv =
             new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
             addTitleDiv.Style.Add(HtmlTextWriterStyle.Color, "Blue");
             addTitleDiv.Style.Add(HtmlTextWriterStyle.FontSize, "Large");
             HyperLink hyperLink = new HyperLink();
-            hyperLink.Text = title;
+            hyperLink.Text = title_utf8;
             hyperLink.NavigateUrl = "http://"+url;
             addTitleDiv.Controls.Add(hyperLink);
-           // addTitleDiv.InnerHtml = title;
+            // addTitleDiv.InnerHtml = title;
+            
 
 
             System.Web.UI.HtmlControls.HtmlGenericControl addURLDiv =
@@ -161,10 +165,12 @@ namespace SuperQueryUI
             addURLDiv.Style.Add(HtmlTextWriterStyle.Color, "green");
             addURLDiv.InnerHtml = url;
 
+            bytes = Encoding.Default.GetBytes(description);
+            string description_utf8 = Encoding.UTF8.GetString(bytes);
             System.Web.UI.HtmlControls.HtmlGenericControl addDescriptionDiv =
             new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
             addDescriptionDiv.Style.Add(HtmlTextWriterStyle.Color, "black");
-            addDescriptionDiv.InnerHtml = description;
+            addDescriptionDiv.InnerHtml = description_utf8;
 
             
             createResultDiv.Controls.Add(addTitleDiv);
