@@ -19,7 +19,7 @@ namespace businessLogic.SearchEngines
             string apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
             int count = 1;
      
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {   
                 WebRequest request = WebRequest.Create(String.Format("https://yandex.com/search/xml?l10n=en&user=itzikooper&key={0}&query={1}&page={2}", apiKey, query, i));
                 WebResponse response = request.GetResponse();

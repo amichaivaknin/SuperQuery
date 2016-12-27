@@ -21,7 +21,7 @@ namespace businessLogic.SearchEngines
           
             var count = 1;
             WebClient webClient = new WebClient();
-            string result = webClient.DownloadString(string.Format("http://www.gigablast.com/search?q={0}&format=json&n=100&rxivq=1015471771&rand=1482683517796",query));
+            string result = webClient.DownloadString(string.Format("http://www.gigablast.com/search?q={0}&format=json&n=10&rxivq=1015471771&rand=1482683517796",query));
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             Dictionary<string, object> collection = serializer.Deserialize<Dictionary<string, object>>(result);
 
