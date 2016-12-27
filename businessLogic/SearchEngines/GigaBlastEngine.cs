@@ -27,11 +27,11 @@ namespace businessLogic.SearchEngines
 
             foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
             {
-                if (!resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(res["url"].ToString()))))
+                if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(res["url"].ToString()))))
                 {
                     resultList.Results.Add(new Result
                     {
-                        DisplayUrl = StringConvert(res["url"].ToString()),
+                        DisplayUrl = UrlConvert(res["url"].ToString()),
                         Title = res["title"].ToString(),
                         Description = res["sum"].ToString(),
                         Rank = count++

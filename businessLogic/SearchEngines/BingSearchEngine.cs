@@ -34,11 +34,11 @@ namespace businessLogic.SearchEngines
                         var results = (ArrayList)item.Value;
                         foreach (Dictionary<string, object> res in results)
                         {
-                            if (!resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(res["displayUrl"].ToString()))))
+                            if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(res["displayUrl"].ToString()))))
                             {
                                 resultList.Results.Add(new Result
                                 {
-                                    DisplayUrl = StringConvert(res["displayUrl"].ToString()),
+                                    DisplayUrl = UrlConvert(res["displayUrl"].ToString()),
                                     Title = res["name"].ToString(),
                                     Description = res["snippet"].ToString(),
                                     Rank = count++

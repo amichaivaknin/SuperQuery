@@ -33,11 +33,11 @@ namespace businessLogic.SearchEngines
                     if (xElement == null) continue;
 
                     var element = xElement.Element("headline");
-                    if (!resultList.Results.Any(r => r.DisplayUrl.Equals(StringConvert(xElement.Element("url")?.Value))))
+                    if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(xElement.Element("url")?.Value))))
                     {
                         resultList.Results.Add(new Result
                         {
-                            DisplayUrl = StringConvert(xElement.Element("url")?.Value),
+                            DisplayUrl = UrlConvert(xElement.Element("url")?.Value),
                             Title = xElement.Element("title")?.Value,
                             Description = element != null ? xElement.Element("headline").Value : xElement.Element("passages").Element("passage").Value,
                             Rank = count++
