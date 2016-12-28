@@ -34,7 +34,7 @@
          <div style="text-align:center">
             <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" value="jerusalem" runat="server" /> <br /><br />
             <asp:Button ID="btn_search" runat="server" Text="Search" OnClick="btn_search_Click" AutoPostback = "False" />
-        </div>
+        </div>       
         <br />
         <div id="resDiv" runat="server"></div>
         <br />

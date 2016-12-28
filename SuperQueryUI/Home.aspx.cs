@@ -25,6 +25,7 @@ namespace SuperQueryUI
         List<Button> buttonList = new List<Button>();
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             { 
               //  createResultDiv();
@@ -53,12 +54,10 @@ namespace SuperQueryUI
 
         protected void btn_search_Click(object sender, EventArgs e)
         {
-
             query = search.Value;
-            
             //if (checkbox_bing.Checked) engines.Add("Bing");
             //if (checkbox_google.Checked) engines.Add("Google");
-            //if (checkbox_yandex.Checked) engines.Add("Yandex");
+            if (checkbox_yandex.Checked) engines.Add("Yandex");
             if (checkbox_gigablast.Checked) engines.Add("GigaBlast");
             if (checkbox_HotBot.Checked) engines.Add("HotBot");
             if (checkbox_rambler.Checked) engines.Add("Rambler");
@@ -68,74 +67,11 @@ namespace SuperQueryUI
             currPage = 1;
             Session["page"] = currPage;
             Session["flag"] = 1;
+            resPerPageFunc();
             createPage();
             initialButtonList();
-
         }
 
-        protected void createResultDiv()
-        {            
-            for (int i = 0; i < 10; i++)
-            {
-                System.Web.UI.HtmlControls.HtmlGenericControl createResultDiv =
-                new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
-                createResultDiv.ID = "resultDivNum" + i;
-
-                System.Web.UI.HtmlControls.HtmlGenericControl addTitleDiv =
-                new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
-                addTitleDiv.ID = "titleDiv";
-                addTitleDiv.Style.Add(HtmlTextWriterStyle.Color, "Blue");
-                addTitleDiv.InnerHtml = "Title: ";
-
-
-                System.Web.UI.HtmlControls.HtmlGenericControl addURLDiv =
-                new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
-                addURLDiv.ID = "urlDiv";
-                addURLDiv.Style.Add(HtmlTextWriterStyle.Color, "green");
-                addURLDiv.InnerHtml = "URL: ";
-
-                System.Web.UI.HtmlControls.HtmlGenericControl addDescriptionDiv =
-                new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
-                addDescriptionDiv.ID = "DescriptionDiv";
-                addDescriptionDiv.Style.Add(HtmlTextWriterStyle.Color, "black");
-                addDescriptionDiv.InnerHtml = "Description: ";
-
-                System.Web.UI.HtmlControls.HtmlGenericControl addBRDiv =
-                new System.Web.UI.HtmlControls.HtmlGenericControl("BR");
-
-                createResultDiv.Controls.Add(addTitleDiv);
-                createResultDiv.Controls.Add(addURLDiv);
-                createResultDiv.Controls.Add(addDescriptionDiv);
-                createResultDiv.Controls.Add(addBRDiv);
-                resDiv.Controls.Add(createResultDiv);
-                //this.Controls.Add(createResultDiv);
-
-                //////////////
-                               
-            }
-            List<Button> l = new List<Button>();
-            System.Web.UI.HtmlControls.HtmlGenericControl addButtonDiv =
-            new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
-            int res;
-            for (int k = 0; k < 50; k++)
-            {
-                Button b = new Button();
-                b.Text = k.ToString();
-                b.UseSubmitBehavior = false;
-                //b.CausesValidation = false;
-                
-                //b.Attributes.Add("AutoPostBack", "return false;");
-                //b.Click += paging;
-                addButtonDiv.Controls.Add(b);
-            }
-            //this.Controls.Add(addButtonDiv);
-            form1.Controls.Add(addButtonDiv);
-        }
-
-        protected void paging(int numOfButton)
-        {
-
-        }
 
         protected void resPerPageFunc()
         {
@@ -155,14 +91,18 @@ namespace SuperQueryUI
                 resPerPage.Add(10);
             }
             resPerPage.Add(numOfRes % 10);
+            Session["resPerPage"] = resPerPage;
         }
 
         protected void createPage()
         {
-            resPerPageFunc();
-            for(int i = 0; i < resPerPage[0]; i++)
+            resPerPage =(List<int>) Session["resPerPage"];
+            ranking_results = (List<FinalResult>)Session["res"];
+            currPage = (int)Session["page"];
+            int startIndex = 10 * (currPage - 1);
+            for(int i = 0; i < resPerPage[currPage-1]; i++)
             {
-                makeResDiv(ranking_results[i].Title, ranking_results[i].DisplayUrl, ranking_results[i].Description,ranking_results[i].SearchEngines.Keys.ToList());
+                makeResDiv(ranking_results[startIndex+i].Title, ranking_results[startIndex + i].DisplayUrl, ranking_results[startIndex + i].Description,ranking_results[startIndex + i].SearchEngines.Keys.ToList());
             }
         }
         protected void makeResDiv(string title,string url,string description,List<string> enginesNames)
@@ -222,23 +162,11 @@ namespace SuperQueryUI
             //this.Controls.Add(createResultDiv);
         }
 
-        protected void getEnginesNames(int page)
-        {
-            int numOfRes = resPerPage[page];
-            int startIndex = 10 * page;
-            for(int i = 0; i < numOfRes; i++)
-            {
-                List<string> names = ranking_results[startIndex].SearchEngines.Keys.ToList();
-                foreach(var name in names)
-                {
-                    enginesOnResults.Add(name);
-                }
-            }
-
-        }
 
         protected void initialButtonList()
         {
+            currPage = (int)Session["page"];
+            page1Button.Style.Add(HtmlTextWriterStyle.Color, "red");
             buttonList.Add(page1Button);
             buttonList.Add(page2Button);
             buttonList.Add(page3Button);
@@ -252,16 +180,86 @@ namespace SuperQueryUI
             for (int k = 0; k < resPerPage.Count; k++)
             {
                 buttonList[k].Visible = true;
-            }
-            Session["buttons"] = buttonList;           
+            }                     
         }
 
         protected void changePage(object sender, EventArgs e)
         {
             currPage = (int)Session["page"];
-            
-            Button clickedButton = (Button)sender;
-            clickedButton.Style.Add(HtmlTextWriterStyle.Color, "red");
+            Button b = (Button)sender;
+            int newPage = int.Parse(b.Text);
+            if (currPage == newPage) return;
+            switch (newPage)
+            {
+                case 1:
+                    page1Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 2:
+                    page2Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 3:
+                    page3Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 4:
+                    page4Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 5:
+                    page5Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 6:
+                    page6Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 7:
+                    page7Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 8:
+                    page8Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 9:
+                    page9Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+                case 10:
+                    page10Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+                    break;
+            }
+
+            switch (currPage)
+            {
+                case 1:
+                    page1Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 2:
+                    page2Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 3:
+                    page3Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 4:
+                    page4Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 5:
+                    page5Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 6:
+                    page6Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 7:
+                    page7Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 8:
+                    page8Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 9:
+                    page9Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+                case 10:
+                    page10Button.Style.Add(HtmlTextWriterStyle.Color, "black");
+                    break;
+            }
+            Session["page"] = newPage;
+            createPage();
+
         }
+         
     }
 }
