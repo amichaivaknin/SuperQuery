@@ -12,18 +12,22 @@ namespace businessLogic.SearchEngines
     {
         public async Task<SearchEngineResultsList> AsyncSearch(string query)
         {
+            var resultList = CreateSearchEngineResultsList("Rambler");
+            resultList.Statistics.Name = "Rambler";
+            resultList.Statistics.Start= DateTime.Now;
             var requests = new List<Task<List<Result>>>();
 
             for (var i = 1; i <= NumberOfRequests; i++)
                 requests.Add(SingleSearchIteration(query, i));
             await Task.WhenAll(requests);
 
-            var resultList = CreateSearchEngineResultsList("Rambler");
+            
 
             foreach (var request in requests.Where(request => request.Result != null))
                 resultList.Results.AddRange(request.Result);
 
             resultList.Results = DistinctList(resultList.Results);
+            resultList.Statistics.End=DateTime.Now;
             return resultList;
         }
 
