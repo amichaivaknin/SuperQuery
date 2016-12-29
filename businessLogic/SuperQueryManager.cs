@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using businessLogic.Interfaces;
 using businessLogic.Models;
-using businessLogic.SearchEngines;
-
 
 namespace businessLogic
 {
@@ -22,15 +16,15 @@ namespace businessLogic
             _rankAggregation = new RankAggregation.RankAggregation();
         }
 
-       public IEnumerable<FinalResult> GetQueryResults(string query)
+        public IEnumerable<FinalResult> GetQueryResults(string query)
         {
             var allSearchResults = _multiSearch.GetResultsFromAllSearchEngines(query);
-            return  _rankAggregation.BordaRank(allSearchResults);
+            return _rankAggregation.BordaRank(allSearchResults);
         }
 
         public IEnumerable<FinalResult> GetQueryResults(List<string> engines, string query)
         {
-            var searchResults = _multiSearch.GetResultsFromSelectedSearchEngines(engines,query);
+            var searchResults = _multiSearch.GetResultsFromSelectedSearchEngines(engines, query);
             var finalResults = _rankAggregation.BordaRank(searchResults);
             return finalResults.Take(100);
         }

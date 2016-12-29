@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using businessLogic.Models;
-using System.Diagnostics;
 
 namespace businessLogic.RankAggregation
 {
     internal class BordaMethod
     {
-        private Dictionary<string, int> _rankBySearchEngine;
+        private readonly Dictionary<string, int> _rankBySearchEngine;
 
         public BordaMethod()
         {
@@ -25,28 +21,29 @@ namespace businessLogic.RankAggregation
                 {"Rambler", 10}
             };
         }
+
         public List<FinalResult> BordaRank(IEnumerable<SearchEngineResultsList> allSearchResults)
         {
             var aggregationResults = new Dictionary<string, FinalResult>();
 
-             RankAndMargeResultsFromAllLists(allSearchResults, aggregationResults);
+            RankAndMargeResultsFromAllLists(allSearchResults, aggregationResults);
 
-             var x=(from result in aggregationResults.Values
-                     orderby result.Rank descending
-                     select result).ToList();
+            var x = (from result in aggregationResults.Values
+                orderby result.Rank descending
+                select result).ToList();
 
             return x;
         }
 
-        private void RankAndMargeResultsFromAllLists(IEnumerable<SearchEngineResultsList> allSearchResults, Dictionary<string, FinalResult> aggregationResults)
+        private void RankAndMargeResultsFromAllLists(IEnumerable<SearchEngineResultsList> allSearchResults,
+            Dictionary<string, FinalResult> aggregationResults)
         {
             foreach (var searchResults in allSearchResults)
-            {
                 RankSingleResultsList(aggregationResults, searchResults);
-            }
         }
 
-        private void RankSingleResultsList(Dictionary<string, FinalResult> aggregationResults, SearchEngineResultsList searchResults)
+        private void RankSingleResultsList(Dictionary<string, FinalResult> aggregationResults,
+            SearchEngineResultsList searchResults)
         {
             const int startRankPosition = 100;
 
@@ -55,10 +52,10 @@ namespace businessLogic.RankAggregation
                 var key = result.DisplayUrl;
 
                 if (!aggregationResults.ContainsKey(result.DisplayUrl))
-                {   
+                {
                     var fl = false;
                     foreach (var ar in aggregationResults.Values.
-                             Where(ar => CheckMatch(ar.DisplayUrl, result.DisplayUrl, ar.Description, result.Description)))
+                        Where(ar => CheckMatch(ar.DisplayUrl, result.DisplayUrl, ar.Description, result.Description)))
                     {
                         key = ar.DisplayUrl;
                         fl = true;
@@ -66,25 +63,23 @@ namespace businessLogic.RankAggregation
                     }
 
                     if (!fl)
-                    {
                         AddNewFinalResult(aggregationResults, key, result);
-                    }
                 }
-   
+
                 if (aggregationResults[key].Description == null)
-                {
                     aggregationResults[key].Description = result.Description;
-                }
 
                 if (!aggregationResults[key].SearchEngines.ContainsKey(searchResults.SearchEngineName))
                 {
-                    aggregationResults[key].Rank += startRankPosition - result.Rank + _rankBySearchEngine[searchResults.SearchEngineName];
-                    aggregationResults[key].SearchEngines.Add(searchResults.SearchEngineName, (int)result.Rank);
-                }    
+                    aggregationResults[key].Rank += startRankPosition - result.Rank +
+                                                    _rankBySearchEngine[searchResults.SearchEngineName];
+                    aggregationResults[key].SearchEngines.Add(searchResults.SearchEngineName, (int) result.Rank);
+                }
             }
         }
 
-        private static void AddNewFinalResult(IDictionary<string, FinalResult> aggregationResults, string key, Result result)
+        private static void AddNewFinalResult(IDictionary<string, FinalResult> aggregationResults, string key,
+            Result result)
         {
             aggregationResults.Add(key, new FinalResult
             {
@@ -120,12 +115,10 @@ namespace businessLogic.RankAggregation
             {
                 var length = 15;
                 if (resultDescription.Length < length)
-                {
                     length = resultDescription.Length;
-                }
                 return results.Contains(resultDescription.Substring(0, length));
             }
             return false;
-        }     
+        }
     }
 }
