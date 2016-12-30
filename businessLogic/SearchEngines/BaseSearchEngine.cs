@@ -6,7 +6,7 @@ namespace businessLogic.SearchEngines
 {
     public class BaseSearchEngine
     {
-        protected const int NumberOfRequests = 1;
+        protected const int NumberOfRequests = 10;
 
         internal string UrlConvert(string value)
         {
