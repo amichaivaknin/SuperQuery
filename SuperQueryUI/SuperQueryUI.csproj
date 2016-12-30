@@ -94,6 +94,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\ajax-loader.gif" />
+    <Content Include="images\ajax-loader2.gif" />
     <Content Include="images\loader.jpg" />
     <Content Include="images\loader2.gif" />
     <Content Include="images\loader3.gif" />

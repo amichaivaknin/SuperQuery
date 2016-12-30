@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -21,46 +23,40 @@ namespace SuperQueryUI
         string query;
         int currPage;
         int flag;
+        int sameQueryFlag=0;
         List<FinalResult> ranking_results;
         List<Button> buttonList = new List<Button>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            if (!IsPostBack)
-            { 
-              //  createResultDiv();
-            }
-            else 
+            try
             {
-                try
-                {
-                    flag = (int)Session["flag"];
-                }
-                catch (Exception)
-                {
-                    //Button b = (Button)sender;
-                    //if (!b.ClientID.Equals("btn_search"))
-                    //{
-                    //    ranking_results = (List<FinalResult>)Session["res"];
-                    //}
-                }
-                
-                //    Button clickedButton = (Button)sender;
-                //    paging(int.Parse(clickedButton.Text));
-                // clickedButton.Text            
+                string q = (string)Session["query"];
+                if (q.Equals(search)) {
+                    sameQueryFlag = 1;
+                    return;
+                }              
+
+            }
+            catch
+            {
 
             }
         }
 
         protected void btn_search_Click(object sender, EventArgs e)
         {
+
+            if (sameQueryFlag == 1) return;
+            //Task showL = new Task(() => showLoader());
+            //showL.Start();
             query = search.Value;
+            Session["query"] = query;
             //if (checkbox_bing.Checked) engines.Add("Bing");
             //if (checkbox_google.Checked) engines.Add("Google");
-            if (checkbox_yandex.Checked) engines.Add("Yandex");
+            //if (checkbox_yandex.Checked) engines.Add("Yandex");
             if (checkbox_gigablast.Checked) engines.Add("GigaBlast");
-            if (checkbox_HotBot.Checked) engines.Add("HotBot");
-            if (checkbox_rambler.Checked) engines.Add("Rambler");
+            //if (checkbox_HotBot.Checked) engines.Add("HotBot");
+            //if (checkbox_rambler.Checked) engines.Add("Rambler");
             /////////////// add more engines if needed !!!!!!!
             ranking_results = manager.GetQueryResults(engines, query).ToList();
             Session["res"] = ranking_results;
@@ -70,6 +66,7 @@ namespace SuperQueryUI
             resPerPageFunc();
             createPage();
             initialButtonList();
+            
         }
 
 
@@ -77,35 +74,37 @@ namespace SuperQueryUI
         {
             int numOfRes = ranking_results.Count();
             int numOfPages;
-            if(numOfRes%10 ==0)
+            if (numOfRes % 10 == 0)
             {
                 numOfPages = numOfRes / 10;
-
+               
             }
             else
             {
                 numOfPages = (numOfRes / 10) + 1;
             }
-            for(int i = 0; i < numOfPages - 1; i++)
+            for (int i = 0; i < numOfPages - 1; i++)
             {
                 resPerPage.Add(10);
             }
-            resPerPage.Add(numOfRes % 10);
+            if (!(numOfRes % 10 == 0)) resPerPage.Add(numOfRes % 10);
+            else resPerPage.Add(10);
+
             Session["resPerPage"] = resPerPage;
         }
 
         protected void createPage()
         {
-            resPerPage =(List<int>) Session["resPerPage"];
+            resPerPage = (List<int>)Session["resPerPage"];
             ranking_results = (List<FinalResult>)Session["res"];
             currPage = (int)Session["page"];
             int startIndex = 10 * (currPage - 1);
-            for(int i = 0; i < resPerPage[currPage-1]; i++)
+            for (int i = 0; i < resPerPage[currPage - 1]; i++)
             {
-                makeResDiv(ranking_results[startIndex+i].Title, ranking_results[startIndex + i].DisplayUrl, ranking_results[startIndex + i].Description,ranking_results[startIndex + i].SearchEngines.Keys.ToList());
+                makeResDiv(ranking_results[startIndex + i].Title, ranking_results[startIndex + i].DisplayUrl, ranking_results[startIndex + i].Description, ranking_results[startIndex + i].SearchEngines.Keys.ToList());
             }
         }
-        protected void makeResDiv(string title,string url,string description,List<string> enginesNames)
+        protected void makeResDiv(string title, string url, string description, List<string> enginesNames)
         {
             System.Web.UI.HtmlControls.HtmlGenericControl addBRDiv =
             new System.Web.UI.HtmlControls.HtmlGenericControl("BR");
@@ -122,20 +121,20 @@ namespace SuperQueryUI
             addTitleDiv.Style.Add(HtmlTextWriterStyle.FontSize, "Large");
             HyperLink hyperLink = new HyperLink();
             hyperLink.Text = title_utf8;
-            hyperLink.NavigateUrl = "http://"+url;
+            hyperLink.NavigateUrl = "http://" + url;
             addTitleDiv.Controls.Add(hyperLink);
             // addTitleDiv.InnerHtml = title;
 
 
             System.Web.UI.HtmlControls.HtmlGenericControl searchEnginesLDiv =
             new System.Web.UI.HtmlControls.HtmlGenericControl("DIV");
-            string names="";
-            foreach(var name in enginesNames)
+            string names = "";
+            foreach (var name in enginesNames)
             {
                 names = $"{names}{name}, ";
             }
-            names=names.TrimEnd(' ');
-            names=names.TrimEnd(',');
+            names = names.TrimEnd(' ');
+            names = names.TrimEnd(',');
             searchEnginesLDiv.Style.Add(HtmlTextWriterStyle.Color, "red");
             searchEnginesLDiv.InnerHtml = names;
 
@@ -152,7 +151,7 @@ namespace SuperQueryUI
             addDescriptionDiv.Style.Add(HtmlTextWriterStyle.Color, "black");
             addDescriptionDiv.InnerHtml = description_utf8;
 
-            
+
             createResultDiv.Controls.Add(addTitleDiv);
             createResultDiv.Controls.Add(searchEnginesLDiv);
             createResultDiv.Controls.Add(addURLDiv);
@@ -180,7 +179,7 @@ namespace SuperQueryUI
             for (int k = 0; k < resPerPage.Count; k++)
             {
                 buttonList[k].Visible = true;
-            }                     
+            }
         }
 
         protected void changePage(object sender, EventArgs e)
@@ -260,6 +259,26 @@ namespace SuperQueryUI
             createPage();
 
         }
-         
+
+
+        //protected void showLoader()
+        //{
+        //    loaderDiv.Visible = true;
+        //    UpdatePanel1.Update();
+
+        //}
+        //protected void hideLoader()
+        //{
+        //    loaderDiv.Visible = false;
+        //    UpdatePanel1.Update();
+
+        //}
+        //public async void showLoader()
+        //{
+        //    loaderDiv.Visible = true;
+        //    UpdatePanel1.Update();
+        //}
+
+
     }
 }

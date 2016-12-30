@@ -14,7 +14,7 @@ namespace businessLogic.SearchEngines
             var apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
             var count = 1;
 
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var request =
                     WebRequest.Create(
