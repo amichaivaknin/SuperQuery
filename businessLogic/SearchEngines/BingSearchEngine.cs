@@ -35,7 +35,7 @@ namespace businessLogic.SearchEngines
             var count = 1;
             var start = 0;
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 1; i++)
             {
                 var webClient = new WebClient();
                 var result =
