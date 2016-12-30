@@ -33,7 +33,7 @@ namespace businessLogic.SearchEngines
             var webClient = new WebClient();
             var result =
                 webClient.DownloadString(
-                    $"http://www.gigablast.com/search?q={query}&format=json&n=10&rxivq=1015471771&rand=1482683517796");
+                    $"http://www.gigablast.com/search?q={query}&format=json&n=100&rxivq=1015471771&rand=1482683517796");
             var serializer = new JavaScriptSerializer();
             var collection = serializer.Deserialize<Dictionary<string, object>>(result);
 

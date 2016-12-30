@@ -56,18 +56,15 @@
         <%--<div id="loaderDiv" style="text-align: center" runat="server" visible="false">
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/loader2.gif" Height="150" Width="150" />
         </div>--%>
-
+        <%--<br />--%>
         <div id="spinner" style="display:none">
-            <img id="image-spinner" src="images/ajax-loader2.gif" alt="loading" height="20" width="20" />
+            <img id="image-spinner" src="images/loader8.gif" alt="loading" height="30" width="30" />
         </div>
         <script>
             function x(){
                 $('#spinner').show();
             }
         </script>
-
-
-    
 
         <br />
         <div id="resDiv" runat="server"></div>

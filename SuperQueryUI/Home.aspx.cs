@@ -47,8 +47,6 @@ namespace SuperQueryUI
         {
 
             if (sameQueryFlag == 1) return;
-            //Task showL = new Task(() => showLoader());
-            //showL.Start();
             query = search.Value;
             Session["query"] = query;
             //if (checkbox_bing.Checked) engines.Add("Bing");
@@ -259,26 +257,5 @@ namespace SuperQueryUI
             createPage();
 
         }
-
-
-        //protected void showLoader()
-        //{
-        //    loaderDiv.Visible = true;
-        //    UpdatePanel1.Update();
-
-        //}
-        //protected void hideLoader()
-        //{
-        //    loaderDiv.Visible = false;
-        //    UpdatePanel1.Update();
-
-        //}
-        //public async void showLoader()
-        //{
-        //    loaderDiv.Visible = true;
-        //    UpdatePanel1.Update();
-        //}
-
-
     }
 }

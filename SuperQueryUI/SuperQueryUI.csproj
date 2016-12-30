@@ -99,6 +99,10 @@
     <Content Include="images\loader.jpg" />
     <Content Include="images\loader2.gif" />
     <Content Include="images\loader3.gif" />
+    <Content Include="images\loader5.gif" />
+    <Content Include="images\loader6.gif" />
+    <Content Include="images\loader7.gif" />
+    <Content Include="images\loader8.gif" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
