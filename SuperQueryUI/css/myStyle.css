@@ -12,6 +12,10 @@
         .pageButton{
             
         }
+        #resDiv{
+            margin-left:150px;
+            margin-right:400px;
+        }
 
         ::-webkit-input-placeholder {
    text-align:center;
