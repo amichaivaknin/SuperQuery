@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,22 +15,6 @@ namespace businessLogic.SearchEngines
     {
         private const string ApiKey = "364dc7e685ed4672b4fa87ad9980d454";
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
-        {
-            var requests = new List<Task<List<Result>>>();
-
-            for (var i = 0; i <= NumberOfRequests; i++)
-                requests.Add(SingleSearchIteration(query, i));
-            await Task.WhenAll(requests);
-
-            var resultList = CreateSearchEngineResultsList("Bing");
-            foreach (var request in requests.Where(request => request.Result != null))
-                resultList.Results.AddRange(request.Result);
-
-            resultList.Results = DistinctList(resultList.Results);
-            return resultList;
-        }
-
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Bing");
@@ -40,18 +26,16 @@ namespace businessLogic.SearchEngines
                 var webClient = new WebClient();
                 var result =
                     webClient.DownloadString(
-                        string.Format(
-                            "https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={0}&q={1}&count=10&offset={2}&mkt=en-us&safesearch=Moderate&filter=webpages",
-                            ApiKey, query, start));
+                        $"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={start}&mkt=en-us&safesearch=Moderate&filter=webpages");
                 var serializer = new JavaScriptSerializer();
                 var collection = serializer.Deserialize<Dictionary<string, object>>(result);
 
-                foreach (KeyValuePair<string, object> item in (IEnumerable) collection["webPages"])
+                foreach (KeyValuePair<string, object> item in (IEnumerable)collection["webPages"])
                 {
                     var y = item.Key;
                     if (y == "value")
                     {
-                        var results = (ArrayList) item.Value;
+                        var results = (ArrayList)item.Value;
                         foreach (Dictionary<string, object> res in results)
                             if (
                                 !resultList.Results.Any(
@@ -69,6 +53,32 @@ namespace businessLogic.SearchEngines
             }
             return resultList;
         }
+
+        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        {
+            var resultList = CreateSearchEngineResultsList("Bing");
+            resultList.Statistics.Name = "Bing";
+            resultList.Statistics.Start = DateTime.Now;
+            var requests = new ConcurrentBag<Result>();
+
+            await Task.Run(() =>
+            {
+                Parallel.For(0, NumberOfRequests, async i =>
+                {
+                    var request = await SingleSearchIteration(query, i);
+                    foreach (var res in request)
+                    {
+                        requests.Add(res);
+                    }
+                });
+            });
+
+            resultList.Results = DistinctList(requests);
+            resultList.Statistics.End = DateTime.Now;
+            return resultList;
+        }
+
+        
 
         private async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
@@ -96,6 +106,7 @@ namespace businessLogic.SearchEngines
             var result =
                 webClient.DownloadString(
                     $"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page*10}&mkt=en-us&safesearch=Moderate&filter=webpages");
+            webClient.Dispose();
             return Task.FromResult(result);
         }
     }

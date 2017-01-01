@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,26 +11,6 @@ namespace businessLogic.SearchEngines
 {
     public class RamblerSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
-        {
-            var resultList = CreateSearchEngineResultsList("Rambler");
-            resultList.Statistics.Name = "Rambler";
-            resultList.Statistics.Start= DateTime.Now;
-            var requests = new List<Task<List<Result>>>();
-
-            for (var i = 1; i <= NumberOfRequests; i++)
-                requests.Add(SingleSearchIteration(query, i));
-            await Task.WhenAll(requests);
-
-            
-
-            foreach (var request in requests.Where(request => request.Result != null))
-                resultList.Results.AddRange(request.Result);
-
-            resultList.Results = DistinctList(resultList.Results);
-            resultList.Statistics.End=DateTime.Now;
-            return resultList;
-        }
 
         public SearchEngineResultsList Search(string query)
         {
@@ -66,6 +47,30 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
+        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        {
+            var resultList = CreateSearchEngineResultsList("Rambler");
+            resultList.Statistics.Name = "Rambler";
+            resultList.Statistics.Start = DateTime.Now;
+            var requests = new ConcurrentBag<Result>();
+
+            await Task.Run(() =>
+            {
+                Parallel.For(1, NumberOfRequests + 1, async i =>
+                {
+                    var request = await SingleSearchIteration(query, i);
+                    foreach (var res in request)
+                    {
+                        requests.Add(res);
+                    }
+                });
+            });
+
+            resultList.Results = DistinctList(requests);
+            resultList.Statistics.End = DateTime.Now;
+            return resultList;
+        }
+
         private async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var resultList = new List<Result>();
@@ -98,15 +103,14 @@ namespace businessLogic.SearchEngines
             try
             {
                 var web = new HtmlWeb();
-                var document =
-                    web.Load(
-                        $"http://nova.rambler.ru/search?scroll=1&utm_source=nhp&utm_content=search&utm_medium=button&utm_campaign=self_promo&query={query}&page={page}");
+                var document =web.Load($"http://nova.rambler.ru/search?scroll=1&utm_source=nhp&utm_content=search&utm_medium=button&utm_campaign=self_promo&query={query}&page={page}");
                 return Task.FromResult(document);
             }
             catch (Exception e)
             {
                 return null;
             }
+
         }
     }
 }

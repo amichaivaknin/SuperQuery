@@ -7,10 +7,9 @@ namespace ConsoleApplication1
         private static void Main()
         {
 
-            var r = new RamblerSearchEngine();
-            var s = r.AsyncSearch("amichai").Result;
-
-            var y = (double)s.Statistics.Duration;
+            var r = new GoogleSearchEngine();
+            var s = r.AsyncSearch("jerusale").Result;
+            
             var x = 1;
 
         }
