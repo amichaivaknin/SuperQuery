@@ -1,11 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using businessLogic.Interfaces;
 using businessLogic.Models;
 using HtmlAgilityPack;
 
 namespace businessLogic.SearchEngines
 {
-    internal class HotBotSearchEngine : BaseSearchEngine, ISearchEngine
+    public class HotBotSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
         public SearchEngineResultsList Search(string query)
         {
@@ -30,7 +34,8 @@ namespace businessLogic.SearchEngines
                             {
                                 DisplayUrl = UrlConvert(title.GetAttributeValue("href", null)),
                                 Title = title.InnerText,
-                                Description = decriptions[count].InnerText
+                                Description = decriptions[count].InnerText,
+                                Rank = (i-1)*10+count
                             });
                             count++;
 
@@ -46,6 +51,72 @@ namespace businessLogic.SearchEngines
             }
 
             return resultList;
+        }
+
+        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        {
+            var resultList = CreateSearchEngineResultsList("HotBot");
+            resultList.Statistics.Name = "HotBot";
+            resultList.Statistics.Start = DateTime.Now;
+            var requests = new ConcurrentBag<Result>();
+
+            await Task.Run(() =>
+            {
+                Parallel.For(1, NumberOfRequests + 1, async i =>
+                {
+                    var request = await SingleSearchIteration(query, i);
+                    foreach (var res in request)
+                    {
+                        requests.Add(res);
+                    }
+                });
+            });
+
+            resultList.Results = DistinctList(requests);
+            resultList.Statistics.End = DateTime.Now;
+            return resultList;
+        }
+
+        private async Task<List<Result>> SingleSearchIteration(string query, int page)
+        {
+            var resultList = new List<Result>();
+            var document = await SearchRequest(query, page);
+            var searchResults = document.DocumentNode.SelectNodes("//div[@class='search-results']//a").ToArray();
+
+            foreach (var node in searchResults)
+            {
+                var count = 0;
+                foreach (var liTag in node.SelectNodes("//li"))
+                {
+                    var titles = liTag.SelectNodes("//h3[@class='title']//a");
+                    var decriptions = liTag.SelectNodes("//div[@class='description']");
+                    foreach (var title in titles)
+                    {
+                        resultList.Add(new Result
+                        {
+                            DisplayUrl = UrlConvert(title.GetAttributeValue("href", null)),
+                            Title = title.InnerText,
+                            Description = decriptions[count].InnerText,
+                            Rank = (page - 1) * 10 + count
+                        });
+                        count++;
+
+                    }
+                    if (count >= 10)
+                        break;
+                }
+                if (count >= 10)
+                    break;
+            }
+
+            return resultList;
+        }
+
+        private Task<HtmlDocument> SearchRequest(string query, int page)
+        {
+            var web = new HtmlWeb();
+            var document = web.Load($"http://hotbot.com/search/?query={query}&page={page}");
+            return Task.FromResult(document);
         }
     }
 }
