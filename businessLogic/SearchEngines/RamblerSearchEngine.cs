@@ -58,10 +58,17 @@ namespace businessLogic.SearchEngines
             {
                 Parallel.For(1, NumberOfRequests + 1, async i =>
                 {
-                    var request = await SingleSearchIteration(query, i);
-                    foreach (var res in request)
+                    try
                     {
-                        requests.Add(res);
+                        var request = await SingleSearchIteration(query, i);
+                        foreach (var res in request)
+                        {
+                            requests.Add(res);
+                        }
+                    }
+                    catch
+                    {
+                        resultList.Statistics.Message = $"{resultList.Statistics.Message}/n request number {i} failed";
                     }
                 });
             });

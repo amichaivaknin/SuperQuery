@@ -13,5 +13,6 @@ namespace businessLogic.Extentions
         public DateTime End { get; set; }
         public int Duration => (End - Start).Milliseconds;
         public bool Success { get; set; }
+        public string Message { get; set; }
     }
 }

@@ -7,8 +7,8 @@ namespace ConsoleApplication1
         private static void Main()
         {
 
-            var r = new GoogleSearchEngine();
-            var s = r.AsyncSearch("jerusale").Result;
+            var r = new RamblerSearchEngine();
+            var s = r.AsyncSearch("dfsdgdsgfdbhfghghgfh hgk jkhj hgj hjyjgh jhjhgjghjhgj hj jjhgjhg hjgh   aaaa").Result;
             
             var x = 1;
 
