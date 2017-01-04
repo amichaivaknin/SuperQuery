@@ -7,7 +7,7 @@
     <title>Super Query</title>
     <link href="css/myStyle.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    
+    <script src="scripts/jquery-3.1.1.min.js"></script>
 </head>
 <body>
     <form id="form1" runat="server" method="post">
@@ -47,27 +47,31 @@
         <br />
 
         <div style="text-align: center">
-            <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" value="jerusalem" runat="server" />
+            <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" runat="server"/>
             <br />
             <br />
-            <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" OnClick="btn_search_Click" AutoPostback="False" />
+            <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" AutoPostback="False" OnClick="btn_search_Click"/>
         </div>
 
         <%--<div id="loaderDiv" style="text-align: center" runat="server" visible="false">
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/loader2.gif" Height="150" Width="150" />
         </div>--%>
-
+        <%--<br />--%>
         <div id="spinner" style="display:none">
-            <img id="image-spinner" src="images/ajax-loader2.gif" alt="loading" height="20" width="20" />
+            <img id="image-spinner" src="images/loader8.gif" alt="loading" height="30" width="30" />
         </div>
         <script>
-            function x(){
+            var flag = 0;
+            $("#search").change(function () {
+                flag=1;
+            });
+            function x() {
+                if (flag == 0) return;
+                if ($('#search').val().length == 0) return;
                 $('#spinner').show();
-            }
+                }
+
         </script>
-
-
-    
 
         <br />
         <div id="resDiv" runat="server"></div>

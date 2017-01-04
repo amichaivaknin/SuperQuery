@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -22,41 +23,23 @@ namespace SuperQueryUI
         List<string> enginesOnResults = new List<string>();
         string query;
         int currPage;
-        int flag;
-        int sameQueryFlag=0;
         List<FinalResult> ranking_results;
         List<Button> buttonList = new List<Button>();
         protected void Page_Load(object sender, EventArgs e)
         {
-            try
-            {
-                string q = (string)Session["query"];
-                if (q.Equals(search)) {
-                    sameQueryFlag = 1;
-                    return;
-                }              
 
-            }
-            catch
-            {
-
-            }
         }
 
         protected void btn_search_Click(object sender, EventArgs e)
         {
-
-            if (sameQueryFlag == 1) return;
-            //Task showL = new Task(() => showLoader());
-            //showL.Start();
             query = search.Value;
             Session["query"] = query;
             //if (checkbox_bing.Checked) engines.Add("Bing");
             //if (checkbox_google.Checked) engines.Add("Google");
-            //if (checkbox_yandex.Checked) engines.Add("Yandex");
+            if (checkbox_yandex.Checked) engines.Add("Yandex");
             if (checkbox_gigablast.Checked) engines.Add("GigaBlast");
-            //if (checkbox_HotBot.Checked) engines.Add("HotBot");
-            //if (checkbox_rambler.Checked) engines.Add("Rambler");
+            if (checkbox_HotBot.Checked) engines.Add("HotBot");
+            if (checkbox_rambler.Checked) engines.Add("Rambler");
             /////////////// add more engines if needed !!!!!!!
             ranking_results = manager.GetQueryResults(engines, query).ToList();
             Session["res"] = ranking_results;
@@ -66,7 +49,7 @@ namespace SuperQueryUI
             resPerPageFunc();
             createPage();
             initialButtonList();
-            
+
         }
 
 
@@ -77,7 +60,7 @@ namespace SuperQueryUI
             if (numOfRes % 10 == 0)
             {
                 numOfPages = numOfRes / 10;
-               
+
             }
             else
             {
@@ -258,27 +241,6 @@ namespace SuperQueryUI
             Session["page"] = newPage;
             createPage();
 
-        }
-
-
-        //protected void showLoader()
-        //{
-        //    loaderDiv.Visible = true;
-        //    UpdatePanel1.Update();
-
-        //}
-        //protected void hideLoader()
-        //{
-        //    loaderDiv.Visible = false;
-        //    UpdatePanel1.Update();
-
-        //}
-        //public async void showLoader()
-        //{
-        //    loaderDiv.Visible = true;
-        //    UpdatePanel1.Update();
-        //}
-
-
+        }     
     }
 }
