@@ -7,15 +7,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for HotBotSearchEngineTests
+    /// Summary description for YandexSearchEngineTests
     /// </summary>
     [TestClass]
-    public class HotBotSearchEngineTests
+    public class YandexSearchEngineTests
     {
-        private readonly HotBotSearchEngine _searchEngine;
-        public HotBotSearchEngineTests()
+        private readonly YandexSearchEngine _searchEngine;
+        public YandexSearchEngineTests()
         {
-            _searchEngine = new HotBotSearchEngine();
+            _searchEngine = new YandexSearchEngine();
         }
 
         private TestContext testContextInstance;
@@ -49,7 +49,7 @@ namespace SuperQueryTests.SearchEnginesTests
         #endregion
 
         [TestMethod]
-        public void HotBotSearch_NullQuery_ResultsCountEqualTo0()
+        public void YandexSearch_NullQuery_ResultsCountEqualTo0()
         {
             var search = _searchEngine.Search("");
             var listCount = search.Results.Count;
@@ -57,7 +57,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotSearch_JerusalemQuery_ResultsCountBiggerThe0()
+        public void YandexSearch_JerusalemQuery_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("Jerusalem");
             var listCount = search.Results.Count;
@@ -65,35 +65,35 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotSearch_QueryWithNoResults_ResultsCountEqualTo0()
+        public void YandexSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.Search("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
             var listCount = search.Results.Count;
             Assert.AreEqual(0, listCount);
         }
 
-        [TestMethod]
-        public void HotBotAsyncSearch_NullQuery_ResultsCountEqualTo0()
-        {
-            var search = _searchEngine.AsyncSearch("").Result;
-            var listCount = search.Results.Count;
-            Assert.AreEqual(0, listCount);
-        }
+        //[TestMethod]
+        //public void YandexAsyncSearch_NullQuery_ResultsCountEqualTo0()
+        //{
+        //    var search = _searchEngine.AsyncSearch("").Result;
+        //    var listCount = search.Results.Count;
+        //    Assert.AreEqual(0, listCount);
+        //}
 
-        [TestMethod]
-        public void HotBotAsyncSearch_JerusalemQuery_ResultsCountBiggerThe0()
-        {
-            var search = _searchEngine.AsyncSearch("Jerusalem").Result;
-            var listCount = search.Results.Count;
-            Assert.IsTrue(listCount > 0);
-        }
+        //[TestMethod]
+        //public void YandexAsyncSearch_JerusalemQuery_ResultsCountBiggerThe0()
+        //{
+        //    var search = _searchEngine.AsyncSearch("Jerusalem").Result;
+        //    var listCount = search.Results.Count;
+        //    Assert.IsTrue(listCount > 0);
+        //}
 
-        [TestMethod]
-        public void HotBotAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
-        {
-            var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
-            var listCount = search.Results.Count;
-            Assert.AreEqual(0, listCount);
-        }
+        //[TestMethod]
+        //public void YandexAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
+        //{
+        //    var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
+        //    var listCount = search.Results.Count;
+        //    Assert.AreEqual(0, listCount);
+        //}
     }
 }

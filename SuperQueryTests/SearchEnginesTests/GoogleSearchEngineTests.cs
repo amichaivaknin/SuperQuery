@@ -87,7 +87,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void GoogleAsyncearch_QueryWithNoResults_ResultsCountEqualTo0()
+        public void GoogleAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
             var listCount = search.Results.Count;

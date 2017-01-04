@@ -87,7 +87,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void RamblerAsyncearch_QueryWithNoResults_ResultsCountEqualTo0()
+        public void RamblerAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
             var listCount = search.Results.Count;

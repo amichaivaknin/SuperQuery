@@ -52,11 +52,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="SearchEnginesTests\BingSearchEngineTests.cs" />
     <Compile Include="SearchEnginesTests\GigaBlastSearchEngineTests.cs" />
     <Compile Include="SearchEnginesTests\GoogleSearchEngineTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchEnginesTests\HotBotSearchEngineTests.cs" />
     <Compile Include="SearchEnginesTests\RamblerSearchEngineTests.cs" />
+    <Compile Include="SearchEnginesTests\YandexSearchEngineTests.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

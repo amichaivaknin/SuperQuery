@@ -89,7 +89,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void GigaBlastAsyncearch_QueryWithNoResults_ResultsCountEqualTo0()
+        public void GigaBlastAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
             var listCount = search.Results.Count;

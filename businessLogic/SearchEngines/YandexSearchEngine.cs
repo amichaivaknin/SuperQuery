@@ -6,7 +6,7 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    internal class YandexSearchEngine : BaseSearchEngine, ISearchEngine
+    public class YandexSearchEngine : BaseSearchEngine, ISearchEngine
     {
         public SearchEngineResultsList Search(string query)
         {

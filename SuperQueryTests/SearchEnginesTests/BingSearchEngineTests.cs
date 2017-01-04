@@ -7,15 +7,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for HotBotSearchEngineTests
+    /// Summary description for BingSearchEngineTests
     /// </summary>
     [TestClass]
-    public class HotBotSearchEngineTests
+    public class BingSearchEngineTests
     {
-        private readonly HotBotSearchEngine _searchEngine;
-        public HotBotSearchEngineTests()
+        private readonly BingSearchEngine _searchEngine;
+        public BingSearchEngineTests()
         {
-            _searchEngine = new HotBotSearchEngine();
+            _searchEngine = new BingSearchEngine();
         }
 
         private TestContext testContextInstance;
@@ -49,7 +49,7 @@ namespace SuperQueryTests.SearchEnginesTests
         #endregion
 
         [TestMethod]
-        public void HotBotSearch_NullQuery_ResultsCountEqualTo0()
+        public void BingSearch_NullQuery_ResultsCountEqualTo0()
         {
             var search = _searchEngine.Search("");
             var listCount = search.Results.Count;
@@ -57,7 +57,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotSearch_JerusalemQuery_ResultsCountBiggerThe0()
+        public void BingSearch_JerusalemQuery_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("Jerusalem");
             var listCount = search.Results.Count;
@@ -65,7 +65,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotSearch_QueryWithNoResults_ResultsCountEqualTo0()
+        public void BingSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.Search("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
             var listCount = search.Results.Count;
@@ -73,7 +73,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotAsyncSearch_NullQuery_ResultsCountEqualTo0()
+        public void BingAsyncSearch_NullQuery_ResultsCountEqualTo0()
         {
             var search = _searchEngine.AsyncSearch("").Result;
             var listCount = search.Results.Count;
@@ -81,7 +81,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotAsyncSearch_JerusalemQuery_ResultsCountBiggerThe0()
+        public void BingAsyncSearch_JerusalemQuery_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.AsyncSearch("Jerusalem").Result;
             var listCount = search.Results.Count;
@@ -89,7 +89,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void HotBotAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
+        public void BingAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
             var listCount = search.Results.Count;
@@ -97,3 +97,4 @@ namespace SuperQueryTests.SearchEnginesTests
         }
     }
 }
+
