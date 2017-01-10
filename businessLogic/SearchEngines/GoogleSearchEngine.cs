@@ -27,7 +27,7 @@ namespace businessLogic.SearchEngines
             var webClient = new WebClient();
             try
             {
-                for (var i = 0; i < 1; i++)
+                for (var i = 0; i < 10; i++)
                 {
                     var result =
                         webClient.DownloadString($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={start}&alt=json&cr=us");

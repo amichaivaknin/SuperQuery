@@ -47,7 +47,7 @@
         <br />
 
         <div style="text-align: center">
-            <input id="search" placeholder="search" onkeypress="search_methode" autocomplete="off" runat="server"/>
+            <input id="search" placeholder="Search for..." onkeypress="search_methode" autocomplete="off" runat="server"/>
             <br />
             <br />
             <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" AutoPostback="False" OnClick="btn_search_Click"/>
@@ -64,6 +64,24 @@
             var flag = 0;
             $("#search").change(function () {
                 flag=1;
+            });
+            $("#checkbox_google").change(function () {
+                flag = 1;
+            });
+            $("#checkbox_yandex").change(function () {
+                flag = 1;
+            });
+            $("#checkbox_bing").change(function () {
+                flag = 1;
+            });
+            $("#checkbox_gigablast").change(function () {
+                flag = 1;
+            });
+            $("#checkbox_HotBot").change(function () {
+                flag = 1;
+            });
+            $("#checkbox_rambler").change(function () {
+                flag = 1;
             });
             function x() {
                 if (flag == 0) return;
