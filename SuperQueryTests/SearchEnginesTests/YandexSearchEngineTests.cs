@@ -56,8 +56,8 @@ namespace SuperQueryTests.SearchEnginesTests
             Assert.AreEqual(0, listCount);
         }
 
-        [TestMethod]
-        public void YandexSearch_JerusalemQuery_ResultsCountBiggerThe0()
+        [TestMethod] 
+        public void YandexSearch_JerusalemQuery_ResultsCountBiggerThe0(string query)
         {
             var search = _searchEngine.Search("Jerusalem");
             var listCount = search.Results.Count;

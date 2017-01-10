@@ -1,12 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class YandexSearchEngine : BaseSearchEngine, ISearchEngine
+    public class YandexSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
         public SearchEngineResultsList Search(string query)
         {
@@ -47,6 +49,16 @@ namespace businessLogic.SearchEngines
             }
 
             return resultList;
+        }
+
+        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        {
+            return new SearchEngineResultsList
+            {
+                SearchEngineName = "Yandex",
+                Results = new List<Result>()
+            };
+            //throw new System.NotImplementedException();
         }
     }
 }

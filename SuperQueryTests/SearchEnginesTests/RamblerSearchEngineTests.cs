@@ -13,6 +13,7 @@ namespace SuperQueryTests.SearchEnginesTests
     public class RamblerSearchEngineTests
     {
         private readonly RamblerSearchEngine _searchEngine;
+
         public RamblerSearchEngineTests()
         {
             _searchEngine = new RamblerSearchEngine();

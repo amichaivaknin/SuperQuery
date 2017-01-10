@@ -38,7 +38,7 @@ namespace businessLogic.SearchEngines
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
             var count = 1;
-            var result = await SearchRequst(query);
+            var result = await SearchRequest(query);
             var serializer = new JavaScriptSerializer();
             var collection = serializer.Deserialize<Dictionary<string, object>>(result);
 
@@ -48,7 +48,7 @@ namespace businessLogic.SearchEngines
             resultList.Results = DistinctList(resultList.Results);
             return resultList;
         }
-        private Task<string> SearchRequst(string query)
+        private Task<string> SearchRequest(string query)
         {
             var webClient = new WebClient();
             var result =

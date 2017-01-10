@@ -18,13 +18,13 @@ namespace businessLogic
 
         public IEnumerable<FinalResult> GetQueryResults(string query)
         {
-            var allSearchResults = _multiSearch.GetResultsFromAllSearchEngines(query);
+            var allSearchResults = _multiSearch.GetAsyncResultsFromAllSearchEngines(query);
             return _rankAggregation.BordaRank(allSearchResults);
         }
 
         public IEnumerable<FinalResult> GetQueryResults(List<string> engines, string query)
         {
-            var searchResults = _multiSearch.GetResultsFromSelectedSearchEngines(engines, query);
+            var searchResults = _multiSearch.GetAsyncResultsFromSelectedSearchEngines(engines, query);
             var finalResults = _rankAggregation.BordaRank(searchResults);
             return finalResults.Take(100);
         }

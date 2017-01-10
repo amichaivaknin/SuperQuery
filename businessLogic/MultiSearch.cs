@@ -8,9 +8,10 @@ using businessLogic.SearchEngines;
 
 namespace businessLogic
 {
-    internal class MultiSearch : IMultiSearch
+    public class MultiSearch : IMultiSearch
     {
         private readonly Dictionary<string, ISearchEngine> _searchEngines;
+        private readonly Dictionary<string, IAsyncSearchEngine> _asyncSearchEngines;
 
         public MultiSearch()
         {
@@ -23,6 +24,17 @@ namespace businessLogic
                 {"HotBot", new HotBotSearchEngine()},
                 {"Rambler", new RamblerSearchEngine()}
             };
+
+            _asyncSearchEngines = new Dictionary<string, IAsyncSearchEngine>
+            {
+                {"Google", new GoogleSearchEngine()},
+                {"Bing", new BingSearchEngine()},
+                {"Yandex", new YandexSearchEngine()},
+                {"GigaBlast", new GigaBlastEngine()},
+                {"HotBot", new HotBotSearchEngine()},
+                {"Rambler", new RamblerSearchEngine()}
+            };
+
         }
 
         public IEnumerable<SearchEngineResultsList> GetResultsFromAllSearchEngines(string query)
@@ -31,7 +43,7 @@ namespace businessLogic
 
             Parallel.ForEach(_searchEngines.Values, searchEngine => { allResults.Add(searchEngine.Search(query)); });
 
-            return allResults.ToList();
+            return allResults;
         }
 
         public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines,
@@ -44,7 +56,32 @@ namespace businessLogic
                 var engineResult = _searchEngines[searchEngine].Search(query);
                 allResults.Add(engineResult);
             });
-            return allResults.ToList();
+            return allResults;
+        }
+
+        public IEnumerable<SearchEngineResultsList> GetAsyncResultsFromAllSearchEngines(string query)
+        {
+            var allResults = new ConcurrentBag<SearchEngineResultsList>();
+            Parallel.ForEach(_asyncSearchEngines.Values,  searchEngine =>
+            {
+                var engineResult = searchEngine.AsyncSearch(query).Result;
+                allResults.Add(engineResult);
+            });
+
+            return allResults;
+
+        }
+
+        public IEnumerable<SearchEngineResultsList> GetAsyncResultsFromSelectedSearchEngines(List<string> engines, string query)
+        {
+            var allResults = new ConcurrentBag<SearchEngineResultsList>();
+
+            Parallel.ForEach(engines, searchEngine =>
+            {
+                var engineResult = _asyncSearchEngines[searchEngine].AsyncSearch(query).Result;
+                allResults.Add(engineResult);
+            });
+            return allResults;
         }
     }
 }

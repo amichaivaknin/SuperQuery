@@ -84,7 +84,7 @@ namespace businessLogic.SearchEngines
         {
             var count = 1;
             var results = new List<Result>();
-            var result = await SearchRequst(query, page);
+            var result = await SearchRequest(query, page);
             var serializer = new JavaScriptSerializer();
             var collection = serializer.Deserialize<Dictionary<string, object>>(result);
 
@@ -100,7 +100,7 @@ namespace businessLogic.SearchEngines
             return results;
         }
 
-        private Task<string> SearchRequst(string query, int page)
+        private Task<string> SearchRequest(string query, int page)
         {
             var webClient = new WebClient();
             var result =
