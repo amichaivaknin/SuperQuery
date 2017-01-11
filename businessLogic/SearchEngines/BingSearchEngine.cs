@@ -56,31 +56,32 @@ namespace businessLogic.SearchEngines
 
         public async Task<SearchEngineResultsList> AsyncSearch(string query)
         {
-            var resultList = CreateSearchEngineResultsList("Bing");
-            resultList.Statistics.Name = "Bing";
-            resultList.Statistics.Start = DateTime.Now;
-            var requests = new ConcurrentBag<Result>();
+            return await FullSearch(0, NumberOfRequests, query, "Bing");
+            //var resultList = CreateSearchEngineResultsList("Bing");
+            //resultList.Statistics.Name = "Bing";
+            //resultList.Statistics.Start = DateTime.Now;
+            //var requests = new ConcurrentBag<Result>();
 
-            await Task.Run(() =>
-            {
-                Parallel.For(0, NumberOfRequests, async i =>
-                {
-                    var request = await SingleSearchIteration(query, i);
-                    foreach (var res in request)
-                    {
-                        requests.Add(res);
-                    }
-                });
-            });
+            //await Task.Run(() =>
+            //{
+            //    Parallel.For(0, NumberOfRequests, async i =>
+            //    {
+            //        var request = await SingleSearchIteration(query, i);
+            //        foreach (var res in request)
+            //        {
+            //            requests.Add(res);
+            //        }
+            //    });
+            //});
 
-            resultList.Results = DistinctList(requests);
-            resultList.Statistics.End = DateTime.Now;
-            return resultList;
+            //resultList.Results = OrderAndDistinctList(requests);
+            //resultList.Statistics.End = DateTime.Now;
+            //return resultList;
         }
 
-        
 
-        private async Task<List<Result>> SingleSearchIteration(string query, int page)
+
+        protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var count = 1;
             var results = new List<Result>();

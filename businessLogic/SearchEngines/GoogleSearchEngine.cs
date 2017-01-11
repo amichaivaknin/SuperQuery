@@ -54,6 +54,7 @@ namespace businessLogic.SearchEngines
 
         public async Task<SearchEngineResultsList> AsyncSearch(string query)
         {
+            return await FullSearch(0, NumberOfRequests, query, "Google");
             var resultList = CreateSearchEngineResultsList("Google");
             resultList.Statistics.Name = "Google";
             resultList.Statistics.Start = DateTime.Now;
@@ -71,12 +72,12 @@ namespace businessLogic.SearchEngines
                 });
             });
 
-            resultList.Results = DistinctList(requests);
+            resultList.Results = OrderAndDistinctList(requests);
             resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
 
-        private async Task<List<Result>> SingleSearchIteration(string query, int i)
+        protected override async Task<List<Result>> SingleSearchIteration(string query, int i)
         {
             var count=1;
             var result = await SearchRequest(query, i);

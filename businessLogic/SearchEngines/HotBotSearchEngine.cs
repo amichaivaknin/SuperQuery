@@ -55,29 +55,10 @@ namespace businessLogic.SearchEngines
 
         public async Task<SearchEngineResultsList> AsyncSearch(string query)
         {
-            var resultList = CreateSearchEngineResultsList("HotBot");
-            resultList.Statistics.Name = "HotBot";
-            resultList.Statistics.Start = DateTime.Now;
-            var requests = new ConcurrentBag<Result>();
-
-            await Task.Run(() =>
-            {
-                Parallel.For(1, NumberOfRequests + 1, async i =>
-                {
-                    var request = await SingleSearchIteration(query, i);
-                    foreach (var res in request)
-                    {
-                        requests.Add(res);
-                    }
-                });
-            });
-
-            resultList.Results = DistinctList(requests);
-            resultList.Statistics.End = DateTime.Now;
-            return resultList;
+            return await FullSearch(1, NumberOfRequests + 1, query, "HotBot");
         }
 
-        private async Task<List<Result>> SingleSearchIteration(string query, int page)
+        protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var resultList = new List<Result>();
             var document = await SearchRequest(query, page);

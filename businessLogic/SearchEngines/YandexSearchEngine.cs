@@ -10,6 +10,8 @@ namespace businessLogic.SearchEngines
 {
     public class YandexSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
+        private const string ApiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
+
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Yandex");
@@ -18,11 +20,7 @@ namespace businessLogic.SearchEngines
 
             for (var i = 0; i < 10; i++)
             {
-                var request =
-                    WebRequest.Create(
-                        string.Format(
-                            "https://yandex.com/search/xml?l10n=en&user=itzikooper&key={0}&query={1}&page={2}", apiKey,
-                            query, i));
+                var request =WebRequest.Create( $"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={apiKey}&query={query}&page={i}");
                 var response = request.GetResponse();
                 var dataStream = response.GetResponseStream();
                 var xelement = XElement.Load(dataStream);
@@ -53,12 +51,22 @@ namespace businessLogic.SearchEngines
 
         public async Task<SearchEngineResultsList> AsyncSearch(string query)
         {
-            return new SearchEngineResultsList
-            {
-                SearchEngineName = "Yandex",
-                Results = new List<Result>()
-            };
-            //throw new System.NotImplementedException();
+            return await FullSearch(0, NumberOfRequests, query, "Yandex");
+        }
+
+        protected override Task<List<Result>> SingleSearchIteration(string query, int page)
+        {
+            return base.SingleSearchIteration(query, page);
+        }
+
+        private Task<IEnumerable<XElement>> SearchRequest(string query, int page)
+        {
+            var request = WebRequest.Create($"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={ApiKey}&query={query}&page={page}");
+            var response = request.GetResponse();
+            var dataStream = response.GetResponseStream();
+            var xelement = XElement.Load(dataStream);
+            var results = xelement.Elements();
+            return Task.FromResult(results);
         }
     }
 }

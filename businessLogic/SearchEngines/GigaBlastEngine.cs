@@ -45,7 +45,7 @@ namespace businessLogic.SearchEngines
             foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
                 resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
                     res["title"].ToString(), res["sum"].ToString(), count++));
-            resultList.Results = DistinctList(resultList.Results);
+            resultList.Results = OrderAndDistinctList(resultList.Results);
             return resultList;
         }
         private Task<string> SearchRequest(string query)

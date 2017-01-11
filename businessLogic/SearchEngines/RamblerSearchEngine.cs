@@ -11,7 +11,6 @@ namespace businessLogic.SearchEngines
 {
     public class RamblerSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
-
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Rambler");
@@ -49,36 +48,37 @@ namespace businessLogic.SearchEngines
 
         public async Task<SearchEngineResultsList> AsyncSearch(string query)
         {
-            var resultList = CreateSearchEngineResultsList("Rambler");
-            resultList.Statistics.Name = "Rambler";
-            resultList.Statistics.Start = DateTime.Now;
-            var requests = new ConcurrentBag<Result>();
+            return await FullSearch(1, NumberOfRequests + 1, query, "Rambler");
+            //var resultList = CreateSearchEngineResultsList("Rambler");
+            //resultList.Statistics.Name = "Rambler";
+            //resultList.Statistics.Start = DateTime.Now;
+            //var requests = new ConcurrentBag<Result>();
 
-            await Task.Run(() =>
-            {
-                Parallel.For(1, NumberOfRequests + 1, async i =>
-                {
-                    try
-                    {
-                        var request = await SingleSearchIteration(query, i);
-                        foreach (var res in request)
-                        {
-                            requests.Add(res);
-                        }
-                    }
-                    catch
-                    {
-                        resultList.Statistics.Message = $"{resultList.Statistics.Message}/n request number {i} failed";
-                    }
-                });
-            });
+            //await Task.Run(() =>
+            //{
+            //    Parallel.For(1, NumberOfRequests + 1, async i =>
+            //    {
+            //        try
+            //        {
+            //            var request = await SingleSearchIteration(query, i);
+            //            foreach (var res in request)
+            //            {
+            //                requests.Add(res);
+            //            }
+            //        }
+            //        catch
+            //        {
+            //            resultList.Statistics.Message = $"{resultList.Statistics.Message}/n request number {i} failed";
+            //        }
+            //    });
+            //});
 
-            resultList.Results = DistinctList(requests);
-            resultList.Statistics.End = DateTime.Now;
-            return resultList;
+            //resultList.Results = OrderAndDistinctList(requests);
+            //resultList.Statistics.End = DateTime.Now;
+            //return resultList;
         }
 
-        private async Task<List<Result>> SingleSearchIteration(string query, int page)
+        protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var resultList = new List<Result>();
             var c = page*10 - 10;
