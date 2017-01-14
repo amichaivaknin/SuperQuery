@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using businessLogic;
+using businessLogic.Interfaces;
 using businessLogic.Models;
 using businessLogic.SearchEngines;
 using Markov;
@@ -12,16 +13,40 @@ namespace ConsoleApplication1
     {
         private static void Main()
         {
-            var ram = new RamblerSearchEngine();
-            var res = ram.AsyncSearch("amichai").Result;
+
+            var searchEngines = new Dictionary<string, ISearchEngine>
+            {
+                {"Google", new GoogleSearchEngine()},
+                {"Bing", new BingSearchEngine()},
+                {"Yandex", new YandexSearchEngine()},
+                {"GigaBlast", new GigaBlastEngine()},
+                {"HotBot", new HotBotSearchEngine()},
+                {"Rambler", new RamblerSearchEngine()}
+            };
+
+            var asyncSearchEngines = new Dictionary<string, IAsyncSearchEngine>
+            {
+                {"Google", new GoogleSearchEngine()},
+                {"Bing", new BingSearchEngine()},
+                {"Yandex", new YandexSearchEngine()},
+                {"GigaBlast", new GigaBlastEngine()},
+                {"HotBot", new HotBotSearchEngine()},
+                {"Rambler", new RamblerSearchEngine()}
+            };
+
+            var parAsync = asyncSearchEngines.Values.AsParallel();
+
+            var sync = searchEngines.Values.Select(searchengine => searchengine.Search("jerusalem")).ToList();
+
+            var async = Enumerable.ToList(parAsync.Select(searchEngine => searchEngine.AsyncSearch("jerusalem").Result));
 
             var multi = new MultiSearch();
 
 
-            //var search = multi.GetResultsFromAllSearchEngines("amichai");
-            var asyncSearch = multi.GetAsyncResultsFromAllSearchEngines("amichai");
+            ////var search = multi.GetResultsFromAllSearchEngines("amichai");
+            //var asyncSearch = multi.GetAsyncResultsFromAllSearchEngines("amichai");
 
-            var x = 1;
+            //var x = 1;
 
             //var dic = new Dictionary<string,int>();
             //var r = new GigaBlastEngine();

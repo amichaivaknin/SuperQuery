@@ -21,6 +21,7 @@ namespace businessLogic.SearchEngines
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Google");
+            resultList.Statistics.Start = DateTime.Now;
             var count = 1;
             uint start = 1;
 
@@ -49,6 +50,8 @@ namespace businessLogic.SearchEngines
             {
                 return resultList;
             }
+
+            resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
 

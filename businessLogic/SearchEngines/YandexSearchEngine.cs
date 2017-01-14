@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace businessLogic.SearchEngines
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Yandex");
+            resultList.Statistics.Start = DateTime.Now;
             var apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
             var count = 1;
 
@@ -45,7 +47,7 @@ namespace businessLogic.SearchEngines
                         });
                 }
             }
-
+            resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
 

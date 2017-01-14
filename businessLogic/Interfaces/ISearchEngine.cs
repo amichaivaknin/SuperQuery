@@ -2,7 +2,7 @@
 
 namespace businessLogic.Interfaces
 {
-    internal interface ISearchEngine
+    public interface ISearchEngine
     {
         SearchEngineResultsList Search(string query);
     }

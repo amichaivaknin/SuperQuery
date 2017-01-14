@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -14,6 +15,7 @@ namespace businessLogic.SearchEngines
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
+            resultList.Statistics.Start = DateTime.Now;
             var count = 1;
             var webClient = new WebClient();
             var result =
@@ -31,6 +33,7 @@ namespace businessLogic.SearchEngines
                         Description = res["sum"].ToString(),
                         Rank = count++
                     });
+            resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
 

@@ -14,6 +14,7 @@ namespace businessLogic.SearchEngines
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("HotBot");
+            resultList.Statistics.Start = DateTime.Now;
             var web = new HtmlWeb();
 
             for (var i = 1; i <= 10; i++)
@@ -49,7 +50,7 @@ namespace businessLogic.SearchEngines
                         break;
                 }
             }
-
+            resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
 

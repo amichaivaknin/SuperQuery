@@ -14,6 +14,7 @@ namespace businessLogic.SearchEngines
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Rambler");
+            resultList.Statistics.Start = DateTime.Now;
             var web = new HtmlWeb();
 
             for (var i = 1; i <= NumberOfRequests; i++)
@@ -43,6 +44,7 @@ namespace businessLogic.SearchEngines
                     break;
                 }
             }
+            resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
 

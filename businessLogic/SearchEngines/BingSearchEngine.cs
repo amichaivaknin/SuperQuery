@@ -18,6 +18,7 @@ namespace businessLogic.SearchEngines
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Bing");
+            resultList.Statistics.Start = DateTime.Now;
             var count = 1;
             var start = 0;
 
@@ -51,6 +52,8 @@ namespace businessLogic.SearchEngines
                 }
                 start += 10;
             }
+
+            resultList.Statistics.End= DateTime.Now;
             return resultList;
         }
 
