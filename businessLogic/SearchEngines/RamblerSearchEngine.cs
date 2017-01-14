@@ -85,7 +85,7 @@ namespace businessLogic.SearchEngines
             var document = await SearchRequest(query, page);
 
             if (document == null)
-                return null;
+                    return null;
 
             var searchResults = document.DocumentNode.SelectNodes("//body").ToArray();
             var lWrapper = searchResults[0].SelectNodes("//div[@class='l-wrapper']//a").ToArray();
@@ -97,7 +97,7 @@ namespace businessLogic.SearchEngines
                 var header = bSerpItem.SelectNodes("//h2[@class='b-serp-item__header']//a");
                 var snippet = bSerpItem.SelectNodes("//p[@class='b-serp-item__snippet']");
 
-                for (var j = 0; j < 10; j++)
+                for (var j = 0; j < 10 && header[j]!=null && snippet[j]!=null; j++)
                     resultList.Add(NewResult(header[j].GetAttributeValue("href", null), header[j].InnerText,
                         snippet[j].InnerText, c + j + 1));
                 break;

@@ -62,7 +62,7 @@ namespace businessLogic
         public IEnumerable<SearchEngineResultsList> GetAsyncResultsFromAllSearchEngines(string query)
         {
             var allResults = new ConcurrentBag<SearchEngineResultsList>();
-            Parallel.ForEach(_asyncSearchEngines.Values,  searchEngine =>
+            Parallel.ForEach(_asyncSearchEngines.Values, searchEngine =>
             {
                 var engineResult = searchEngine.AsyncSearch(query).Result;
                 allResults.Add(engineResult);

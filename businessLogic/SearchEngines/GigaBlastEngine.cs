@@ -38,14 +38,24 @@ namespace businessLogic.SearchEngines
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
             var count = 1;
-            var result = await SearchRequest(query);
-            var serializer = new JavaScriptSerializer();
-            var collection = serializer.Deserialize<Dictionary<string, object>>(result);
 
-            foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
-                resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
-                    res["title"].ToString(), res["sum"].ToString(), count++));
-            resultList.Results = OrderAndDistinctList(resultList.Results);
+            try
+            {
+                var result = await SearchRequest(query);
+                var serializer = new JavaScriptSerializer();
+                var collection = serializer.Deserialize<Dictionary<string, object>>(result);
+
+                foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
+                    resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
+                        res["title"].ToString(), res["sum"].ToString(), count++));
+                resultList.Results = OrderAndDistinctList(resultList.Results);
+                
+            }
+            catch (System.Exception)
+            {
+
+                resultList.Statistics.Message = "access to GigaBlast failed";
+            }
             return resultList;
         }
         private Task<string> SearchRequest(string query)

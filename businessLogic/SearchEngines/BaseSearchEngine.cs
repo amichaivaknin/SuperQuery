@@ -10,7 +10,7 @@ namespace businessLogic.SearchEngines
 {
     public class BaseSearchEngine
     {
-        protected const int NumberOfRequests = 10;
+        protected const int NumberOfRequests = 1;
 
         protected async Task<SearchEngineResultsList> FullSearch(int startIndex, int endIndex, string query, string engineName)
         {
@@ -23,10 +23,19 @@ namespace businessLogic.SearchEngines
             {
                 Parallel.For(startIndex, endIndex, async i =>
                 {
-                    var request = await SingleSearchIteration(query, i);
-                    foreach (var res in request)
+
+                    try
                     {
-                        requests.Add(res);
+                        var request = await SingleSearchIteration(query, i);
+                        foreach (var res in request)
+                        {
+                            requests.Add(res);
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                     }
                 });
             });

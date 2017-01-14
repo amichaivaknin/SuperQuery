@@ -96,6 +96,7 @@ namespace businessLogic.SearchEngines
 
         private Task<string> SearchRequest(string query, int page)
         {
+
             var webClient = new WebClient();
             var result =webClient.DownloadString($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={page*10+1}&alt=json&cr=us");
             webClient.Dispose();

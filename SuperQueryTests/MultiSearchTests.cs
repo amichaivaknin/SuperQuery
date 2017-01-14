@@ -59,11 +59,14 @@ namespace SuperQueryTests
         #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void MultiSearch_NullQuery_EmptySearchEngineLists()
         {
-            //
-            // TODO: Add test logic here
-            //
+            var multiSearch = new MultiSearch();
+            var results = multiSearch.GetAsyncResultsFromAllSearchEngines("");
+            foreach (var searchResult in results)
+            {
+                Assert.AreEqual(0,searchResult.Results.Count);
+            }
         }
     }
 }

@@ -54,9 +54,22 @@ namespace businessLogic.SearchEngines
             return await FullSearch(0, NumberOfRequests, query, "Yandex");
         }
 
-        protected override Task<List<Result>> SingleSearchIteration(string query, int page)
+        protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
-            return base.SingleSearchIteration(query, page);
+            var elements = await SearchRequest(query, page);
+            var count = 0;
+            return (from item in elements?.Descendants("group")
+                    select item.Element("doc")
+                    into xElement
+                    where xElement != null
+                    let element = xElement.Element("headline")
+                   select new Result
+                   {
+                    DisplayUrl = UrlConvert(xElement.Element("url")?.Value),
+                       Title = xElement.Element("title")?.Value,
+                       Description = element != null ? xElement.Element("headline").Value : xElement.Element("passages").Element("passage").Value,
+                       Rank = page * 10 + count++
+                   }).ToList();
         }
 
         private Task<IEnumerable<XElement>> SearchRequest(string query, int page)
