@@ -85,8 +85,7 @@ namespace businessLogic.RankAggregation
             {
                 DisplayUrl = result.DisplayUrl,
                 Description = result.Description,
-                Title = result.Title,
-                Rank = result.Rank
+                Title = result.Title
             });
         }
 

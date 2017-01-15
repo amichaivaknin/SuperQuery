@@ -13,34 +13,38 @@ namespace ConsoleApplication1
     {
         private static void Main()
         {
+            var ram = new RamblerSearchEngine();
 
-            var searchEngines = new Dictionary<string, ISearchEngine>
-            {
-                {"Google", new GoogleSearchEngine()},
-                {"Bing", new BingSearchEngine()},
-                {"Yandex", new YandexSearchEngine()},
-                {"GigaBlast", new GigaBlastEngine()},
-                {"HotBot", new HotBotSearchEngine()},
-                {"Rambler", new RamblerSearchEngine()}
-            };
+            var x = ram.AsyncSearch("israel").Result;
 
-            var asyncSearchEngines = new Dictionary<string, IAsyncSearchEngine>
-            {
-                {"Google", new GoogleSearchEngine()},
-                {"Bing", new BingSearchEngine()},
-                {"Yandex", new YandexSearchEngine()},
-                {"GigaBlast", new GigaBlastEngine()},
-                {"HotBot", new HotBotSearchEngine()},
-                {"Rambler", new RamblerSearchEngine()}
-            };
+            var y = 1;
+            //var searchEngines = new Dictionary<string, ISearchEngine>
+            //{
+            //    {"Google", new GoogleSearchEngine()},
+            //    {"Bing", new BingSearchEngine()},
+            //    {"Yandex", new YandexSearchEngine()},
+            //    {"GigaBlast", new GigaBlastEngine()},
+            //    {"HotBot", new HotBotSearchEngine()},
+            //    {"Rambler", new RamblerSearchEngine()}
+            //};
 
-            var parAsync = asyncSearchEngines.Values.AsParallel();
+            //var asyncSearchEngines = new Dictionary<string, IAsyncSearchEngine>
+            //{
+            //    {"Google", new GoogleSearchEngine()},
+            //    {"Bing", new BingSearchEngine()},
+            //    {"Yandex", new YandexSearchEngine()},
+            //    {"GigaBlast", new GigaBlastEngine()},
+            //    {"HotBot", new HotBotSearchEngine()},
+            //    {"Rambler", new RamblerSearchEngine()}
+            //};
 
-            var sync = searchEngines.Values.Select(searchengine => searchengine.Search("jerusalem")).ToList();
+            //var parAsync = asyncSearchEngines.Values.AsParallel();
 
-            var async = Enumerable.ToList(parAsync.Select(searchEngine => searchEngine.AsyncSearch("jerusalem").Result));
+            //var sync = searchEngines.Values.Select(searchengine => searchengine.Search("jerusalem")).ToList();
 
-            var multi = new MultiSearch();
+            //var async = Enumerable.ToList(parAsync.Select(searchEngine => searchEngine.AsyncSearch("jerusalem").Result));
+
+            //var multi = new MultiSearch();
 
 
             ////var search = multi.GetResultsFromAllSearchEngines("amichai");
