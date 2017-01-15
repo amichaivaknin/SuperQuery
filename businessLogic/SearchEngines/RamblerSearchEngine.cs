@@ -100,7 +100,7 @@ namespace businessLogic.SearchEngines
                 var snippet = bSerpItem.SelectNodes("//p[@class='b-serp-item__snippet']");
 
                 for (var j = 0; j < 10 && header[j]!=null && snippet[j]!=null; j++)
-                    resultList.Add(NewResult(header[j].GetAttributeValue("href", null), header[j].InnerText,
+                    resultList.Add(NewResult(UrlConvert(header[j].GetAttributeValue("href", null)), header[j].InnerText,
                         snippet[j].InnerText, c + j + 1));
                 break;
             }
