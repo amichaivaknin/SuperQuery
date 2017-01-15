@@ -93,6 +93,8 @@
                 if (flag == 0) return;
                 if ($('#search').val().length == 0) return;
                 $('#noResDIv').hide();
+                $('#resDiv').hide();
+                $('#pagingDiv').hide();
                 $('#spinner').show();
                 }
 
