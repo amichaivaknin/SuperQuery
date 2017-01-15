@@ -40,7 +40,7 @@ namespace SuperQueryUI
             //if (checkbox_yandex.Checked) engines.Add("Yandex");
             if (checkbox_gigablast.Checked) engines.Add("GigaBlast");
             if (checkbox_HotBot.Checked) engines.Add("HotBot");
-            if (checkbox_rambler.Checked) engines.Add("Rambler");
+            //if (checkbox_rambler.Checked) engines.Add("Rambler");
             /////////////// add more engines if needed !!!!!!!
             ranking_results = manager.GetQueryResults(engines, query).ToList();
             Session["res"] = ranking_results;
@@ -82,6 +82,18 @@ namespace SuperQueryUI
             resPerPage = (List<int>)Session["resPerPage"];
             ranking_results = (List<FinalResult>)Session["res"];
             currPage = (int)Session["page"];
+            //////////////
+            if(ranking_results.Count==0)
+            {
+                resDiv.Visible = false;
+                pagingDiv.Visible = false;
+                noResDIv.Visible = true;
+                return;
+            }
+            resDiv.Visible = true;
+            pagingDiv.Visible = true;
+            noResDIv.Visible = false;
+            //////////////
             int startIndex = 10 * (currPage - 1);
             for (int i = 0; i < resPerPage[currPage - 1]; i++)
             {
@@ -162,8 +174,10 @@ namespace SuperQueryUI
             buttonList.Add(page10Button);
             for (int k = 0; k < resPerPage.Count; k++)
             {
+                buttonList[k].Style.Add(HtmlTextWriterStyle.Color, "black");
                 buttonList[k].Visible = true;
             }
+            page1Button.Style.Add(HtmlTextWriterStyle.Color, "red");
         }
 
         protected void changePage(object sender, EventArgs e)

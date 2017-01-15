@@ -92,6 +92,10 @@
         </script>
 
         <br />
+        <div id="noResDIv" style="text-align:center" runat="server" visible="False">
+            <asp:Label ID="noResLabel" runat="server" Text="No results"></asp:Label>
+        </div>
+        <br />
         <div id="resDiv" runat="server"></div>
         <br />
         <div id="pagingDiv" runat="server" style="text-align:center">
