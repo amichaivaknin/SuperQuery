@@ -162,6 +162,16 @@ namespace SuperQueryUI
         {
             currPage = (int)Session["page"];
             page1Button.Style.Add(HtmlTextWriterStyle.Color, "red");
+            page2Button.Visible = false;
+            page3Button.Visible = false;
+            page4Button.Visible = false;
+            page5Button.Visible = false;
+            page6Button.Visible = false;
+            page7Button.Visible = false;
+            page8Button.Visible = false;
+            page9Button.Visible = false;
+            page10Button.Visible = false;
+
             buttonList.Add(page1Button);
             buttonList.Add(page2Button);
             buttonList.Add(page3Button);

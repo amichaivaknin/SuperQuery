@@ -57,9 +57,15 @@
             <asp:Image ID="Image1" runat="server" ImageUrl="~/images/loader2.gif" Height="150" Width="150" />
         </div>--%>
         <%--<br />--%>
+        <br />
         <div id="spinner" style="display:none">
             <img id="image-spinner" src="images/loader8.gif" alt="loading" height="30" width="30" />
         </div>
+        <br />
+        <div id="noResDIv" style="text-align:center" runat="server" visible="False">
+            <asp:Label ID="noResLabel" runat="server" Text="No results"></asp:Label>
+        </div>
+        
         <script>
             var flag = 0;
             $("#search").change(function () {
@@ -86,15 +92,14 @@
             function x() {
                 if (flag == 0) return;
                 if ($('#search').val().length == 0) return;
+                $('#noResDIv').hide();
                 $('#spinner').show();
                 }
 
         </script>
 
         <br />
-        <div id="noResDIv" style="text-align:center" runat="server" visible="False">
-            <asp:Label ID="noResLabel" runat="server" Text="No results"></asp:Label>
-        </div>
+        
         <br />
         <div id="resDiv" runat="server"></div>
         <br />
