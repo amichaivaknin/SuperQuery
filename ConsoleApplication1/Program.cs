@@ -13,7 +13,7 @@ namespace ConsoleApplication1
     {
         private static void Main()
         {
-            var ram = new RamblerSearchEngine();
+            var ram = new GoogleSearchEngine();
 
             var x = ram.AsyncSearch("israel").Result;
 
