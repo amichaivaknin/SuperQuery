@@ -27,8 +27,9 @@ namespace businessLogic.SearchEngines
                         requests.Add(res);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    var x = e;
                     resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
             });
