@@ -14,7 +14,7 @@ namespace businessLogic.SearchEngines
     public class GoogleSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
         //private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-        //private const string Cx = "007172875963593911035:kpk5tcwf8pa";
+       // private const string Cx = "007172875963593911035:kpk5tcwf8pa";
         private const string ApiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
         private const string Cx = "009511415247016879030:smaostb1cxe";
 
@@ -55,30 +55,36 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        public SearchEngineResultsList AsyncSearch(string query)
         {
-            return await FullSearch(0, NumberOfRequests, query, "Google");
-            var resultList = CreateSearchEngineResultsList("Google");
-            resultList.Statistics.Name = "Google";
-            resultList.Statistics.Start = DateTime.Now;
-            var requests = new ConcurrentBag<Result>();
-
-            await Task.Run(() =>
-            {
-                Parallel.For(0, NumberOfRequests, async i =>
-                {
-                    var request = await SingleSearchIteration(query, i);
-                    foreach (var res in request)
-                    {
-                        requests.Add(res);
-                    }
-                });
-            });
-
-            resultList.Results = OrderAndDistinctList(requests);
-            resultList.Statistics.End = DateTime.Now;
-            return resultList;
+            return  FullSearch(1, NumberOfRequests+1, query, "Google");
         }
+
+
+        //public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        //{
+        //    return await FullSearch(0, NumberOfRequests, query, "Google");
+        //    var resultList = CreateSearchEngineResultsList("Google");
+        //    resultList.Statistics.Name = "Google";
+        //    resultList.Statistics.Start = DateTime.Now;
+        //    var requests = new ConcurrentBag<Result>();
+
+        //    await Task.Run(() =>
+        //    {
+        //        Parallel.For(0, NumberOfRequests, async i =>
+        //        {
+        //            var request = await SingleSearchIteration(query, i);
+        //            foreach (var res in request)
+        //            {
+        //                requests.Add(res);
+        //            }
+        //        });
+        //    });
+
+        //    resultList.Results = OrderAndDistinctList(requests);
+        //    resultList.Statistics.End = DateTime.Now;
+        //    return resultList;
+        //}
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int i)
         {
@@ -93,17 +99,22 @@ namespace businessLogic.SearchEngines
                     DisplayUrl = UrlConvert(item["link"].ToString()),
                     Title = item["title"].ToString(),
                     Description = item["snippet"].ToString(),
-                    Rank = i*10 + count++
+                    Rank = i*10 -10 + count++
                 }).ToList();
         }
 
-        private Task<string> SearchRequest(string query, int page)
+        private async Task<string> SearchRequest(string query, int page)
         {
+            using (var webClient = new WebClient())
+            {
+                var result = await webClient.DownloadStringTaskAsync($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={page*10-9}&alt=json&cr=us");
 
-            var webClient = new WebClient();
-            var result =webClient.DownloadString($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={page*10+1}&alt=json&cr=us");
-            webClient.Dispose();
-            return Task.FromResult(result);
+                return result;
+            }
+ 
         }
+
+
+
     }
 }

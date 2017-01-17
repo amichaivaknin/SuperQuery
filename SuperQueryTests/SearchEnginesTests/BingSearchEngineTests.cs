@@ -75,7 +75,7 @@ namespace SuperQueryTests.SearchEnginesTests
         [TestMethod]
         public void BingAsyncSearch_NullQuery_ResultsCountEqualTo0()
         {
-            var search = _searchEngine.AsyncSearch("").Result;
+            var search = _searchEngine.AsyncSearch("");
             var listCount = search.Results.Count;
             Assert.AreEqual(0, listCount);
         }
@@ -83,7 +83,7 @@ namespace SuperQueryTests.SearchEnginesTests
         [TestMethod]
         public void BingAsyncSearch_JerusalemQuery_ResultsCountBiggerThe0()
         {
-            var search = _searchEngine.AsyncSearch("Jerusalem").Result;
+            var search = _searchEngine.AsyncSearch("Jerusalem");
             var listCount = search.Results.Count;
             Assert.IsTrue(listCount > 0);
         }
@@ -91,7 +91,7 @@ namespace SuperQueryTests.SearchEnginesTests
         [TestMethod]
         public void BingAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
-            var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd").Result;
+            var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
             var listCount = search.Results.Count;
             Assert.AreEqual(0, listCount);
         }

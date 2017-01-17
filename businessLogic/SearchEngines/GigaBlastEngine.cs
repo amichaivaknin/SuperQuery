@@ -11,7 +11,7 @@ using businessLogic.Models;
 namespace businessLogic.SearchEngines
 {
     public class GigaBlastEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
-    {    
+    {
         public SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
@@ -24,7 +24,7 @@ namespace businessLogic.SearchEngines
             var serializer = new JavaScriptSerializer();
             var collection = serializer.Deserialize<Dictionary<string, object>>(result);
 
-            foreach (Dictionary<string, object> res in (IEnumerable) collection["results"])
+            foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
                 if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(res["url"].ToString()))))
                     resultList.Results.Add(new Result
                     {
@@ -37,22 +37,21 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        public SearchEngineResultsList AsyncSearch(string query)
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
             var count = 1;
-
             try
             {
-                var result = await SearchRequest(query);
+                var result = SearchRequest(query);
                 var serializer = new JavaScriptSerializer();
-                var collection = serializer.Deserialize<Dictionary<string, object>>(result);
+                var collection = serializer.Deserialize<Dictionary<string, object>>(result.Result);
 
                 foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
                     resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
                         res["title"].ToString(), res["sum"].ToString(), count++));
                 resultList.Results = OrderAndDistinctList(resultList.Results);
-                
+
             }
             catch (System.Exception)
             {
@@ -61,14 +60,16 @@ namespace businessLogic.SearchEngines
             }
             return resultList;
         }
-        private Task<string> SearchRequest(string query)
+        private async Task<string> SearchRequest(string query)
         {
-            var webClient = new WebClient();
-            var result =
-                webClient.DownloadString(
-                    $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests*10}&rxivq=1015471771&rand=1482683517796");
-            webClient.Dispose();
-            return Task.FromResult(result);
+            using (var webClient = new WebClient())
+            {
+                var result =
+                    await webClient.DownloadStringTaskAsync(
+                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests * 10}&rxivq=1015471771&rand=1482683517796");
+
+                return result;
+            }
         }
     }
 }

@@ -51,10 +51,15 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        public SearchEngineResultsList AsyncSearch(string query)
         {
-            return await FullSearch(0, NumberOfRequests, query, "Yandex");
+            return FullSearch(0, NumberOfRequests, query, "Yandex");
         }
+
+        //public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        //{
+        //    return await FullSearch(0, NumberOfRequests, query, "Yandex");
+        //}
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {

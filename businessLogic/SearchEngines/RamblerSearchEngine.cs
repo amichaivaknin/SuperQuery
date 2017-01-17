@@ -48,37 +48,42 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        public SearchEngineResultsList AsyncSearch(string query)
         {
-            return await FullSearch(1, NumberOfRequests + 1, query, "Rambler");
-            //var resultList = CreateSearchEngineResultsList("Rambler");
-            //resultList.Statistics.Name = "Rambler";
-            //resultList.Statistics.Start = DateTime.Now;
-            //var requests = new ConcurrentBag<Result>();
-
-            //await Task.Run(() =>
-            //{
-            //    Parallel.For(1, NumberOfRequests + 1, async i =>
-            //    {
-            //        try
-            //        {
-            //            var request = await SingleSearchIteration(query, i);
-            //            foreach (var res in request)
-            //            {
-            //                requests.Add(res);
-            //            }
-            //        }
-            //        catch
-            //        {
-            //            resultList.Statistics.Message = $"{resultList.Statistics.Message}/n request number {i} failed";
-            //        }
-            //    });
-            //});
-
-            //resultList.Results = OrderAndDistinctList(requests);
-            //resultList.Statistics.End = DateTime.Now;
-            //return resultList;
+            return FullSearch(1, NumberOfRequests + 1, query, "Rambler");
         }
+
+        //public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        //{
+        //    return await FullSearch(1, NumberOfRequests + 1, query, "Rambler");
+        //    //var resultList = CreateSearchEngineResultsList("Rambler");
+        //    //resultList.Statistics.Name = "Rambler";
+        //    //resultList.Statistics.Start = DateTime.Now;
+        //    //var requests = new ConcurrentBag<Result>();
+
+        //    //await Task.Run(() =>
+        //    //{
+        //    //    Parallel.For(1, NumberOfRequests + 1, async i =>
+        //    //    {
+        //    //        try
+        //    //        {
+        //    //            var request = await SingleSearchIteration(query, i);
+        //    //            foreach (var res in request)
+        //    //            {
+        //    //                requests.Add(res);
+        //    //            }
+        //    //        }
+        //    //        catch
+        //    //        {
+        //    //            resultList.Statistics.Message = $"{resultList.Statistics.Message}/n request number {i} failed";
+        //    //        }
+        //    //    });
+        //    //});
+
+        //    //resultList.Results = OrderAndDistinctList(requests);
+        //    //resultList.Statistics.End = DateTime.Now;
+        //    //return resultList;
+        //}
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
@@ -109,17 +114,10 @@ namespace businessLogic.SearchEngines
 
         private Task<HtmlDocument> SearchRequest(string query, int page)
         {
-            try
-            {
+            
                 var web = new HtmlWeb();
                 var document =web.Load($"http://nova.rambler.ru/search?scroll=1&utm_source=nhp&utm_content=search&utm_medium=button&utm_campaign=self_promo&query={query}&page={page}");
                 return Task.FromResult(document);
-            }
-            catch (Exception e)
-            {
-                return null;
-            }
-
         }
     }
 }

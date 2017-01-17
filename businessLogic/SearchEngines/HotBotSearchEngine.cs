@@ -24,7 +24,7 @@ namespace businessLogic.SearchEngines
 
                 foreach (var node in searchResults)
                 {
-                    var count = 0;
+                    var count = 1;
                     foreach (var liTag in node.SelectNodes("//li"))
                     {
                         var titles = liTag.SelectNodes("//h3[@class='title']//a");
@@ -54,10 +54,15 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        public SearchEngineResultsList AsyncSearch(string query)
         {
-            return await FullSearch(1, NumberOfRequests + 1, query, "HotBot");
+            return  FullSearch(1, NumberOfRequests + 1, query, "HotBot");
         }
+
+        //public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        //{
+        //    return await FullSearch(1, NumberOfRequests + 1, query, "HotBot");
+        //}
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
@@ -100,5 +105,7 @@ namespace businessLogic.SearchEngines
             var document = web.Load($"http://hotbot.com/search/?query={query}&page={page}");
             return Task.FromResult(document);
         }
+
+       
     }
 }

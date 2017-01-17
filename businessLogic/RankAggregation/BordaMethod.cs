@@ -8,7 +8,7 @@ namespace businessLogic.RankAggregation
     internal class BordaMethod
     {
         private readonly Dictionary<string, int> _rankBySearchEngine;
-
+        private const int StartRankPosition = 100;
         public BordaMethod()
         {
             _rankBySearchEngine = new Dictionary<string, int>
@@ -26,13 +26,49 @@ namespace businessLogic.RankAggregation
         {
             var aggregationResults = new Dictionary<string, FinalResult>();
 
+            //foreach (var searchEngine in allSearchResults)
+            //{
+            //    var singleSEarchEngineRankDictionary = SingleSearchEngineResultsRank(searchEngine.Results,searchEngine.SearchEngineName);
+
+            //    foreach (var result in singleSEarchEngineRankDictionary)
+            //    {
+            //        if (!aggregationResults.ContainsKey(result.Key))
+            //        {
+            //            var location = (int)((result.Value.Rank - StartRankPosition - _rankBySearchEngine[searchEngine.SearchEngineName])*-1);
+            //            aggregationResults.Add(result.Key, new FinalResult
+            //            {
+            //                Description = result.Value.Description,
+            //                DisplayUrl = result.Value.DisplayUrl,
+            //                Rank = result.Value.Rank,
+            //                SearchEngines = new Dictionary<string, int> {{searchEngine.SearchEngineName, location}}
+            //            });
+            //        }
+            //        else
+            //        {
+                        
+            //        }
+            //    }
+            //}
+
             RankAndMargeResultsFromAllLists(allSearchResults, aggregationResults);
 
+
             var x = (from result in aggregationResults.Values
-                orderby result.Rank descending
-                select result).ToList();
+                     orderby result.Rank descending
+                     select result).ToList();
 
             return x;
+        }
+
+        private Dictionary<string, Result> SingleSearchEngineResultsRank(List<Result> results, string searchEngineName)
+        {
+            var resultsMap = new Dictionary<string, Result>();
+            foreach (var result in results)
+            {
+                result.Rank = StartRankPosition - result.Rank +_rankBySearchEngine[searchEngineName];
+                resultsMap.Add(result.DisplayUrl, result);
+            }
+            return resultsMap;
         }
 
         private void RankAndMargeResultsFromAllLists(IEnumerable<SearchEngineResultsList> allSearchResults,

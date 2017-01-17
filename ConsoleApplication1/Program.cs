@@ -14,9 +14,7 @@ namespace ConsoleApplication1
         private static void Main()
         {
             var ram = new GoogleSearchEngine();
-
-            var x = ram.AsyncSearch("israel").Result;
-
+            var x = ram.AsyncSearch("amichai");
             var y = 1;
             //var searchEngines = new Dictionary<string, ISearchEngine>
             //{

@@ -64,7 +64,7 @@ namespace businessLogic
             var allResults = new ConcurrentBag<SearchEngineResultsList>();
             Parallel.ForEach(_asyncSearchEngines.Values, searchEngine =>
             {
-                var engineResult = searchEngine.AsyncSearch(query).Result;
+                var engineResult = searchEngine.AsyncSearch(query);
                 allResults.Add(engineResult);
             });
 
@@ -78,7 +78,7 @@ namespace businessLogic
 
             Parallel.ForEach(engines, searchEngine =>
             {
-                var engineResult = _asyncSearchEngines[searchEngine].AsyncSearch(query).Result;
+                var engineResult = _asyncSearchEngines[searchEngine].AsyncSearch(query);
                 allResults.Add(engineResult);
             });
             return allResults;

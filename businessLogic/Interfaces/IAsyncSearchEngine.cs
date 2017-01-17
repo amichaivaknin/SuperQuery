@@ -5,6 +5,6 @@ namespace businessLogic.Interfaces
 {
     public interface IAsyncSearchEngine
     {
-        Task<SearchEngineResultsList> AsyncSearch(string query);
+        SearchEngineResultsList AsyncSearch(string query);
     }
 }
