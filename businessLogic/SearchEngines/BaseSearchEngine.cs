@@ -12,32 +12,25 @@ namespace businessLogic.SearchEngines
     {
         protected const int NumberOfRequests = 10;
 
-        protected async Task<SearchEngineResultsList> FullSearch(int startIndex, int endIndex, string query, string engineName)
+        protected SearchEngineResultsList FullSearch(int startIndex, int endIndex, string query, string engineName)
         {
             var resultList = CreateSearchEngineResultsList(engineName);
-            resultList.Statistics.Name = engineName;
-            resultList.Statistics.Start = DateTime.Now;
             var requests = new ConcurrentBag<Result>();
 
-            await Task.Run(() =>
+            Parallel.For(startIndex, endIndex, i =>
             {
-                Parallel.For(startIndex, endIndex, async i =>
+                try
                 {
-
-                    try
+                    var request = SingleSearchIteration(query, i).Result;
+                    foreach (var res in request)
                     {
-                        var request = await SingleSearchIteration(query, i);
-                        foreach (var res in request)
-                        {
-                            requests.Add(res);
-                        }
+                        requests.Add(res);
                     }
-                    catch (Exception)
-                    {
-
-                        resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
-                    }
-                });
+                }
+                catch (Exception)
+                {
+                    resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
+                }
             });
 
             resultList.Results = OrderAndDistinctList(requests);
@@ -60,11 +53,10 @@ namespace businessLogic.SearchEngines
             return new SearchEngineResultsList
             {
                 SearchEngineName = searchEngineName,
-
-                Results = new List<Result>()
+                Results = new List<Result>(),
             };
         }
-       
+
         protected List<Result> OrderAndDistinctList(IEnumerable<Result> results)
         {
             return results.OrderBy(x => x.Rank).GroupBy(x => x.DisplayUrl).Select(y => y.First()).ToList();

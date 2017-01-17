@@ -57,32 +57,35 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        public SearchEngineResultsList AsyncSearch(string query)
         {
-            return await FullSearch(0, NumberOfRequests, query, "Bing");
-            //var resultList = CreateSearchEngineResultsList("Bing");
-            //resultList.Statistics.Name = "Bing";
-            //resultList.Statistics.Start = DateTime.Now;
-            //var requests = new ConcurrentBag<Result>();
-
-            //await Task.Run(() =>
-            //{
-            //    Parallel.For(0, NumberOfRequests, async i =>
-            //    {
-            //        var request = await SingleSearchIteration(query, i);
-            //        foreach (var res in request)
-            //        {
-            //            requests.Add(res);
-            //        }
-            //    });
-            //});
-
-            //resultList.Results = OrderAndDistinctList(requests);
-            //resultList.Statistics.End = DateTime.Now;
-            //return resultList;
+            return FullSearch(0, NumberOfRequests, query, "Bing");
         }
 
+        //public async Task<SearchEngineResultsList> AsyncSearch(string query)
+        //{
+        //    return await FullSearch(0, NumberOfRequests, query, "Bing");
+        //    //var resultList = CreateSearchEngineResultsList("Bing");
+        //    //resultList.Statistics.Name = "Bing";
+        //    //resultList.Statistics.Start = DateTime.Now;
+        //    //var requests = new ConcurrentBag<Result>();
 
+        //    //await Task.Run(() =>
+        //    //{
+        //    //    Parallel.For(0, NumberOfRequests, async i =>
+        //    //    {
+        //    //        var request = await SingleSearchIteration(query, i);
+        //    //        foreach (var res in request)
+        //    //        {
+        //    //            requests.Add(res);
+        //    //        }
+        //    //    });
+        //    //});
+
+        //    //resultList.Results = OrderAndDistinctList(requests);
+        //    //resultList.Statistics.End = DateTime.Now;
+        //    //return resultList;
+        //}
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
@@ -104,14 +107,15 @@ namespace businessLogic.SearchEngines
             return results;
         }
 
-        private Task<string> SearchRequest(string query, int page)
+        private async Task<string> SearchRequest(string query, int page)
         {
-            var webClient = new WebClient();
-            var result =
-                webClient.DownloadString(
-                    $"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page*10}&mkt=en-us&safesearch=Moderate&filter=webpages");
-            webClient.Dispose();
-            return Task.FromResult(result);
+            using (var webClient = new WebClient())
+            {
+                var result = await webClient.DownloadStringTaskAsync($"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page * 10}&mkt=en-us&safesearch=Moderate&filter=webpages");
+
+                return result;
+            }
         }
+
     }
 }
