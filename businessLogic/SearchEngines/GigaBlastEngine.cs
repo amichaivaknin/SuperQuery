@@ -66,7 +66,7 @@ namespace businessLogic.SearchEngines
             {
                 var result =
                     await webClient.DownloadStringTaskAsync(
-                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests * 10}&rxivq=1015471771&rand=1482683517796");
+                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests*10}&rxivq=1015471771&rand=1482683517796");
 
                 return result;
             }

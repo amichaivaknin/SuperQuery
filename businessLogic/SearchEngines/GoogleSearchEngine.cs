@@ -13,10 +13,10 @@ namespace businessLogic.SearchEngines
 {
     public class GoogleSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
     {
-        //private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-       // private const string Cx = "007172875963593911035:kpk5tcwf8pa";
-        private const string ApiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
-        private const string Cx = "009511415247016879030:smaostb1cxe";
+        private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
+        private const string Cx = "007172875963593911035:kpk5tcwf8pa";
+        //private const string ApiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
+        //private const string Cx = "009511415247016879030:smaostb1cxe";
 
         public SearchEngineResultsList Search(string query)
         {
@@ -105,9 +105,10 @@ namespace businessLogic.SearchEngines
 
         private async Task<string> SearchRequest(string query, int page)
         {
+            int start = (page * 10) - 9;
             using (var webClient = new WebClient())
             {
-                var result = await webClient.DownloadStringTaskAsync($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={page*10-9}&alt=json&cr=us");
+                var result = await webClient.DownloadStringTaskAsync($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={start}&alt=json&cr=us");
 
                 return result;
             }
