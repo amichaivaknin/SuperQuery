@@ -13,7 +13,7 @@ namespace ConsoleApplication1
     {
         private static void Main()
         {
-            var ram = new GoogleSearchEngine();
+            var ram = new GigaBlastEngine();
             var x = ram.AsyncSearch("amichai");
             var y = 1;
             //var searchEngines = new Dictionary<string, ISearchEngine>

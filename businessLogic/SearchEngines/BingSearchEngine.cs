@@ -87,13 +87,13 @@ namespace businessLogic.SearchEngines
         //    //return resultList;
         //}
 
-        protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
+        protected override  Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var count = 1;
             var results = new List<Result>();
-            var result = await SearchRequest(query, page);
+            var result =  SearchRequest(query, page);
             var serializer = new JavaScriptSerializer();
-            var collection = serializer.Deserialize<Dictionary<string, object>>(result);
+            var collection = serializer.Deserialize<Dictionary<string, object>>(result.Result);
 
             foreach (var itemValue in from KeyValuePair<string, object>
                 item in (IEnumerable) collection["webPages"]
@@ -104,17 +104,17 @@ namespace businessLogic.SearchEngines
                     from Dictionary<string, object> res in itemValue
                     select NewResult(UrlConvert(res["displayUrl"].ToString()), res["name"].ToString(),
                         res["snippet"].ToString(), page*10 + count++));
-            return results;
+            return Task.FromResult(results);
         }
 
-        private async Task<string> SearchRequest(string query, int page)
+        private Task<string> SearchRequest(string query, int page)
         {
+            string result;
             using (var webClient = new WebClient())
             {
-                var result = await webClient.DownloadStringTaskAsync($"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page * 10}&mkt=en-us&safesearch=Moderate&filter=webpages");
-
-                return result;
+                 result = webClient.DownloadString($"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page * 10}&mkt=en-us&safesearch=Moderate&filter=webpages");   
             }
+            return Task.FromResult(result);
         }
 
     }

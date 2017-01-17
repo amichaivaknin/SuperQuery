@@ -60,16 +60,16 @@ namespace businessLogic.SearchEngines
             }
             return resultList;
         }
-        private async Task<string> SearchRequest(string query)
+        private  Task<string> SearchRequest(string query)
         {
+            string result;
             using (var webClient = new WebClient())
             {
-                var result =
-                    await webClient.DownloadStringTaskAsync(
-                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests*10}&rxivq=1015471771&rand=1482683517796");
-
-                return result;
+                result =
+                     webClient.DownloadString(
+                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests * 10}&rxivq=1015471771&rand=1482683517796");   
             }
+            return Task.FromResult(result);
         }
     }
 }
