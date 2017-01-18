@@ -36,12 +36,12 @@ namespace SuperQueryUI
             if (query.Equals("")) return;
             Session["query"] = query;
             //if (checkbox_bing.Checked) engines.Add("Bing");
-            if (checkbox_google.Checked) engines.Add("Google");
-            if (checkbox_yandex.Checked) engines.Add("Yandex");
+            //if (checkbox_google.Checked) engines.Add("Google");
+            //if (checkbox_yandex.Checked) engines.Add("Yandex");
             if (checkbox_gigablast.Checked) engines.Add("GigaBlast");
             if (checkbox_HotBot.Checked) engines.Add("HotBot");
             if (checkbox_rambler.Checked) engines.Add("Rambler");
-            ///////////////// add more engines if needed !!!!!!!
+            /////////////// add more engines if needed !!!!!!!
             ranking_results = manager.GetQueryResults(engines, query).ToList();
             Session["res"] = ranking_results;
             currPage = 1;
