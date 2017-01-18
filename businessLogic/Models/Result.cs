@@ -4,10 +4,10 @@ namespace businessLogic.Models
 {
     public class Result : IEquatable<Result>
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
         public string DisplayUrl { get; set; }
         public string Url { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
         public double Rank { get; set; }
 
         public bool Equals(Result other)
