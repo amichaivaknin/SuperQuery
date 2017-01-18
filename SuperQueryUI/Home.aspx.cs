@@ -34,6 +34,11 @@ namespace SuperQueryUI
         {
             query = search.Value;
             if (query.Equals("")) return;
+            if (!((checkbox_bing.Checked) || (checkbox_gigablast.Checked) || (checkbox_google.Checked) || (checkbox_HotBot.Checked) || (checkbox_rambler.Checked) || (checkbox_yandex.Checked)))
+            {
+                pagingDiv.Visible = false;
+                return;
+            }
             Session["query"] = query;
             //if (checkbox_bing.Checked) engines.Add("Bing");
             //if (checkbox_google.Checked) engines.Add("Google");

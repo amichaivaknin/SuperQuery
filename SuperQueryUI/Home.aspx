@@ -90,6 +90,14 @@
                 flag = 1;
             });
             function x() {
+                
+                if (!(($("#checkbox_google").is(":checked")) || ($("#checkbox_yandex").is(":checked")) || ($("#checkbox_bing").is(":checked")) || ($("#checkbox_gigablast").is(":checked")) || ($("#checkbox_HotBot").is(":checked")) || ($("#checkbox_rambler").is(":checked")))) {
+                    window.alert("please select at least one searche engine");
+                    $('#noResDIv').hide();
+                    $('#resDiv').hide();
+                    $('#pagingDiv').hide();
+                    return;
+                }
                 if (flag == 0) return;
                 if ($('#search').val().length == 0) return;
                 $('#noResDIv').hide();
