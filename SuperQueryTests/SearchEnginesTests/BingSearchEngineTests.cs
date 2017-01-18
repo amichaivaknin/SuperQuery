@@ -18,36 +18,6 @@ namespace SuperQueryTests.SearchEnginesTests
             _searchEngine = new BingSearchEngine();
         }
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext { get; set; }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
-
         [TestMethod]
         public void BingSearch_NullQuery_ResultsCountEqualTo0()
         {
@@ -68,30 +38,6 @@ namespace SuperQueryTests.SearchEnginesTests
         public void BingSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.Search("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
-            var listCount = search.Results.Count;
-            Assert.AreEqual(0, listCount);
-        }
-
-        [TestMethod]
-        public void BingAsyncSearch_NullQuery_ResultsCountEqualTo0()
-        {
-            var search = _searchEngine.AsyncSearch("");
-            var listCount = search.Results.Count;
-            Assert.AreEqual(0, listCount);
-        }
-
-        [TestMethod]
-        public void BingAsyncSearch_JerusalemQuery_ResultsCountBiggerThe0()
-        {
-            var search = _searchEngine.AsyncSearch("Jerusalem");
-            var listCount = search.Results.Count;
-            Assert.IsTrue(listCount > 0);
-        }
-
-        [TestMethod]
-        public void BingAsynSearch_QueryWithNoResults_ResultsCountEqualTo0()
-        {
-            var search = _searchEngine.AsyncSearch("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
             var listCount = search.Results.Count;
             Assert.AreEqual(0, listCount);
         }
