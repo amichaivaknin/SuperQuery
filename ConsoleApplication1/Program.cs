@@ -13,9 +13,8 @@ namespace ConsoleApplication1
     {
         private static void Main()
         {
-            var ram = new GigaBlastEngine();
-            var x = ram.AsyncSearch("amichai");
-            var y = 1;
+            //var ram = new GigaBlastEngine();
+            //var y = 1;
             //var searchEngines = new Dictionary<string, ISearchEngine>
             //{
             //    {"Google", new GoogleSearchEngine()},
@@ -40,7 +39,7 @@ namespace ConsoleApplication1
 
             //var sync = searchEngines.Values.Select(searchengine => searchengine.Search("jerusalem")).ToList();
 
-            //var async = Enumerable.ToList(parAsync.Select(searchEngine => searchEngine.AsyncSearch("jerusalem").Result));
+            //var async = Enumerable.ToList(parAsync.Select(searchEngine => searchEngine.ParallelSearch("jerusalem").Result));
 
             //var multi = new MultiSearch();
 
@@ -52,7 +51,7 @@ namespace ConsoleApplication1
 
             //var dic = new Dictionary<string,int>();
             //var r = new GigaBlastEngine();
-            //var s = r.AsyncSearch("amichai").Result;
+            //var s = r.ParallelSearch("amichai").Result;
             //var m = new MarkovChain<Result>(1000);
             //foreach (var res in s.Results)
             //{

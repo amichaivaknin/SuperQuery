@@ -9,7 +9,7 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class YandexSearchEngine : BaseSearchEngine, ISearchEngine, IAsyncSearchEngine
+    public class YandexSearchEngine : BaseSearchEngine, ISearchEngine
     {
         private const string ApiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
 
@@ -17,49 +17,24 @@ namespace businessLogic.SearchEngines
         {
             var resultList = CreateSearchEngineResultsList("Yandex");
             resultList.Statistics.Start = DateTime.Now;
-            var apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
-            var count = 1;
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < NumberOfRequests; i++)
             {
-                var request =WebRequest.Create( $"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={apiKey}&query={query}&page={i}");
-                var response = request.GetResponse();
-                var dataStream = response.GetResponseStream();
-                var xelement = XElement.Load(dataStream);
-                var results = xelement.Elements();
-
-                foreach (var item in results?.Descendants("group"))
+                try
                 {
-                    var xElement = item.Element("doc");
-                    if (xElement == null) continue;
-
-                    var element = xElement.Element("headline");
-                    if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(xElement.Element("url")?.Value))))
-                        resultList.Results.Add(new Result
-                        {
-                            DisplayUrl = UrlConvert(xElement.Element("url")?.Value),
-                            Title = xElement.Element("title")?.Value,
-                            Description =
-                                element != null
-                                    ? xElement.Element("headline").Value
-                                    : xElement.Element("passages").Element("passage").Value,
-                            Rank = count++
-                        });
+                    var singleIterationResults = SingleSearchIteration(query, i).Result;
+                    resultList.Results.AddRange(singleIterationResults);
+                }
+                catch (Exception)
+                {
+                    resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
             }
+
+            resultList.Results = OrderAndDistinctList(resultList.Results);
             resultList.Statistics.End = DateTime.Now;
             return resultList;
         }
-
-        public SearchEngineResultsList AsyncSearch(string query)
-        {
-            return FullSearch(0, NumberOfRequests, query, "Yandex");
-        }
-
-        //public async Task<SearchEngineResultsList> AsyncSearch(string query)
-        //{
-        //    return await FullSearch(0, NumberOfRequests, query, "Yandex");
-        //}
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
@@ -88,5 +63,51 @@ namespace businessLogic.SearchEngines
             var results = xelement.Elements();
             return Task.FromResult(results);
         }
+
+        //  The original Search method before changes 
+        //
+        //public SearchEngineResultsList Search(string query)
+        //{
+        //    var resultList = CreateSearchEngineResultsList("Yandex");
+        //    resultList.Statistics.Start = DateTime.Now;
+        //    var apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
+        //    var count = 1;
+
+        //    for (var i = 0; i < 10; i++)
+        //    {
+        //        var request = WebRequest.Create($"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={apiKey}&query={query}&page={i}");
+        //        var response = request.GetResponse();
+        //        var dataStream = response.GetResponseStream();
+        //        var xelement = XElement.Load(dataStream);
+        //        var results = xelement.Elements();
+
+        //        foreach (var item in results?.Descendants("group"))
+        //        {
+        //            var xElement = item.Element("doc");
+        //            if (xElement == null) continue;
+
+        //            var element = xElement.Element("headline");
+        //            if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(xElement.Element("url")?.Value))))
+        //                resultList.Results.Add(new Result
+        //                {
+        //                    DisplayUrl = UrlConvert(xElement.Element("url")?.Value),
+        //                    Title = xElement.Element("title")?.Value,
+        //                    Description =
+        //                        element != null
+        //                            ? xElement.Element("headline").Value
+        //                            : xElement.Element("passages").Element("passage").Value,
+        //                    Rank = count++
+        //                });
+        //        }
+        //    }
+        //    resultList.Statistics.End = DateTime.Now;
+        //    return resultList;
+        //}
+
+        // Not stable for this search engine
+        //public SearchEngineResultsList ParallelSearch(string query)
+        //{
+        //    return FullSearch(0, NumberOfRequests, query, "Yandex");
+        //}
     }
 }

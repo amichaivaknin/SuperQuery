@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using businessLogic.Extentions;
@@ -15,6 +16,7 @@ namespace businessLogic.SearchEngines
         protected SearchEngineResultsList FullSearch(int startIndex, int endIndex, string query, string engineName)
         {
             var resultList = CreateSearchEngineResultsList(engineName);
+            resultList.Statistics.Start = DateTime.Now;
             var requests = new ConcurrentBag<Result>();
 
             Parallel.For(startIndex, endIndex, i =>
@@ -27,9 +29,8 @@ namespace businessLogic.SearchEngines
                         requests.Add(res);
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    var x = e;
                     resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
             });
