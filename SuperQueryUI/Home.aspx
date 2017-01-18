@@ -106,16 +106,16 @@
         <div id="resDiv" runat="server"></div>
         <br />
         <div id="pagingDiv" runat="server" style="text-align:center">
-            <asp:Button ID="page1Button" runat="server" Text="1" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page2Button" runat="server" Text="2" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page3Button" runat="server" Text="3" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page4Button" runat="server" Text="4" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page5Button" runat="server" Text="5" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page6Button" runat="server" Text="6" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page7Button" runat="server" Text="7" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page8Button" runat="server" Text="8" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page9Button" runat="server" Text="9" Visible="False" OnClick="changePage"/>
-            <asp:Button ID="page10Button" runat="server" Text="10" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page1Button" runat="server" Text="1" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page2Button" runat="server" Text="2" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page3Button" runat="server" Text="3" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page4Button" runat="server" Text="4" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page5Button" runat="server" Text="5" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page6Button" runat="server" Text="6" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page7Button" runat="server" Text="7" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page8Button" runat="server" Text="8" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page9Button" runat="server" Text="9" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page10Button" runat="server" Text="10" Visible="False" OnClick="ChangePage"/>
         </div>    
     </form>
 </body>

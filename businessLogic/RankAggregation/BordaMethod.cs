@@ -67,6 +67,7 @@ namespace businessLogic.RankAggregation
                     {
                         aggregationResults.Add(result.DisplayUrl, new FinalResult
                         {
+                            Title = result.Title,
                             Description = result.Description,
                             DisplayUrl = result.DisplayUrl,
                             Rank = result.Rank,
