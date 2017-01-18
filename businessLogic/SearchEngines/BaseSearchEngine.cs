@@ -11,7 +11,7 @@ namespace businessLogic.SearchEngines
 {
     public class BaseSearchEngine
     {
-        protected const int NumberOfRequests = 10;
+        protected const int NumberOfRequests = 1;
 
         protected SearchEngineResultsList FullSearch(int startIndex, int endIndex, string query, string engineName)
         {

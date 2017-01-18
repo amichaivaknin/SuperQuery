@@ -35,6 +35,22 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
+        public void BingSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
+        {
+            var search = _searchEngine.Search("Ort Braude");
+            var listCount = search.Results.Count;
+            Assert.IsTrue(listCount > 0);
+        }
+
+        [TestMethod]
+        public void BingSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
+        {
+            var search = _searchEngine.Search("How To Find c Tutorial");
+            var listCount = search.Results.Count;
+            Assert.IsTrue(listCount > 0);
+        }
+
+        [TestMethod]
         public void GoogleSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _searchEngine.Search("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
