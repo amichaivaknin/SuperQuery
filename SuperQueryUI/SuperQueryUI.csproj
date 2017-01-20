@@ -94,6 +94,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\sweetalert.css" />
     <Content Include="images\ajax-loader.gif" />
     <Content Include="images\ajax-loader2.gif" />
     <Content Include="images\loader.jpg" />
@@ -119,6 +120,7 @@
     <Content Include="Home.aspx" />
     <Content Include="images\logo.png" />
     <Content Include="scripts\jquery-3.1.1.min.js" />
+    <Content Include="scripts\sweetalert.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -36,6 +36,7 @@ namespace SuperQueryUI
             if (query.Equals("")) return;
             if (!((checkbox_bing.Checked) || (checkbox_gigablast.Checked) || (checkbox_google.Checked) || (checkbox_HotBot.Checked) || (checkbox_rambler.Checked) || (checkbox_yandex.Checked)))
             {
+              //  alert.Visible = true;
                 pagingDiv.Visible = false;
                 return;
             }
