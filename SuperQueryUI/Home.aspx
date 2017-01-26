@@ -8,6 +8,8 @@
     <link href="css/myStyle.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="scripts/jquery-3.1.1.min.js"></script>
+    <script src="scripts/sweetalert.min.js"></script>
+    <link href="css/sweetalert.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server" method="post">
@@ -50,7 +52,7 @@
             <input id="search" placeholder="Search for..." onkeypress="search_methode" autocomplete="off" runat="server"/>
             <br />
             <br />
-            <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" AutoPostback="False" OnClick="btn_search_Click"/>
+            <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" UseSubmitBehavior="false" OnClick="btn_search_Click"/>
         </div>
 
         <%--<div id="loaderDiv" style="text-align: center" runat="server" visible="false">
@@ -65,8 +67,17 @@
         <div id="noResDIv" style="text-align:center" runat="server" visible="False">
             <asp:Label ID="noResLabel" runat="server" Text="No results"></asp:Label>
         </div>
+
+
+<%--        <div id="alert" runat="server" visible="False">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            Please select at least one search engine!
+        </div>--%>
+
         
         <script>
+            
+
             var flag = 0;
             $("#search").change(function () {
                 flag=1;
@@ -90,8 +101,20 @@
                 flag = 1;
             });
             function x() {
+                
+                if (!(($("#checkbox_google").is(":checked")) || ($("#checkbox_yandex").is(":checked")) || ($("#checkbox_bing").is(":checked")) || ($("#checkbox_gigablast").is(":checked")) || ($("#checkbox_HotBot").is(":checked")) || ($("#checkbox_rambler").is(":checked")))) {
+                     window.alert("please select at least one searche engine");
+                   
+                  // swal("Please select at least one search engine!");
+                   // $('#alert').show();
+                    $('#noResDIv').hide();
+                    $('#resDiv').hide();
+                    $('#pagingDiv').hide();
+                    return;
+                }
                 if (flag == 0) return;
                 if ($('#search').val().length == 0) return;
+              //  $('#alert').hide();
                 $('#noResDIv').hide();
                 $('#resDiv').hide();
                 $('#pagingDiv').hide();
@@ -106,16 +129,16 @@
         <div id="resDiv" runat="server"></div>
         <br />
         <div id="pagingDiv" runat="server" style="text-align:center">
-            <asp:Button ID="page1Button" runat="server" Text="1" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page2Button" runat="server" Text="2" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page3Button" runat="server" Text="3" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page4Button" runat="server" Text="4" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page5Button" runat="server" Text="5" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page6Button" runat="server" Text="6" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page7Button" runat="server" Text="7" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page8Button" runat="server" Text="8" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page9Button" runat="server" Text="9" Visible="False" OnClick="ChangePage"/>
-            <asp:Button ID="page10Button" runat="server" Text="10" Visible="False" OnClick="ChangePage"/>
+            <asp:Button ID="page1Button" runat="server" Text="1" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page2Button" runat="server" Text="2" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page3Button" runat="server" Text="3" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page4Button" runat="server" Text="4" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page5Button" runat="server" Text="5" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page6Button" runat="server" Text="6" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page7Button" runat="server" Text="7" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page8Button" runat="server" Text="8" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page9Button" runat="server" Text="9" Visible="False" OnClick="changePage"/>
+            <asp:Button ID="page10Button" runat="server" Text="10" Visible="False" OnClick="changePage"/>
         </div>    
     </form>
 </body>
