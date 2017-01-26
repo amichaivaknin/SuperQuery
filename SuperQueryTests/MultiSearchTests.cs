@@ -83,5 +83,61 @@ namespace SuperQueryTests
                 Assert.AreEqual(0, engine.Results.Count, engine.SearchEngineName);
             }
         }
+
+        [TestMethod]
+        public void multiSearch_GetResultsFromAllSearchEngines_NullQuery_ResultsCountEqualTo0()
+        {
+            var search = _multiSearch.GetResultsFromAllSearchEngines("");
+            var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
+            var listCount = searchEngineResultsLists.Count;
+
+            Assert.AreEqual(_searchEngines.Count, listCount);
+            foreach (var engine in searchEngineResultsLists)
+            {
+                Assert.AreEqual(0, engine.Results.Count, engine.SearchEngineName);
+            }
+        }
+
+        [TestMethod]
+        public void multiSearch_GetResultsFromAllSearchEngines_Ort_Braude_Query_ResultsCountBiggerThe0()
+        {
+            var search = _multiSearch.GetResultsFromAllSearchEngines("Ort Braude");
+            var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
+            var listCount = searchEngineResultsLists.Count;
+
+            Assert.AreEqual(_searchEngines.Count, listCount);
+            foreach (var engine in searchEngineResultsLists)
+            {
+                Assert.IsTrue(listCount > 0, engine.SearchEngineName);
+            }
+        }
+
+        [TestMethod]
+        public void multiSearch_GetResultsFromAllSearchEngines_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
+        {
+            var search = _multiSearch.GetResultsFromAllSearchEngines( "How To Find c Tutorial");
+            var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
+            var listCount = searchEngineResultsLists.Count;
+
+            Assert.AreEqual(_searchEngines.Count, listCount);
+            foreach (var engine in searchEngineResultsLists)
+            {
+                Assert.IsTrue(listCount > 0, engine.SearchEngineName);
+            }
+        }
+
+        [TestMethod]
+        public void multiSearch_GetResultsFromAllSearchEngines_QueryWithNoResults_ResultsCountEqualTo0()
+        {
+            var search = _multiSearch.GetResultsFromAllSearchEngines("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
+            var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
+            var listCount = searchEngineResultsLists.Count;
+
+            Assert.AreEqual(_searchEngines.Count, listCount);
+            foreach (var engine in searchEngineResultsLists)
+            {
+                Assert.AreEqual(0, engine.Results.Count, engine.SearchEngineName);
+            }
+        }
     }
 }

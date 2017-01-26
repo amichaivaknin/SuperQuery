@@ -1,4 +1,6 @@
-﻿using businessLogic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using businessLogic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests
@@ -10,57 +12,59 @@ namespace SuperQueryTests
     public class SuperQueryManagerTests
     {
         private SuperQueryManager _manager;
+        private readonly List<string> _searchEngines;
+
         public SuperQueryManagerTests()
         {
            _manager = new SuperQueryManager();
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
+           _searchEngines = new List<string>
             {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
+                "GigaBlast",
+                "HotBot",
+                "Rambler"
+            };
         }
-
-        #region Additional test attributes
-        //
-        // You can use the following additional attributes as you write your tests:
-        //
-        // Use ClassInitialize to run code before running the first test in the class
-        // [ClassInitialize()]
-        // public static void MyClassInitialize(TestContext testContext) { }
-        //
-        // Use ClassCleanup to run code after all tests in a class have run
-        // [ClassCleanup()]
-        // public static void MyClassCleanup() { }
-        //
-        // Use TestInitialize to run code before running each test 
-        // [TestInitialize()]
-        // public void MyTestInitialize() { }
-        //
-        // Use TestCleanup to run code after each test has run
-        // [TestCleanup()]
-        // public void MyTestCleanup() { }
-        //
-        #endregion
 
         [TestMethod]
-        public void TestMethod1()
+        public void SuperQueryManagerTests_GetQueryResults_NullQuery_ResultsCountEqualTo0()
         {
-            //
-            // TODO: Add test logic here
-            //
+            var search = _manager.GetQueryResults(_searchEngines, "");
+            Assert.IsTrue(!search.Any());
+        }
+
+        [TestMethod]
+        public void SuperQueryManagerTests_GetQueryResults_JerusalemQuery_ResultsCountBiggerThe0()
+        {
+            var search = _manager.GetQueryResults(_searchEngines, "Jerusalem");
+            Assert.IsTrue(search.Any());
+        }
+
+        [TestMethod]
+        public void SuperQueryManagerTests_GetQueryResults_JerusalemQuery_ResultsCountEqualTo0()
+        {
+            var search = _manager.GetQueryResults(_searchEngines, "gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
+            Assert.IsTrue(!search.Any());
+        }
+
+        [TestMethod]
+        public void SuperQueryManagerTests_GetQueryResultsFromAllSearchEngines_NullQuery_ResultsCountEqualTo0()
+        {
+            var search = _manager.GetQueryResults("");
+            Assert.IsTrue(!search.Any());
+        }
+
+        [TestMethod]
+        public void SuperQueryManagerTests_GetQueryResultsFromAllSearchEngines_JerusalemQuery_ResultsCountBiggerThe0()
+        {
+            var search = _manager.GetQueryResults("Jerusalem");
+            Assert.IsTrue(search.Any());
+        }
+
+        [TestMethod]
+        public void SuperQueryManagerTests_GetQueryResultsFromAllSearchEngines_JerusalemQuery_ResultsCountEqualTo0()
+        {
+            var search = _manager.GetQueryResults("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
+            Assert.IsTrue(!search.Any());
         }
     }
 }

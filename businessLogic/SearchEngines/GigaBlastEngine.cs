@@ -24,9 +24,9 @@ namespace businessLogic.SearchEngines
                 var collection = serializer.Deserialize<Dictionary<string, object>>(result.Result);
 
                 foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
-                    resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
-                        res["title"].ToString(), res["sum"].ToString(), count++));
-                resultList.Results = OrderAndDistinctList(resultList.Results);
+                         resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
+                         res["title"].ToString(), res["sum"].ToString(), count++));
+                         resultList.Results = OrderAndDistinctList(resultList.Results);
 
             }
             catch (System.Exception)
