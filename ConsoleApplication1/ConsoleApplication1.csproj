@@ -54,10 +54,6 @@
       <Project>{DDF662F1-02BF-49C3-96CC-3D11DD563240}</Project>
       <Name>businessLogic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Markov\Markov.csproj">
-      <Project>{ba051da7-ac13-4709-8829-4dc82deccf4b}</Project>
-      <Name>Markov</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

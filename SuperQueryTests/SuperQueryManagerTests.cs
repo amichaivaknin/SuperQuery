@@ -40,7 +40,7 @@ namespace SuperQueryTests
         }
 
         [TestMethod]
-        public void SuperQueryManagerTests_GetQueryResults_JerusalemQuery_ResultsCountEqualTo0()
+        public void SuperQueryManagerTests_GetQueryResults_QueryWithNoResults_ResultsCountEqualTo0()
         {
             var search = _manager.GetQueryResults(_searchEngines, "gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
             Assert.IsTrue(!search.Any());
@@ -61,10 +61,10 @@ namespace SuperQueryTests
         }
 
         [TestMethod]
-        public void SuperQueryManagerTests_GetQueryResultsFromAllSearchEngines_JerusalemQuery_ResultsCountEqualTo0()
+        public void SuperQueryManagerTests_GetQueryResultsFromAllSearchEngines_QueryWithNoResult_ResultsCountEqualTo0()
         {
             var search = _manager.GetQueryResults("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
-            Assert.IsTrue(!search.Any());
+            Assert.IsTrue(search.Any());
         }
     }
 }

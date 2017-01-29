@@ -5,11 +5,12 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using businessLogic.Extentions;
+using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class BaseSearchEngine
+    public abstract class BaseSearchEngine: ISearchEngine
     {
         protected const int NumberOfRequests = 1;
 
@@ -73,6 +74,11 @@ namespace businessLogic.SearchEngines
                 Description = description,
                 Rank = rank
             };
+        }
+
+        public virtual SearchEngineResultsList Search(string query)
+        {
+            throw new NotImplementedException();
         }
     }
 }

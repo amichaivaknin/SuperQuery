@@ -11,11 +11,11 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class BingSearchEngine : BaseSearchEngine, ISearchEngine
+    public class BingSearchEngine : BaseSearchEngine
     {
         private const string ApiKey = "364dc7e685ed4672b4fa87ad9980d454";
 
-        public SearchEngineResultsList Search(string query)
+        public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Bing");
             resultList.Statistics.Start = DateTime.Now;

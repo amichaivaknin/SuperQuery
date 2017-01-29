@@ -9,9 +9,9 @@ using HtmlAgilityPack;
 
 namespace businessLogic.SearchEngines
 {
-    public class RamblerSearchEngine : BaseSearchEngine, ISearchEngine
+    public class RamblerSearchEngine : BaseSearchEngine
     {
-        public SearchEngineResultsList Search(string query)
+        public override SearchEngineResultsList Search(string query)
         {
             return FullSearch(1, NumberOfRequests + 1, query, "Rambler");
         }

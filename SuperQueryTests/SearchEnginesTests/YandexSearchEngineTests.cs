@@ -53,7 +53,7 @@ namespace SuperQueryTests.SearchEnginesTests
         [TestMethod]
         public void YandexSearch_QueryWithNoResults_ResultsCountEqualTo0()
         {
-            var search = _searchEngine.Search("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
+            var search = _searchEngine.Search("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             var listCount = search.Results.Count;
             Assert.AreEqual(0, listCount);
         }

@@ -10,9 +10,9 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class GigaBlastEngine : BaseSearchEngine, ISearchEngine
+    public class GigaBlastEngine : BaseSearchEngine
     {
-        public SearchEngineResultsList Search(string query)
+        public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
             resultList.Statistics.Start = DateTime.Now;

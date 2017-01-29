@@ -9,11 +9,11 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class YandexSearchEngine : BaseSearchEngine, ISearchEngine
+    public class YandexSearchEngine : BaseSearchEngine
     {
         private const string ApiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
 
-        public SearchEngineResultsList Search(string query)
+        public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Yandex");
             resultList.Statistics.Start = DateTime.Now;

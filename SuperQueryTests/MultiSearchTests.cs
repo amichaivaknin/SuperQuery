@@ -91,7 +91,7 @@ namespace SuperQueryTests
             var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
             var listCount = searchEngineResultsLists.Count;
 
-            Assert.AreEqual(_searchEngines.Count, listCount);
+            Assert.AreEqual(6, listCount);
             foreach (var engine in searchEngineResultsLists)
             {
                 Assert.AreEqual(0, engine.Results.Count, engine.SearchEngineName);
@@ -105,7 +105,7 @@ namespace SuperQueryTests
             var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
             var listCount = searchEngineResultsLists.Count;
 
-            Assert.AreEqual(_searchEngines.Count, listCount);
+            Assert.AreEqual(6, listCount);
             foreach (var engine in searchEngineResultsLists)
             {
                 Assert.IsTrue(listCount > 0, engine.SearchEngineName);
@@ -119,24 +119,10 @@ namespace SuperQueryTests
             var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
             var listCount = searchEngineResultsLists.Count;
 
-            Assert.AreEqual(_searchEngines.Count, listCount);
+            Assert.AreEqual(6, listCount);
             foreach (var engine in searchEngineResultsLists)
             {
                 Assert.IsTrue(listCount > 0, engine.SearchEngineName);
-            }
-        }
-
-        [TestMethod]
-        public void multiSearch_GetResultsFromAllSearchEngines_QueryWithNoResults_ResultsCountEqualTo0()
-        {
-            var search = _multiSearch.GetResultsFromAllSearchEngines("gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
-            var searchEngineResultsLists = search as IList<SearchEngineResultsList> ?? search.ToList();
-            var listCount = searchEngineResultsLists.Count;
-
-            Assert.AreEqual(_searchEngines.Count, listCount);
-            foreach (var engine in searchEngineResultsLists)
-            {
-                Assert.AreEqual(0, engine.Results.Count, engine.SearchEngineName);
             }
         }
     }

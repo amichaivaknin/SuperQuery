@@ -9,9 +9,9 @@ using HtmlAgilityPack;
 
 namespace businessLogic.SearchEngines
 {
-    public class HotBotSearchEngine : BaseSearchEngine, ISearchEngine
+    public class HotBotSearchEngine : BaseSearchEngine
     {
-        public SearchEngineResultsList Search(string query)
+        public override SearchEngineResultsList Search(string query)
         {
             return FullSearch(1, NumberOfRequests + 1, query, "HotBot");
         }
