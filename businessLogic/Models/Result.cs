@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace businessLogic.Models
+﻿namespace businessLogic.Models
 {
     public class Result
     {

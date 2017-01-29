@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
@@ -21,7 +19,6 @@ namespace businessLogic.SearchEngines
             resultList.Statistics.Start = DateTime.Now;
 
             for (var i = 0; i < NumberOfRequests; i++)
-            {
                 try
                 {
                     var singleIterationResults = SingleSearchIteration(query, i).Result;
@@ -29,20 +26,20 @@ namespace businessLogic.SearchEngines
                 }
                 catch (Exception)
                 {
-                    resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
+                    resultList.Statistics.Message =
+                        $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
-            }
 
             resultList.Results = OrderAndDistinctList(resultList.Results);
-            resultList.Statistics.End= DateTime.Now;
+            resultList.Statistics.End = DateTime.Now;
             return resultList;
-        }       
+        }
 
-        protected override  Task<List<Result>> SingleSearchIteration(string query, int page)
+        protected override Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var count = 1;
             var results = new List<Result>();
-            var result =  SearchRequest(query, page);
+            var result = SearchRequest(query, page);
             var serializer = new JavaScriptSerializer();
             var collection = serializer.Deserialize<Dictionary<string, object>>(result.Result);
 
@@ -54,7 +51,7 @@ namespace businessLogic.SearchEngines
                 results.AddRange(
                     from Dictionary<string, object> res in itemValue
                     select NewResult(UrlConvert(res["displayUrl"].ToString()), res["name"].ToString(),
-                        res["snippet"].ToString(), page*10 + count++));
+                        res["snippet"].ToString(), page * 10 + count++));
             return Task.FromResult(results);
         }
 
@@ -63,15 +60,18 @@ namespace businessLogic.SearchEngines
             string result;
             using (var webClient = new WebClient())
             {
-                 result = webClient.DownloadString($"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page * 10}&mkt=en-us&safesearch=Moderate&filter=webpages");   
+                result =
+                    webClient.DownloadString(
+                        $"https://api.cognitive.microsoft.com/bing/v5.0/search?subscription-key={ApiKey}&q={query}&count=10&offset={page * 10}&mkt=en-us&safesearch=Moderate&filter=webpages");
             }
             return Task.FromResult(result);
         }
 
-        //  The original Search methods before changes 
-        //
-        //public SearchEngineResultsList Search(string query)
         //{
+        //public SearchEngineResultsList Search(string query)
+        //
+
+        //  The original Search methods before changes 
         //    var resultList = CreateSearchEngineResultsList("Bing");
         //    resultList.Statistics.Start = DateTime.Now;
         //    var count = 1;

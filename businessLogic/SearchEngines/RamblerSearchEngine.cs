@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using businessLogic.Interfaces;
 using businessLogic.Models;
 using HtmlAgilityPack;
 
@@ -19,11 +16,11 @@ namespace businessLogic.SearchEngines
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var resultList = new List<Result>();
-            var c = page*10 - 10;
+            var c = page * 10 - 10;
             var document = await SearchRequest(query, page);
 
             if (document == null)
-                    return null;
+                return null;
 
             var searchResults = document.DocumentNode.SelectNodes("//body").ToArray();
             var lWrapper = searchResults[0].SelectNodes("//div[@class='l-wrapper']//a").ToArray();
@@ -35,7 +32,7 @@ namespace businessLogic.SearchEngines
                 var header = bSerpItem.SelectNodes("//h2[@class='b-serp-item__header']//a");
                 var snippet = bSerpItem.SelectNodes("//p[@class='b-serp-item__snippet']");
 
-                for (var j = 0; j < 10 && header[j]!=null && snippet[j]!=null; j++)
+                for (var j = 0; j < 10 && header[j] != null && snippet[j] != null; j++)
                     resultList.Add(NewResult(UrlConvert(header[j].GetAttributeValue("href", null)), header[j].InnerText,
                         snippet[j].InnerText, c + j + 1));
                 break;
@@ -44,15 +41,18 @@ namespace businessLogic.SearchEngines
         }
 
         private Task<HtmlDocument> SearchRequest(string query, int page)
-        {            
-                var web = new HtmlWeb();
-                var document =web.Load($"http://nova.rambler.ru/search?scroll=1&utm_source=nhp&utm_content=search&utm_medium=button&utm_campaign=self_promo&query={query}&page={page}");
-                return Task.FromResult(document);
+        {
+            var web = new HtmlWeb();
+            var document =
+                web.Load(
+                    $"http://nova.rambler.ru/search?scroll=1&utm_source=nhp&utm_content=search&utm_medium=button&utm_campaign=self_promo&query={query}&page={page}");
+            return Task.FromResult(document);
         }
 
-        //  The original Search methods before changes 
-        //
         //public SearchEngineResultsList Search(string query)
+        //
+
+        //  The original Search methods before changes 
         //{
         //    var resultList = CreateSearchEngineResultsList("Rambler");
         //    resultList.Statistics.Start = DateTime.Now;

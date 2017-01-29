@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for GoogleSearchEngineTests
+    ///     Summary description for GoogleSearchEngineTests
     /// </summary>
     [TestClass]
     public class GoogleSearchEngineTests
     {
         private readonly GoogleSearchEngine _searchEngine;
+
         public GoogleSearchEngineTests()
         {
             _searchEngine = new GoogleSearchEngine();
@@ -23,7 +21,7 @@ namespace SuperQueryTests.SearchEnginesTests
         {
             var search = _searchEngine.Search("");
             var listCount = search.Results.Count;
-            Assert.AreEqual(0,listCount);
+            Assert.AreEqual(0, listCount);
         }
 
         [TestMethod]
@@ -31,7 +29,7 @@ namespace SuperQueryTests.SearchEnginesTests
         {
             var search = _searchEngine.Search("Jerusalem");
             var listCount = search.Results.Count;
-            Assert.IsTrue(listCount>0);
+            Assert.IsTrue(listCount > 0);
         }
 
         [TestMethod]

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using businessLogic.Interfaces;
 using businessLogic.Models;
 using HtmlAgilityPack;
 
@@ -39,7 +36,6 @@ namespace businessLogic.SearchEngines
                             Rank = (page - 1) * 10 + count
                         });
                         count++;
-
                     }
                     if (count >= 10)
                         break;
@@ -58,9 +54,10 @@ namespace businessLogic.SearchEngines
             return Task.FromResult(document);
         }
 
-        //  The original Search methods before changes 
-        //
         //public SearchEngineResultsList Search(string query)
+        //
+
+        //  The original Search methods before changes 
         //{
         //    var resultList = CreateSearchEngineResultsList("HotBot");
         //    resultList.Statistics.Start = DateTime.Now;
@@ -107,7 +104,5 @@ namespace businessLogic.SearchEngines
         //{
         //    return FullSearch(1, NumberOfRequests + 1, query, "HotBot");
         //}
-
-
     }
 }

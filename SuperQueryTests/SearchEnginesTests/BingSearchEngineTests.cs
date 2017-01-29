@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for BingSearchEngineTests
+    ///     Summary description for BingSearchEngineTests
     /// </summary>
     [TestClass]
     public class BingSearchEngineTests
     {
         private readonly BingSearchEngine _searchEngine;
+
         public BingSearchEngineTests()
         {
             _searchEngine = new BingSearchEngine();
@@ -59,4 +57,3 @@ namespace SuperQueryTests.SearchEnginesTests
         }
     }
 }
-

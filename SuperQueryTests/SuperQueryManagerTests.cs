@@ -6,18 +6,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SuperQueryTests
 {
     /// <summary>
-    /// Summary description for SuperQueryManagerTests
+    ///     Summary description for SuperQueryManagerTests
     /// </summary>
     [TestClass]
     public class SuperQueryManagerTests
     {
-        private SuperQueryManager _manager;
         private readonly List<string> _searchEngines;
+        private readonly SuperQueryManager _manager;
 
         public SuperQueryManagerTests()
         {
-           _manager = new SuperQueryManager();
-           _searchEngines = new List<string>
+            _manager = new SuperQueryManager();
+            _searchEngines = new List<string>
             {
                 "GigaBlast",
                 "HotBot",
@@ -42,7 +42,8 @@ namespace SuperQueryTests
         [TestMethod]
         public void SuperQueryManagerTests_GetQueryResults_QueryWithNoResults_ResultsCountEqualTo0()
         {
-            var search = _manager.GetQueryResults(_searchEngines, "gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
+            var search = _manager.GetQueryResults(_searchEngines,
+                "gfdgdfgdfgdf fdgdfg fgdfgdfgd bdfgdfgdfg bdfgfdgdf fgdfgfd");
             Assert.IsTrue(!search.Any());
         }
 

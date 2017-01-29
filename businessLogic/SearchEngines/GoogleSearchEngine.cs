@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
@@ -23,7 +21,6 @@ namespace businessLogic.SearchEngines
             var resultList = CreateSearchEngineResultsList("Google");
             resultList.Statistics.Start = DateTime.Now;
             for (var i = 1; i <= NumberOfRequests; i++)
-            {
                 try
                 {
                     var singleIterationResults = SingleSearchIteration(query, i).Result;
@@ -31,9 +28,9 @@ namespace businessLogic.SearchEngines
                 }
                 catch (Exception)
                 {
-                    resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
+                    resultList.Statistics.Message =
+                        $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
-            }
 
             resultList.Results = OrderAndDistinctList(resultList.Results);
             resultList.Statistics.End = DateTime.Now;
@@ -42,7 +39,7 @@ namespace businessLogic.SearchEngines
 
         protected override async Task<List<Result>> SingleSearchIteration(string query, int i)
         {
-            var count=1;
+            var count = 1;
             var result = await SearchRequest(query, i);
             var serializer = new JavaScriptSerializer();
             var collection = serializer.Deserialize<Dictionary<string, object>>(result);
@@ -53,27 +50,29 @@ namespace businessLogic.SearchEngines
                     DisplayUrl = UrlConvert(item["link"].ToString()),
                     Title = item["title"].ToString(),
                     Description = item["snippet"].ToString(),
-                    Rank = i*10 -10 + count++
+                    Rank = i * 10 - 10 + count++
                 }).ToList();
         }
 
         private async Task<string> SearchRequest(string query, int page)
         {
-            int start = (page * 10) - 9;
+            var start = page * 10 - 9;
             using (var webClient = new WebClient())
             {
-                var result = await webClient.DownloadStringTaskAsync($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={start}&alt=json&cr=us");
+                var result =
+                    await webClient.DownloadStringTaskAsync(
+                        $"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={start}&alt=json&cr=us");
 
                 return result;
             }
- 
         }
 
-        //  The original Search methods before changes 
-        //
-        //public SearchEngineResultsList Search(string query)
-        //{
         //    var resultList = CreateSearchEngineResultsList("Google");
+        //{
+        //public SearchEngineResultsList Search(string query)
+        //
+
+        //  The original Search methods before changes 
         //    resultList.Statistics.Start = DateTime.Now;
         //    var count = 1;
         //    uint start = 1;

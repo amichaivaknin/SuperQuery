@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for YandexSearchEngineTests
+    ///     Summary description for YandexSearchEngineTests
     /// </summary>
     [TestClass]
     public class YandexSearchEngineTests
     {
         private readonly YandexSearchEngine _searchEngine;
+
         public YandexSearchEngineTests()
         {
             _searchEngine = new YandexSearchEngine();

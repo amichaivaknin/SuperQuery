@@ -1,13 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for RamblerSearchEngineTests
+    ///     Summary description for RamblerSearchEngineTests
     /// </summary>
     [TestClass]
     public class RamblerSearchEngineTests
@@ -60,4 +57,3 @@ namespace SuperQueryTests.SearchEnginesTests
         }
     }
 }
-

@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for HotBotSearchEngineTests
+    ///     Summary description for HotBotSearchEngineTests
     /// </summary>
     [TestClass]
     public class HotBotSearchEngineTests
     {
         private readonly HotBotSearchEngine _searchEngine;
+
         public HotBotSearchEngineTests()
         {
             _searchEngine = new HotBotSearchEngine();

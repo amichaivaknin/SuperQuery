@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
@@ -19,7 +18,6 @@ namespace businessLogic.SearchEngines
             resultList.Statistics.Start = DateTime.Now;
 
             for (var i = 0; i < NumberOfRequests; i++)
-            {
                 try
                 {
                     var singleIterationResults = SingleSearchIteration(query, i).Result;
@@ -27,9 +25,9 @@ namespace businessLogic.SearchEngines
                 }
                 catch (Exception)
                 {
-                    resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
+                    resultList.Statistics.Message =
+                        $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
-            }
 
             resultList.Results = OrderAndDistinctList(resultList.Results);
             resultList.Statistics.End = DateTime.Now;
@@ -41,22 +39,27 @@ namespace businessLogic.SearchEngines
             var elements = await SearchRequest(query, page);
             var count = 0;
             return (from item in elements?.Descendants("group")
-                    select item.Element("doc")
-                    into xElement
-                    where xElement != null
-                    let element = xElement.Element("headline")
-                   select new Result
-                   {
+                select item.Element("doc")
+                into xElement
+                where xElement != null
+                let element = xElement.Element("headline")
+                select new Result
+                {
                     DisplayUrl = UrlConvert(xElement.Element("url")?.Value),
-                       Title = xElement.Element("title")?.Value,
-                       Description = element != null ? xElement.Element("headline").Value : xElement.Element("passages").Element("passage").Value,
-                       Rank = page * 10 + count++
-                   }).ToList();
+                    Title = xElement.Element("title")?.Value,
+                    Description =
+                        element != null
+                            ? xElement.Element("headline").Value
+                            : xElement.Element("passages").Element("passage").Value,
+                    Rank = page * 10 + count++
+                }).ToList();
         }
 
         private Task<IEnumerable<XElement>> SearchRequest(string query, int page)
         {
-            var request = WebRequest.Create($"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={ApiKey}&query={query}&page={page}");
+            var request =
+                WebRequest.Create(
+                    $"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={ApiKey}&query={query}&page={page}");
             var response = request.GetResponse();
             var dataStream = response.GetResponseStream();
             var xelement = XElement.Load(dataStream);
@@ -64,10 +67,11 @@ namespace businessLogic.SearchEngines
             return Task.FromResult(results);
         }
 
-        //  The original Search method before changes 
-        //
-        //public SearchEngineResultsList Search(string query)
         //{
+        //public SearchEngineResultsList Search(string query)
+        //
+
+        //  The original Search method before changes 
         //    var resultList = CreateSearchEngineResultsList("Yandex");
         //    resultList.Statistics.Start = DateTime.Now;
         //    var apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";

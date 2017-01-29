@@ -9,6 +9,7 @@ namespace businessLogic.Models
         {
             Statistics = new Statistics();
         }
+
         public string SearchEngineName { get; set; }
         public List<Result> Results { get; set; }
         public Statistics Statistics { get; set; }

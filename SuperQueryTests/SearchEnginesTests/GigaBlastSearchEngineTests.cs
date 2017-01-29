@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for GigaBlastSearchEngineTests
+    ///     Summary description for GigaBlastSearchEngineTests
     /// </summary>
     [TestClass]
     public class GigaBlastSearchEngineTests
     {
         private readonly GigaBlastEngine _searchEngine;
+
         public GigaBlastSearchEngineTests()
         {
             _searchEngine = new GigaBlastEngine();
