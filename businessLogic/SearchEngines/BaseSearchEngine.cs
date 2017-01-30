@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using businessLogic.Extentions;
+using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class BaseSearchEngine
+    public abstract class BaseSearchEngine : ISearchEngine
     {
         protected const int NumberOfRequests = 10;
+
+        public virtual SearchEngineResultsList Search(string query)
+        {
+            throw new NotImplementedException();
+        }
 
         protected SearchEngineResultsList FullSearch(int startIndex, int endIndex, string query, string engineName)
         {
@@ -25,13 +29,12 @@ namespace businessLogic.SearchEngines
                 {
                     var request = SingleSearchIteration(query, i).Result;
                     foreach (var res in request)
-                    {
                         requests.Add(res);
-                    }
                 }
                 catch (Exception)
                 {
-                    resultList.Statistics.Message = $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
+                    resultList.Statistics.Message =
+                        $"{resultList.Statistics.Message} requst no {i} failed {Environment.NewLine}";
                 }
             });
 
@@ -55,7 +58,7 @@ namespace businessLogic.SearchEngines
             return new SearchEngineResultsList
             {
                 SearchEngineName = searchEngineName,
-                Results = new List<Result>(),
+                Results = new List<Result>()
             };
         }
 

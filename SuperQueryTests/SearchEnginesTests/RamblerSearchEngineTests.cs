@@ -1,13 +1,10 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for RamblerSearchEngineTests
+    ///     Summary description for RamblerSearchEngineTests
     /// </summary>
     [TestClass]
     public class RamblerSearchEngineTests
@@ -36,7 +33,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void BingSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
+        public void RamblerSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("Ort Braude");
             var listCount = search.Results.Count;
@@ -44,7 +41,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void BingSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
+        public void RamblerSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("How To Find c Tutorial");
             var listCount = search.Results.Count;
@@ -60,4 +57,3 @@ namespace SuperQueryTests.SearchEnginesTests
         }
     }
 }
-

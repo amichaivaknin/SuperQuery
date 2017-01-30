@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using businessLogic.Interfaces;
 using businessLogic.Models;
@@ -11,7 +10,7 @@ namespace businessLogic
     public class MultiSearch : IMultiSearch
     {
         private readonly Dictionary<string, ISearchEngine> _searchEngines;
-        
+
         public MultiSearch()
         {
             _searchEngines = new Dictionary<string, ISearchEngine>

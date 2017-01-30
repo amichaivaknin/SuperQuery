@@ -7,8 +7,8 @@ namespace businessLogic.RankAggregation
 {
     internal class BordaMethod
     {
-        private readonly Dictionary<string, int> _rankBySearchEngine;
         private const int StartRankPosition = 100;
+        private readonly Dictionary<string, int> _rankBySearchEngine;
 
         public BordaMethod()
         {
@@ -25,20 +25,19 @@ namespace businessLogic.RankAggregation
 
         public List<FinalResult> BordaRank(IEnumerable<SearchEngineResultsList> allSearchResults)
         {
-            var searchEngineResultsLists = allSearchResults as IList<SearchEngineResultsList> ?? allSearchResults.ToList();
+            var searchEngineResultsLists = allSearchResults as IList<SearchEngineResultsList> ??
+                                           allSearchResults.ToList();
 
             foreach (var searchEngine in searchEngineResultsLists)
-            {
-              SingleSearchEngineResultsRank(searchEngine.Results,searchEngine.SearchEngineName);   
-            }
+                SingleSearchEngineResultsRank(searchEngine.Results, searchEngine.SearchEngineName);
 
             var aggregationResults = BordaAggregate(searchEngineResultsLists);
 
             CheckForDuplications(aggregationResults);
 
-             return (from result in aggregationResults.Values
-                     orderby result.Rank descending
-                     select result).ToList();
+            return (from result in aggregationResults.Values
+                orderby result.Rank descending
+                select result).ToList();
             //RankAndMargeResultsFromAllLists(searchEngineResultsLists, aggregationResults);
         }
 
@@ -46,36 +45,30 @@ namespace businessLogic.RankAggregation
         {
             var aggregationResults = new Dictionary<string, FinalResult>();
             foreach (var searchEngine in searchEngineResultsLists)
+            foreach (var result in searchEngine.Results)
             {
-                foreach (var result in searchEngine.Results)
+                var location =
+                    (int) ((result.Rank - StartRankPosition - _rankBySearchEngine[searchEngine.SearchEngineName]) * -1);
+                if (aggregationResults.ContainsKey(result.DisplayUrl))
                 {
-                    var location =
-                        (int) ((result.Rank - StartRankPosition - _rankBySearchEngine[searchEngine.SearchEngineName]) * -1);
-                    if (aggregationResults.ContainsKey(result.DisplayUrl))
-                    {
-                        aggregationResults[result.DisplayUrl].Rank += result.Rank;
-                        if (aggregationResults[result.DisplayUrl].Description == "")
-                        {
-                            aggregationResults[result.DisplayUrl].Description = result.Description;
-                        }
-                        if (aggregationResults[result.DisplayUrl].Title == "")
-                        {
-                            aggregationResults[result.DisplayUrl].Title = result.Description;
-                        }
-                    }
-                    else
-                    {
-                        aggregationResults.Add(result.DisplayUrl, new FinalResult
-                        {
-                            Title = result.Title,
-                            Description = result.Description,
-                            DisplayUrl = result.DisplayUrl,
-                            Rank = result.Rank,
-                            SearchEngines = new Dictionary<string, int>()
-                        });
-                    }
-                    aggregationResults[result.DisplayUrl].SearchEngines.Add(searchEngine.SearchEngineName, location);
+                    aggregationResults[result.DisplayUrl].Rank += result.Rank;
+                    if (aggregationResults[result.DisplayUrl].Description == "")
+                        aggregationResults[result.DisplayUrl].Description = result.Description;
+                    if (aggregationResults[result.DisplayUrl].Title == "")
+                        aggregationResults[result.DisplayUrl].Title = result.Description;
                 }
+                else
+                {
+                    aggregationResults.Add(result.DisplayUrl, new FinalResult
+                    {
+                        Title = result.Title,
+                        Description = result.Description,
+                        DisplayUrl = result.DisplayUrl,
+                        Rank = result.Rank,
+                        SearchEngines = new Dictionary<string, int>()
+                    });
+                }
+                aggregationResults[result.DisplayUrl].SearchEngines.Add(searchEngine.SearchEngineName, location);
             }
             return aggregationResults;
         }
@@ -83,9 +76,7 @@ namespace businessLogic.RankAggregation
         private void SingleSearchEngineResultsRank(List<Result> results, string searchEngineName)
         {
             foreach (var result in results)
-            {
-                result.Rank = StartRankPosition - result.Rank +_rankBySearchEngine[searchEngineName];   
-            }
+                result.Rank = StartRankPosition - result.Rank + _rankBySearchEngine[searchEngineName];
         }
 
         private static void CheckForDuplications(Dictionary<string, FinalResult> aggregationResults)
@@ -93,22 +84,18 @@ namespace businessLogic.RankAggregation
             var count = aggregationResults.Count;
             var results = aggregationResults.Values.ToArray();
             for (var i = 0; i < count; i++)
-            {
-                for (var j = i + 1; j < count; j++)
+            for (var j = i + 1; j < count; j++)
+                if (CheckMatch(results[i].DisplayUrl, results[j].DisplayUrl, results[i].Description,
+                    results[i].Description))
                 {
-                    if (CheckMatch(results[i].DisplayUrl, results[j].DisplayUrl, results[i].Description, results[i].Description))
-                    {
-                        aggregationResults[results[i].DisplayUrl].Rank += aggregationResults[results[j].DisplayUrl].Rank;
+                    aggregationResults[results[i].DisplayUrl].Rank += aggregationResults[results[j].DisplayUrl].Rank;
 
-                        foreach (
-                            var searchEngine in
-                            results[j].SearchEngines.Where(searchEngine => !results[i].SearchEngines.ContainsKey(searchEngine.Key)))
-                        {
-                            results[i].SearchEngines.Add(searchEngine.Key, searchEngine.Value);
-                        }
-                    }
+                    foreach (
+                        var searchEngine in
+                        results[j].SearchEngines.Where(
+                            searchEngine => !results[i].SearchEngines.ContainsKey(searchEngine.Key)))
+                        results[i].SearchEngines.Add(searchEngine.Key, searchEngine.Value);
                 }
-            }
         }
 
         private static bool CheckMatch(string arUrl, string resultUrl, string description1, string description2)
@@ -142,17 +129,18 @@ namespace businessLogic.RankAggregation
             return false;
         }
 
-        //private void RankAndMargeResultsFromAllLists(IEnumerable<SearchEngineResultsList> allSearchResults,
-        //    Dictionary<string, FinalResult> aggregationResults)
+        //    const int startRankPosition = 100;
         //{
-        //    foreach (var searchResults in allSearchResults)
-        //        RankSingleResultsList(aggregationResults, searchResults);
-        //}
+        //    SearchEngineResultsList searchResults)
 
         //private void RankSingleResultsList(Dictionary<string, FinalResult> aggregationResults,
-        //    SearchEngineResultsList searchResults)
+        //}
+        //        RankSingleResultsList(aggregationResults, searchResults);
+        //    foreach (var searchResults in allSearchResults)
         //{
-        //    const int startRankPosition = 100;
+        //    Dictionary<string, FinalResult> aggregationResults)
+
+        //private void RankAndMargeResultsFromAllLists(IEnumerable<SearchEngineResultsList> allSearchResults,
 
         //    foreach (var result in searchResults.Results)
         //    {

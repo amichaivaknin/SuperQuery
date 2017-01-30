@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for GoogleSearchEngineTests
+    ///     Summary description for GoogleSearchEngineTests
     /// </summary>
     [TestClass]
     public class GoogleSearchEngineTests
     {
         private readonly GoogleSearchEngine _searchEngine;
+
         public GoogleSearchEngineTests()
         {
             _searchEngine = new GoogleSearchEngine();
@@ -23,7 +21,7 @@ namespace SuperQueryTests.SearchEnginesTests
         {
             var search = _searchEngine.Search("");
             var listCount = search.Results.Count;
-            Assert.AreEqual(0,listCount);
+            Assert.AreEqual(0, listCount);
         }
 
         [TestMethod]
@@ -31,11 +29,11 @@ namespace SuperQueryTests.SearchEnginesTests
         {
             var search = _searchEngine.Search("Jerusalem");
             var listCount = search.Results.Count;
-            Assert.IsTrue(listCount>0);
+            Assert.IsTrue(listCount > 0);
         }
 
         [TestMethod]
-        public void BingSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
+        public void GoogleSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("Ort Braude");
             var listCount = search.Results.Count;
@@ -43,7 +41,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void BingSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
+        public void GoogleSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("How To Find c Tutorial");
             var listCount = search.Results.Count;

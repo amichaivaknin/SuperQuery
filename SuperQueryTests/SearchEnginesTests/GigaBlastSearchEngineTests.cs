@@ -1,18 +1,16 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using businessLogic.SearchEngines;
+﻿using businessLogic.SearchEngines;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SuperQueryTests.SearchEnginesTests
 {
     /// <summary>
-    /// Summary description for GigaBlastSearchEngineTests
+    ///     Summary description for GigaBlastSearchEngineTests
     /// </summary>
     [TestClass]
     public class GigaBlastSearchEngineTests
     {
         private readonly GigaBlastEngine _searchEngine;
+
         public GigaBlastSearchEngineTests()
         {
             _searchEngine = new GigaBlastEngine();
@@ -35,7 +33,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void BingSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
+        public void GigaBlastSearch_Ort_Braude_Query_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("Ort Braude");
             var listCount = search.Results.Count;
@@ -43,7 +41,7 @@ namespace SuperQueryTests.SearchEnginesTests
         }
 
         [TestMethod]
-        public void BingSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
+        public void GigaBlastSearch_How_To_Find_c_Tutorial_Query_ResultsCountBiggerThe0()
         {
             var search = _searchEngine.Search("How To Find c Tutorial");
             var listCount = search.Results.Count;

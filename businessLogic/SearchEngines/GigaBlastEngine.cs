@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
-using businessLogic.Interfaces;
 using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
-    public class GigaBlastEngine : BaseSearchEngine, ISearchEngine
+    public class GigaBlastEngine : BaseSearchEngine
     {
-        public SearchEngineResultsList Search(string query)
+        public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
             resultList.Statistics.Start = DateTime.Now;
@@ -23,15 +21,13 @@ namespace businessLogic.SearchEngines
                 var serializer = new JavaScriptSerializer();
                 var collection = serializer.Deserialize<Dictionary<string, object>>(result.Result);
 
-                foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
+                foreach (Dictionary<string, object> res in (IEnumerable) collection["results"])
                     resultList.Results.Add(NewResult(UrlConvert(res["url"].ToString()),
                         res["title"].ToString(), res["sum"].ToString(), count++));
                 resultList.Results = OrderAndDistinctList(resultList.Results);
-
             }
-            catch (System.Exception)
+            catch (Exception)
             {
-
                 resultList.Statistics.Message = "access to GigaBlast failed";
             }
 
@@ -40,20 +36,21 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
-        private  Task<string> SearchRequest(string query)
+        private Task<string> SearchRequest(string query)
         {
             string result;
             using (var webClient = new WebClient())
             {
                 result =
-                     webClient.DownloadString(
-                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests * 10}&rxivq=1015471771&rand=1482683517796");   
+                    webClient.DownloadString(
+                        $"http://www.gigablast.com/search?q={query}&format=json&n={NumberOfRequests * 10}&rxivq=1015471771&rand=1482683517796");
             }
             return Task.FromResult(result);
         }
 
-        //  The original Search methods before changes 
         //
+
+        //  The original Search methods before changes 
         //public SearchEngineResultsList Search(string query)
         //{
         //    var resultList = CreateSearchEngineResultsList("GigaBlast");
