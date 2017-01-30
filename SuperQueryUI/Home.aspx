@@ -52,7 +52,7 @@
             <input id="search" placeholder="Search for..." onkeypress="search_methode" autocomplete="off" runat="server"/>
             <br />
             <br />
-            <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" UseSubmitBehavior="false" OnClick="btn_search_Click"/>
+            <asp:Button ID="btn_search" runat="server" Text="Search" OnClientClick="x()" OnClick="btn_search_Click"/>
         </div>
 
         <%--<div id="loaderDiv" style="text-align: center" runat="server" visible="false">

@@ -13,10 +13,10 @@ namespace businessLogic.SearchEngines
 {
     public class GoogleSearchEngine : BaseSearchEngine, ISearchEngine
     {
-        private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
-        private const string Cx = "007172875963593911035:kpk5tcwf8pa";
-        //private const string ApiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
-        //private const string Cx = "009511415247016879030:smaostb1cxe";
+        //private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
+        //private const string Cx = "007172875963593911035:kpk5tcwf8pa";
+        private const string ApiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
+        private const string Cx = "009511415247016879030:smaostb1cxe";
 
         public SearchEngineResultsList Search(string query)
         {

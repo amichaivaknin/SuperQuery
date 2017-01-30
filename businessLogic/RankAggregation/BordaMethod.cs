@@ -14,9 +14,9 @@ namespace businessLogic.RankAggregation
         {
             _rankBySearchEngine = new Dictionary<string, int>
             {
-                {"Google", 10},
-                {"Bing", 10},
-                {"Yandex", 10},
+                {"Google", 70},
+                {"Bing", 70},
+                {"Yandex", 70},
                 {"GigaBlast", 10},
                 {"HotBot", 10},
                 {"Rambler", 10}
