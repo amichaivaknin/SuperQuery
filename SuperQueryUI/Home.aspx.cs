@@ -38,9 +38,9 @@ namespace SuperQueryUI
                 return;
             }
             Session["query"] = _query;
-            //if (checkbox_bing.Checked) engines.Add("Bing");
-            //if (checkbox_google.Checked) engines.Add("Google");
-            //if (checkbox_yandex.Checked) engines.Add("Yandex");
+            if (checkbox_bing.Checked) _engines.Add("Bing");
+            if (checkbox_google.Checked) _engines.Add("Google");
+            if (checkbox_yandex.Checked) _engines.Add("Yandex");
             if (checkbox_gigablast.Checked) _engines.Add("GigaBlast");
             if (checkbox_HotBot.Checked) _engines.Add("HotBot");
             if (checkbox_rambler.Checked) _engines.Add("Rambler");
@@ -112,7 +112,7 @@ namespace SuperQueryUI
             addTitleDiv.Style.Add(HtmlTextWriterStyle.Color, "Blue");
             addTitleDiv.Style.Add(HtmlTextWriterStyle.FontSize, "Large");
             var hyperLink = new HyperLink();
-            hyperLink.Text = titleUtf8;
+            hyperLink.Text = title;
             hyperLink.NavigateUrl = "http://" + url;
             addTitleDiv.Controls.Add(hyperLink);
             // addTitleDiv.InnerHtml = title;
@@ -139,7 +139,7 @@ namespace SuperQueryUI
             var addDescriptionDiv =
                 new HtmlGenericControl("DIV");
             addDescriptionDiv.Style.Add(HtmlTextWriterStyle.Color, "black");
-            addDescriptionDiv.InnerHtml = descriptionUtf8;
+            addDescriptionDiv.InnerHtml = description;
 
 
             createResultDiv.Controls.Add(addTitleDiv);

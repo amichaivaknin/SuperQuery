@@ -37,7 +37,7 @@ namespace businessLogic.SearchEngines
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var elements = await SearchRequest(query, page);
-            var count = 0;
+            var count = 1;
             return (from item in elements?.Descendants("group")
                 select item.Element("doc")
                 into xElement

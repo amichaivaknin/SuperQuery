@@ -21,7 +21,7 @@ namespace businessLogic.SearchEngines
 
             foreach (var node in searchResults)
             {
-                var count = 0;
+                var count = 1;
                 foreach (var liTag in node.SelectNodes("//li"))
                 {
                     var titles = liTag.SelectNodes("//h3[@class='title']//a");

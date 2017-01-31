@@ -14,12 +14,12 @@ namespace businessLogic.RankAggregation
         {
             _rankBySearchEngine = new Dictionary<string, int>
             {
-                {"Google", 10},
-                {"Bing", 10},
-                {"Yandex", 10},
-                {"GigaBlast", 10},
-                {"HotBot", 10},
-                {"Rambler", 10}
+                {"Google", 600},
+                {"Bing", 600},
+                {"Yandex", 600},
+                {"GigaBlast", 600},
+                {"HotBot", 600},
+                {"Rambler", 600}
             };
         }
 
@@ -29,9 +29,13 @@ namespace businessLogic.RankAggregation
                                            allSearchResults.ToList();
 
             foreach (var searchEngine in searchEngineResultsLists)
-                SingleSearchEngineResultsRank(searchEngine.Results, searchEngine.SearchEngineName);
+                     SingleSearchEngineResultsRank(searchEngine.Results, searchEngine.SearchEngineName);
 
             var aggregationResults = BordaAggregate(searchEngineResultsLists);
+
+            var X = (from result in aggregationResults.Values
+                     orderby result.Rank descending
+                     select result).ToList();
 
             CheckForDuplications(aggregationResults);
 
