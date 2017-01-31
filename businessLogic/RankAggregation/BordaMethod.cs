@@ -14,12 +14,12 @@ namespace businessLogic.RankAggregation
         {
             _rankBySearchEngine = new Dictionary<string, int>
             {
-                {"Google", 600},
-                {"Bing", 600},
-                {"Yandex", 600},
-                {"GigaBlast", 600},
-                {"HotBot", 600},
-                {"Rambler", 600}
+                {"Google", 100},
+                {"Bing", 100},
+                {"Yandex", 100},
+                {"GigaBlast", 100},
+                {"HotBot", 100},
+                {"Rambler", 100}
             };
         }
 

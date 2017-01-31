@@ -10,7 +10,7 @@ namespace businessLogic.SearchEngines
 {
     public abstract class BaseSearchEngine : ISearchEngine
     {
-        protected const int NumberOfRequests = 1;
+        protected const int NumberOfRequests = 10;
 
         public virtual SearchEngineResultsList Search(string query)
         {
