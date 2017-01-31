@@ -21,7 +21,7 @@ namespace businessLogic.SearchEngines
 
             foreach (var node in searchResults)
             {
-                var count = 1;
+                var count = 0;
                 foreach (var liTag in node.SelectNodes("//li"))
                 {
                     var titles = liTag.SelectNodes("//h3[@class='title']//a");
@@ -33,7 +33,7 @@ namespace businessLogic.SearchEngines
                             DisplayUrl = UrlConvert(title.GetAttributeValue("href", null)),
                             Title = title.InnerText,
                             Description = decriptions[count].InnerText,
-                            Rank = (page - 1) * 10 + count
+                            Rank = (page - 1) * 10 + count+1
                         });
                         count++;
                     }

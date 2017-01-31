@@ -37,7 +37,7 @@ namespace businessLogic.SearchEngines
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var elements = await SearchRequest(query, page);
-            var count = 1;
+            var count = 0;
             return (from item in elements?.Descendants("group")
                 select item.Element("doc")
                 into xElement
@@ -51,7 +51,7 @@ namespace businessLogic.SearchEngines
                         element != null
                             ? xElement.Element("headline").Value
                             : xElement.Element("passages").Element("passage").Value,
-                    Rank = page * 10 + count++
+                    Rank = page * 10 + count++ + 1
                 }).ToList();
         }
 
