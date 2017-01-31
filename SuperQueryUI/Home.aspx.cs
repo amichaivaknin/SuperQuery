@@ -38,7 +38,7 @@ namespace SuperQueryUI
                 return;
             }
             Session["query"] = _query;
-            if (checkbox_bing.Checked) _engines.Add("Bing");
+            //if (checkbox_bing.Checked) _engines.Add("Bing");
             if (checkbox_google.Checked) _engines.Add("Google");
             if (checkbox_yandex.Checked) _engines.Add("Yandex");
             if (checkbox_gigablast.Checked) _engines.Add("GigaBlast");

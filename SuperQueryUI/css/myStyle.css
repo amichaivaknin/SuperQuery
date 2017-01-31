@@ -1,68 +1,77 @@
-﻿.logo1 {
-    height: 150px;
-    width: 200px;
+﻿
+        .logo1 {
+            height:150px;
+            width: 200px;
+        }
+        .table_box {
+            margin: 0 auto;
+            margin-top:5px;
+            text-align:left;    
+              
+        }
+        .pageButton{
+            
+        }
+        #resDiv{
+            margin-left:150px;
+            margin-right:400px;
+        }
+
+        ::-webkit-input-placeholder {
+   text-align:center;
 }
-
-.table_box {
-    margin: 0 auto;
-    margin-top: 5px;
-    text-align: left;              
-}
-
-.pageButton { }
-
-#resDiv {
-    margin-left: 150px;
-    margin-right: 400px;
-}
-
-::-webkit-input-placeholder { text-align: center; }
 
 :-moz-placeholder { /* Firefox 18- */
-    text-align: center;
+   text-align:center;
 }
 
-::-moz-placeholder { /* Firefox 19+ */
-    text-align: center;
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align:center;
 }
 
-:-ms-input-placeholder { text-align: center; }
+:-ms-input-placeholder {  
+   text-align:center;
+}
 
 #search {
-    height: 25px;
-    width: 300px;
+    width:300px;
+    height:25px;
 }
 
 #spinner {
-    left: 49%;
-    position: fixed;
-    top: 40%;
+    position:fixed;
+    top:42%;
+    left:49%;
 }
 
 #alert {
+    padding: 20px;
     background-color: #ffffcc; /* Red */
     color: black;
     margin-bottom: 15px;
     margin-left: 650px;
     margin-right: 650px;
-    padding: 20px;
 }
 
 /* The close button */
-
 .closebtn {
+    margin-left: 15px;
     color: black;
-    cursor: pointer;
+    font-weight: bold;
     float: right;
     font-size: 22px;
-    font-weight: bold;
     line-height: 20px;
-    margin-left: 15px;
+    cursor: pointer;
     transition: 0.3s;
 }
 
 /* When moving the mouse over the close button */
+.closebtn:hover {
+    color: red;
+}
 
-.closebtn:hover { color: red; }
+#window.alert{
+    color:red;
+}
 
-#window.alert { color: red; }
+
