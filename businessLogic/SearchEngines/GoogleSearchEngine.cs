@@ -54,16 +54,16 @@ namespace businessLogic.SearchEngines
                 }).ToList();
         }
 
-        private async Task<string> SearchRequest(string query, int page)
+        private Task<string> SearchRequest(string query, int page)
         {
             var start = page * 10 - 9;
             using (var webClient = new WebClient())
             {
                 var result =
-                    await webClient.DownloadStringTaskAsync(
+                     webClient.DownloadString(
                         $"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={start}&alt=json&cr=us");
 
-                return result;
+                return Task.FromResult(result);
             }
         }
 

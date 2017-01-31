@@ -33,7 +33,7 @@ namespace businessLogic.SearchEngines
                             DisplayUrl = UrlConvert(title.GetAttributeValue("href", null)),
                             Title = title.InnerText,
                             Description = decriptions[count].InnerText,
-                            Rank = (page - 1) * 10 + count
+                            Rank = (page - 1) * 10 + count+1
                         });
                         count++;
                     }

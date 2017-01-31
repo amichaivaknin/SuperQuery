@@ -51,7 +51,7 @@ namespace businessLogic.SearchEngines
                         element != null
                             ? xElement.Element("headline").Value
                             : xElement.Element("passages").Element("passage").Value,
-                    Rank = page * 10 + count++
+                    Rank = page * 10 + count++ + 1
                 }).ToList();
         }
 

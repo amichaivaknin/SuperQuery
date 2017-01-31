@@ -29,15 +29,9 @@ namespace businessLogic.RankAggregation
                                            allSearchResults.ToList();
 
             foreach (var searchEngine in searchEngineResultsLists)
-                SingleSearchEngineResultsRank(searchEngine.Results, searchEngine.SearchEngineName);
+                     SingleSearchEngineResultsRank(searchEngine.Results, searchEngine.SearchEngineName);
 
             var aggregationResults = BordaAggregate(searchEngineResultsLists);
-
-            //var x = (from result in aggregationResults.Values
-            //         orderby result.Rank descending
-            //         select result).ToList();
-
-       //     CheckForDuplications(aggregationResults);
 
             return (from result in aggregationResults.Values
                 orderby result.Rank descending
@@ -80,59 +74,7 @@ namespace businessLogic.RankAggregation
         private void SingleSearchEngineResultsRank(List<Result> results, string searchEngineName)
         {
             foreach (var result in results)
-            {
                 result.Rank = StartRankPosition - result.Rank + _rankBySearchEngine[searchEngineName];
-            }              
-        }
-
-        private static void CheckForDuplications(Dictionary<string, FinalResult> aggregationResults)
-        {
-            var count = aggregationResults.Count;
-            var results = aggregationResults.Values.ToArray();
-            for (var i = 0; i < count; i++)
-            for (var j = i + 1; j < count; j++)
-                if (CheckMatch(results[i].DisplayUrl, results[j].DisplayUrl, results[i].Description,
-                    results[i].Description))
-                {
-                    aggregationResults[results[i].DisplayUrl].Rank += aggregationResults[results[j].DisplayUrl].Rank;
-
-                    foreach (
-                        var searchEngine in
-                        results[j].SearchEngines.Where(
-                            searchEngine => !results[i].SearchEngines.ContainsKey(searchEngine.Key)))
-                        results[i].SearchEngines.Add(searchEngine.Key, searchEngine.Value);
-                }
-        }
-
-        private static bool CheckMatch(string arUrl, string resultUrl, string description1, string description2)
-        {
-            return CheckUrl(arUrl, resultUrl) && CheckDescriptionMatch(description1, description2);
-        }
-
-        private static bool CheckUrl(string arUrl, string resultUrl)
-        {
-            if (arUrl.Contains("/") && resultUrl.Contains("/"))
-            {
-                if (arUrl.Equals(resultUrl)) return false;
-                var ar = arUrl.IndexOf("/", StringComparison.Ordinal);
-                var res = resultUrl.IndexOf("/", StringComparison.Ordinal);
-                //Debug.WriteLine("first:    " + arUrl.Substring(0, ar) + "\nsecond:    " + resultUrl.Substring(0, res));
-                return arUrl.Substring(0, ar).Equals(resultUrl.Substring(0, res));
-            }
-            return false;
-        }
-
-        private static bool CheckDescriptionMatch(string results, string resultDescription)
-        {
-            //Debug.WriteLine("first:    " + results + "\nsecond:    " + resultDescription);
-            if (!resultDescription.Equals(""))
-            {
-                var length = 15;
-                if (resultDescription.Length < length)
-                    length = resultDescription.Length;
-                return results.Contains(resultDescription.Substring(0, length));
-            }
-            return false;
         }
 
         //    const int startRankPosition = 100;
