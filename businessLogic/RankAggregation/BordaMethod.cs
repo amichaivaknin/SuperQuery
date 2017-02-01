@@ -5,9 +5,14 @@ using businessLogic.Models;
 
 namespace businessLogic.RankAggregation
 {
+    /// <summary>
+    /// BordaMethod class rank and reorder the results according to borda rules
+    /// </summary>
     internal class BordaMethod
-    {
+    {  
         private const int StartRankPosition = 100;
+
+        // _rankBySearchEngine is a dictionary that save the Weight according to search engine
         private readonly Dictionary<string, int> _rankBySearchEngine;
 
         public BordaMethod()
@@ -23,6 +28,11 @@ namespace businessLogic.RankAggregation
             };
         }
 
+        /// <summary>
+        /// BordaRank do the process of ranking and ordering
+        /// </summary>
+        /// <param name="allSearchResults">List of all results from all/selected search engines</param>
+        /// <returns>List of aggregate results</returns>
         public List<FinalResult> BordaRank(IEnumerable<SearchEngineResultsList> allSearchResults)
         {
             var searchEngineResultsLists = allSearchResults as IList<SearchEngineResultsList> ??
@@ -36,9 +46,13 @@ namespace businessLogic.RankAggregation
             return (from result in aggregationResults.Values
                 orderby result.Rank descending
                 select result).ToList();
-            //RankAndMargeResultsFromAllLists(searchEngineResultsLists, aggregationResults);
         }
 
+        /// <summary>
+        /// BordaAggregate marge between the results from all search engines according to borda rules
+        /// </summary>
+        /// <param name="searchEngineResultsLists">Results from all search engines</param>
+        /// <returns>marge results, key = URL , value = FinalResult</returns>
         private Dictionary<string, FinalResult> BordaAggregate(IList<SearchEngineResultsList> searchEngineResultsLists)
         {
             var aggregationResults = new Dictionary<string, FinalResult>();
@@ -71,65 +85,15 @@ namespace businessLogic.RankAggregation
             return aggregationResults;
         }
 
+        /// <summary>
+        /// SingleSearchEngineResultsRank change the rank according to borda rules
+        /// </summary>
+        /// <param name="results">List of search results</param>
+        /// <param name="searchEngineName">Search engine name</param>
         private void SingleSearchEngineResultsRank(List<Result> results, string searchEngineName)
         {
             foreach (var result in results)
                 result.Rank = StartRankPosition - result.Rank + _rankBySearchEngine[searchEngineName];
         }
-
-        //    const int startRankPosition = 100;
-        //{
-        //    SearchEngineResultsList searchResults)
-
-        //private void RankSingleResultsList(Dictionary<string, FinalResult> aggregationResults,
-        //}
-        //        RankSingleResultsList(aggregationResults, searchResults);
-        //    foreach (var searchResults in allSearchResults)
-        //{
-        //    Dictionary<string, FinalResult> aggregationResults)
-
-        //private void RankAndMargeResultsFromAllLists(IEnumerable<SearchEngineResultsList> allSearchResults,
-
-        //    foreach (var result in searchResults.Results)
-        //    {
-        //        var key = result.DisplayUrl;
-
-        //        if (!aggregationResults.ContainsKey(result.DisplayUrl))
-        //        {
-        //            var fl = false;
-        //            foreach (var ar in aggregationResults.Values.
-        //                Where(ar => CheckMatch(ar.DisplayUrl, result.DisplayUrl, ar.Description, result.Description)))
-        //            {
-        //                key = ar.DisplayUrl;
-        //                fl = true;
-        //                break;
-        //            }
-
-        //            if (!fl)
-        //                AddNewFinalResult(aggregationResults, key, result);
-        //        }
-
-        //        if (aggregationResults[key].Description == null)
-        //            aggregationResults[key].Description = result.Description;
-
-        //        if (!aggregationResults[key].SearchEngines.ContainsKey(searchResults.SearchEngineName))
-        //        {
-        //            aggregationResults[key].Rank += startRankPosition - result.Rank +
-        //                                            _rankBySearchEngine[searchResults.SearchEngineName];
-        //            aggregationResults[key].SearchEngines.Add(searchResults.SearchEngineName, (int)result.Rank);
-        //        }
-        //    }
-        //}
-
-        //private static void AddNewFinalResult(IDictionary<string, FinalResult> aggregationResults, string key,
-        //    Result result)
-        //{
-        //    aggregationResults.Add(key, new FinalResult
-        //    {
-        //        DisplayUrl = result.DisplayUrl,
-        //        Description = result.Description,
-        //        Title = result.Title
-        //    });
-        //}
     }
 }

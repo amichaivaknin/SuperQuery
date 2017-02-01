@@ -10,8 +10,17 @@ namespace businessLogic.SearchEngines
 {
     public class YandexSearchEngine : BaseSearchEngine
     {
+        /// <summary>
+        /// YandexSearchEngine run a search on Yandex search engine
+        /// use in Yandex API
+        /// </summary>
         private const string ApiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
 
+        /// <summary>
+        /// Search mathod run a search according to NumberOfRequests
+        /// </summary>
+        /// <param name="query">query that insert by user</param>
+        /// <returns>Yandex search results</returns>
         public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Yandex");
@@ -34,6 +43,12 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
+        /// <summary>
+        /// SingleSearchIteration parsing a XML file
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="i">Number of page that we want to get results for him</param>
+        /// <returns>Search results of a single page</returns>
         protected override async Task<List<Result>> SingleSearchIteration(string query, int page)
         {
             var elements = await SearchRequest(query, page);
@@ -55,6 +70,12 @@ namespace businessLogic.SearchEngines
                 }).ToList();
         }
 
+        /// <summary>
+        /// SearchRequest send the request to Yandex and waiting for results
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="page"></param>
+        /// <returns>XElement that contain all the data</returns>
         private Task<IEnumerable<XElement>> SearchRequest(string query, int page)
         {
             var request =
@@ -66,52 +87,5 @@ namespace businessLogic.SearchEngines
             var results = xelement.Elements();
             return Task.FromResult(results);
         }
-
-        //{
-        //public SearchEngineResultsList Search(string query)
-        //
-
-        //  The original Search method before changes 
-        //    var resultList = CreateSearchEngineResultsList("Yandex");
-        //    resultList.Statistics.Start = DateTime.Now;
-        //    var apiKey = "03.446094686:f1d118338db048a99bcc81892d8639c8";
-        //    var count = 1;
-
-        //    for (var i = 0; i < 10; i++)
-        //    {
-        //        var request = WebRequest.Create($"https://yandex.com/search/xml?l10n=en&user=itzikooper&key={apiKey}&query={query}&page={i}");
-        //        var response = request.GetResponse();
-        //        var dataStream = response.GetResponseStream();
-        //        var xelement = XElement.Load(dataStream);
-        //        var results = xelement.Elements();
-
-        //        foreach (var item in results?.Descendants("group"))
-        //        {
-        //            var xElement = item.Element("doc");
-        //            if (xElement == null) continue;
-
-        //            var element = xElement.Element("headline");
-        //            if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(xElement.Element("url")?.Value))))
-        //                resultList.Results.Add(new Result
-        //                {
-        //                    DisplayUrl = UrlConvert(xElement.Element("url")?.Value),
-        //                    Title = xElement.Element("title")?.Value,
-        //                    Description =
-        //                        element != null
-        //                            ? xElement.Element("headline").Value
-        //                            : xElement.Element("passages").Element("passage").Value,
-        //                    Rank = count++
-        //                });
-        //        }
-        //    }
-        //    resultList.Statistics.End = DateTime.Now;
-        //    return resultList;
-        //}
-
-        // Not stable for this search engine
-        //public SearchEngineResultsList ParallelSearch(string query)
-        //{
-        //    return FullSearch(0, NumberOfRequests, query, "Yandex");
-        //}
     }
 }

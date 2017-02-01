@@ -8,8 +8,19 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
+    /// <summary>
+    /// GigaBlastEngine run a search on GigaBlast search engine
+    /// No API
+    /// </summary>
     public class GigaBlastEngine : BaseSearchEngine
     {
+        /// <summary>
+        /// Search mathod run a search according to NumberOfRequests
+        /// GigaBlast allow as to get all the results in single request
+        /// this mathod parsing a JSON file
+        /// </summary>
+        /// <param name="query">query that insert by user</param>
+        /// <returns>GigaBlast search results</returns>
         public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("GigaBlast");
@@ -36,6 +47,11 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
+        /// <summary>
+        /// SearchRequest send the request to GigaBlast and waiting for results
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns>string that contain all the data</returns>
         private Task<string> SearchRequest(string query)
         {
             string result;
@@ -47,33 +63,5 @@ namespace businessLogic.SearchEngines
             }
             return Task.FromResult(result);
         }
-
-        //
-
-        //  The original Search methods before changes 
-        //public SearchEngineResultsList Search(string query)
-        //{
-        //    var resultList = CreateSearchEngineResultsList("GigaBlast");
-        //    resultList.Statistics.Start = DateTime.Now;
-        //    var count = 1;
-        //    var webClient = new WebClient();
-        //    var result =
-        //        webClient.DownloadString(
-        //            $"http://www.gigablast.com/search?q={query}&format=json&n=100&rxivq=1015471771&rand=1482683517796");
-        //    var serializer = new JavaScriptSerializer();
-        //    var collection = serializer.Deserialize<Dictionary<string, object>>(result);
-
-        //    foreach (Dictionary<string, object> res in (IEnumerable)collection["results"])
-        //        if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(res["url"].ToString()))))
-        //            resultList.Results.Add(new Result
-        //            {
-        //                DisplayUrl = UrlConvert(res["url"].ToString()),
-        //                Title = res["title"].ToString(),
-        //                Description = res["sum"].ToString(),
-        //                Rank = count++
-        //            });
-        //    resultList.Statistics.End = DateTime.Now;
-        //    return resultList;
-        //}
     }
 }

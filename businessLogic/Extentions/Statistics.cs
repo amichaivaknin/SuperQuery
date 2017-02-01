@@ -2,6 +2,9 @@
 
 namespace businessLogic.Extentions
 {
+    /// <summary>
+    /// Statistics class provide as a information on a specific action
+    /// </summary>
     public class Statistics
     {
         public string Name { get; set; }

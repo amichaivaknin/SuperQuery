@@ -9,6 +9,10 @@ using businessLogic.Models;
 
 namespace businessLogic.SearchEngines
 {
+    /// <summary>
+    /// GoogleSearchEngine run a search on Google search engine
+    /// use in Google API
+    /// </summary>
     public class GoogleSearchEngine : BaseSearchEngine
     {
         private const string ApiKey = "AIzaSyDAGFKL3kZevjzrFizgnVGnKmZNKUM1hjw";
@@ -16,6 +20,11 @@ namespace businessLogic.SearchEngines
         //private const string ApiKey = "AIzaSyB8kNz-iLRMinVRviNJHtJUkgPPOAx7mIk";
         //private const string Cx = "009511415247016879030:smaostb1cxe";
 
+        /// <summary>
+        /// Search mathod run a search according to NumberOfRequests
+        /// </summary>
+        /// <param name="query">query that insert by user</param>
+        /// <returns>Google search results</returns>
         public override SearchEngineResultsList Search(string query)
         {
             var resultList = CreateSearchEngineResultsList("Google");
@@ -37,6 +46,12 @@ namespace businessLogic.SearchEngines
             return resultList;
         }
 
+        /// <summary>
+        /// SingleSearchIteration parsing a JSON file
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="i">Number of page that we want to get results for him</param>
+        /// <returns>Search results of a single page</returns>
         protected override async Task<List<Result>> SingleSearchIteration(string query, int i)
         {
             var count = 1;
@@ -54,6 +69,12 @@ namespace businessLogic.SearchEngines
                 }).ToList();
         }
 
+        /// <summary>
+        /// SearchRequest send the request to Google and waiting for results
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="page"></param>
+        /// <returns>string that contain all the data</returns>
         private Task<string> SearchRequest(string query, int page)
         {
             var start = page * 10 - 9;
@@ -66,50 +87,5 @@ namespace businessLogic.SearchEngines
                 return Task.FromResult(result);
             }
         }
-
-        //    var resultList = CreateSearchEngineResultsList("Google");
-        //{
-        //public SearchEngineResultsList Search(string query)
-        //
-
-        //  The original Search methods before changes 
-        //    resultList.Statistics.Start = DateTime.Now;
-        //    var count = 1;
-        //    uint start = 1;
-
-        //    var webClient = new WebClient();
-        //    try
-        //    {
-        //        for (var i = 0; i < 10; i++)
-        //        {
-        //            var result =
-        //                webClient.DownloadString($"https://www.googleapis.com/customsearch/v1?key={ApiKey}&cx={Cx}&q={query}&start={start}&alt=json&cr=us");
-        //            var serializer = new JavaScriptSerializer();
-        //            var collection = serializer.Deserialize<Dictionary<string, object>>(result);
-        //            foreach (Dictionary<string, object> item in (IEnumerable)collection["items"])
-        //                if (!resultList.Results.Any(r => r.DisplayUrl.Equals(UrlConvert(item["link"].ToString()))))
-        //                    resultList.Results.Add(new Result
-        //                    {
-        //                        DisplayUrl = UrlConvert(item["link"].ToString()),
-        //                        Title = item["title"].ToString(),
-        //                        Description = item["snippet"].ToString(),
-        //                        Rank = count++
-        //                    });
-        //            start += 10;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return resultList;
-        //    }
-
-        //    resultList.Statistics.End = DateTime.Now;
-        //    return resultList;
-        //}
-
-        //public SearchEngineResultsList ParallelSearch(string query)
-        //{
-        //    return FullSearch(1, NumberOfRequests + 1, query, "Google");
-        //}
     }
 }

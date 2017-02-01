@@ -1,5 +1,8 @@
 ﻿namespace businessLogic.Models
 {
+    /// <summary>
+    /// Result class collect a data of single search result 
+    /// </summary>
     public class Result
     {
         public string Title { get; set; } = "";

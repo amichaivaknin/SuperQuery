@@ -7,6 +7,10 @@ using businessLogic.SearchEngines;
 
 namespace businessLogic
 {
+    /// <summary>
+    /// MultiSearch search user query on all/selected search engines 
+    /// implament IRankAggregation interface
+    /// </summary>
     public class MultiSearch : IMultiSearch
     {
         private readonly Dictionary<string, ISearchEngine> _searchEngines;
@@ -24,6 +28,11 @@ namespace businessLogic
             };
         }
 
+        /// <summary>
+        /// Method for search at all search engines that define in this project in parallel
+        /// </summary>
+        /// <param name="query">A string that insert by the user</param>
+        /// <returns>Return results from all search engines</returns>
         public IEnumerable<SearchEngineResultsList> GetResultsFromAllSearchEngines(string query)
         {
             var allResults = new ConcurrentBag<SearchEngineResultsList>();
@@ -33,6 +42,12 @@ namespace businessLogic
             return allResults;
         }
 
+        /// <summary>
+        /// Method for search at search engines that selected by the user in parallel
+        /// </summary>
+        /// <param name="engines">A list of search engines that user select for searching</param>
+        /// <param name="query">A string that insert by the user</param>
+        /// <returns>Return results from all search engines</returns>
         public IEnumerable<SearchEngineResultsList> GetResultsFromSelectedSearchEngines(List<string> engines,
             string query)
         {

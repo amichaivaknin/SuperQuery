@@ -3,6 +3,10 @@ using businessLogic.Extentions;
 
 namespace businessLogic.Models
 {
+    /// <summary>
+    /// SearchEngineResultsList class collect all the results from single search engine.
+    /// also provide the search engine name and statistics about the search.
+    /// </summary>
     public class SearchEngineResultsList
     {
         public SearchEngineResultsList()
